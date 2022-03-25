@@ -1,0 +1,35 @@
+### Flujo de Git ###
+
+1.- Hay que linkear el entorno de Gitpod con el repositorio remoto con el comando:
+
+    git remote set-url origin https://github.com/pabloftc/ProyectoFinal_v2.git
+
+2.- Luego traer los cambios con:
+
+    git fetch
+
+3.- Después hay que cambiar a la rama "dev":
+
+    git switch dev -- ó -- git checkout dev 
+
+4.- Una vez en dev sumar los cambios del repositorio remoto:
+
+    git pull
+
+5.- Luego cambiar a la rama propia (yasnadev, matidev, felipedev, pablodev):
+
+    git switch/checkout {rama-propia}
+
+6.- Una vez dentro de la rama propia finalmente hacer:
+
+    git merge dev
+
+## Subir los cambios propios al repositorio remoto ##
+
+1.- Subir los cambios al "staging" (SIEMPRE DESDE LA RAMA PROPIA):
+
+    git add . -- luego hacer git status para ver los archivos que se cambiaron
+    git commit -m "{El mensaje del commit}"
+    git push (Para subirlos a la rama propia)
+
+2.- Después de esto hay que ir a GitHub y hacer un "pull request" (SIEMPRE DESDE LA RAMA PROPIA A DEV)
