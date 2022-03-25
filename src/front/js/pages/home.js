@@ -1,26 +1,45 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+
+import Paginainicial from "./Paginainicial";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import Hero from "../../img/foto-fome.jpg";
+
 import "../../styles/home.css";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+  return (
+    <Container>
+      <Row className="p-5">
+        <Col className="pt-5">
+          <h1 className="pb-3">Cursos SayanDevelopers</h1>
+          <p className="pb-3">
+            Ven y danos tu dinero por ver videos de YouTube que podrías ver
+            gratis
+          </p>
+          <Button variant="primary">
+            <Link to={`/Signup`} className="btn-signup">
+              Sign up
+            </Link>
+          </Button>{" "}
+          <Button variant="outline-primary">
+            <Link to={`/Login`} className="btn-login">
+              Login
+            </Link>
+          </Button>
+        </Col>
+        <Col>
+          <Image fluid src={Hero} />
+        </Col>
+      </Row>
+      <Paginainicial />
+    </Container>
+  );
 };
