@@ -8,10 +8,10 @@ const Paginainicial = () => {
 
   return (
     <Container>
-      <Row xs={1} md={2} className="g-4">
+      <Row>
         {Array.from({ length: 4 }).map((_, idx) => (
           <Col>
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: "20rem" }}>
               <Card.Img
                 variant="top"
                 src="https://picsum.photos/id/233/100/100"
