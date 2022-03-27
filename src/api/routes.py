@@ -30,3 +30,11 @@ def login():
         return jsonify(access_token=access_token)   
     else:
         return jsonify({"msg": "Bad username or password"}), 401    
+
+# @api.route("/curso-detalle", methods=["GET"])
+# def curso-detalle():
+#     name = request.get("name", None)
+#     detalleCursos = Cursos.query.filter_by(name= name[0])
+
+#     return jsonify(detalleCursos.serialize()), 200
+#CREO QUE DEBIESE HACER UN FETCH DESDE EL FRONT-END DE DETALLE CURSO, ME FALTA PONER EL IF, SI EL CURSO ESTÁ IR A VISTA DETALLE SINO MOSTRAR UN MENSAJE.
