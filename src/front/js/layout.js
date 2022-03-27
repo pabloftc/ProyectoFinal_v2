@@ -14,6 +14,7 @@ import Paginainicial from "./pages/Paginainicial";
 import { MisCursos } from "./pages/misCursos"
 import { Usuarios } from "./pages/usuarios";
 
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
