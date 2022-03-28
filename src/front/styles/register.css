@@ -1,0 +1,72 @@
+h2 {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+span{
+    color:red;
+    font-size: 14px;
+}
+
+.imagenlogo {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logosinguptwo{
+    padding-left:30%;
+    padding-right:30%;
+}
+
+.grupoInput {
+    position:relative;
+    z-index: 90;
+}
+
+.check {
+    position:absolute;
+    right: 10px;
+    bottom: 14px;
+    z-index: 100;
+    font-size: 16 px;
+    color:green;
+    opacity: 0;
+}
+
+.signupboton{
+    display:flex;
+    flex-direction: column;
+}
+
+#exclamationerror{
+    height:45px;
+    line-height: 45px;
+    background: none;
+    color:red;
+    padding: 0px 15px;
+    border-radius: 5px;
+    margin-top:20px;
+    font-size:12px;
+    display:flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#exclamationerror2{
+    position: absolute;
+}
+
+b{
+    margin-left:5px;
+}
+
+.mensajexito{
+    font-size: 14px;
+    color: green;
+    margin-top: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    display:none;
+}
