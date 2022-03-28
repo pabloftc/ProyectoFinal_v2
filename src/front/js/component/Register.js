@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import "../../styles/register.css";
 import logo2 from '../../img/logo2.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
 import { Formik, ErrorMessage } from 'formik';
 
@@ -20,9 +20,35 @@ export const Register = () => {
     const [errormessage, setErrormessage] = useState(false)
     const { handleSubmit } = useForm();
 
-    const onSubmit = evento => {
-        console.log(evento);
+    //const onSubmit = evento => {
+    // console.log(evento);
+    // }
+
+    const onSubmitHandler = async () => {
+        sessionStorage.setItem("username", username);
+        const response = await fetch(process.env.BACKEND_URL + "api/register", {
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password,
+            }),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await response.json();
+        console.log("_".repeat(100));
+        console.log(data);
+        if (response.ok == false) {
+            setErrormessage(
+                "El usuario no existe en la plataforma"
+            );
+        } else {
+            sessionStorage.setItem("token", data.access_token);
+        }
     }
+
 
     const checkPassword = () => {
         let pass = password;
@@ -108,7 +134,6 @@ export const Register = () => {
                                         <ErrorMessage nombre="usuario" component={() => (
                                             <span className="error">{errors.username}</span>
                                         )} />
-                                        <FontAwesomeIcon className="check" icon={faCheckCircle} />
                                     </div>
 
                                     <div className="grupoInput">
@@ -123,7 +148,6 @@ export const Register = () => {
                                         <ErrorMessage nombre="correo" component={() => (
                                             <span className="error">{errors.email}</span>
                                         )} />
-                                        <FontAwesomeIcon className="check" icon={faCheckCircle} />
                                     </div>
 
                                     <div className="grupoInput">
@@ -139,7 +163,6 @@ export const Register = () => {
                                         <ErrorMessage nombre="password" component={() => (
                                             <span className="error">{errors.password}</span>
                                         )} />
-                                        <FontAwesomeIcon className="check" icon={faCheckCircle} />
                                     </div>
 
                                     <div className="grupoInput">
@@ -151,7 +174,6 @@ export const Register = () => {
                                             onChange={(e) => setPassword2(e.target.value)}
                                             value={password2}
                                         />
-                                        <FontAwesomeIcon className="check" icon={faCheckCircle} />
                                     </div>
                                 </Form.Group>
 
@@ -159,7 +181,11 @@ export const Register = () => {
                                     <Form.Check type="checkbox" label="Remember me" />
                                 </Form.Group>
                                 <div className="signupboton">
-                                    <Button variant="primary" type="submit" className="w-100" onClick={checkPassword} onSubmit={handleSubmit(onSubmit)}>
+                                    <Button variant="primary"
+                                        type="submit"
+                                        className="w-100"
+                                        onClick={checkPassword}
+                                        onSubmit={onSubmitHandler}>
                                         Sign up
                                     </Button>
                                     <p className="mensajexito">
