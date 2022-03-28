@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-import Paginainicial from "./Paginainicial";
+import PaginaInicial from "./paginaInicial";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -39,7 +39,7 @@ export const Home = () => {
           <Image fluid src={Hero} />
         </Col>
       </Row>
-      <Paginainicial />
+      <PaginaInicial />
     </Container>
   );
 };
