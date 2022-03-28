@@ -17,3 +17,16 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class Curso(db.Model):
+    __tablename__ = 'curso'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(300))
+    descripcion = Column(String(600))
+    categoria = Column(String(80))
+    url = Column(String(300))
+    url_portada = Column(String(300))
+    duracion = Column(String(250))
+    user_id = Column(Integer, ForeignKey('user.id'))
