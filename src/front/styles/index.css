@@ -1,3 +1,26 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Roboto Mono", Arial, sans-serif;
+  font-size: 1.7rem;
+}
+
+.btn-signup {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.btn-login {
+  text-decoration: none;
+  font-size: 1.5rem;
+}
