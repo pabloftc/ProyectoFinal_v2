@@ -31,15 +31,7 @@ import '../../styles/home.css';
         <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
       
       </Nav>
-      <Form className="d-flex" style={{marginRight: '5px'}}>
-        <FormControl
-          type="search"
-          placeholder="Search . . ."
-          className="me"
-          aria-label="Search"
-        />
-        <Button variant="outline-secondary"><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
-      </Form>
+     
       <Link to="/login">
       <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In</Button>
       </Link>

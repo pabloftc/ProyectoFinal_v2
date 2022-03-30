@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import Login from "./login.js";
@@ -7,7 +7,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Paginainicial = () => {
-  const { store, actions } = useContext(Context);
+  const [ curso, setCurso ] = useState("");
+  const [cursos, setCursos] = useState([])
+  useEffect(()=> {
+    fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, 
+    {method: "GET",
+      headers: {"Content-Type": "application/json",},
+    })
+    .then((response)=> response.json())
+    .then((data)=> setCursos(data))
+  }, [])
+  const finderHandler = async() => {
+    const response = await fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, 
+    {method: "GET",
+      headers: {"Content-Type": "application/json",},
+    })
+    const data = await response.json()
+    setCursos(data)
+    }
+
 
   return (
     <>
@@ -21,19 +39,19 @@ const Paginainicial = () => {
       >
         <h1>Cursos o categoría de cursos</h1>{" "}
         <Form className="d-flex" style={{ marginRight: "5px" }}>
-          <FormControl
+          <FormControl value={curso} onChange={(e) =>{setCurso(e.target.value)}}
             type="search"
             placeholder="Search . . ."
             className="me"
             aria-label="Search"
           />
-          <Button variant="outline-secondary">
+          <Button variant="outline-secondary" onClick={finderHandler}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Button>
         </Form>
       </div>
       <Row xs={1} md={3} className="g-4">
-        {Array.from({ length: 9 }).map((_, idx) => (
+        {cursos.map((cursoItem, idx) => (
           <Col>
             <Card>
               <Card.Img
@@ -42,11 +60,9 @@ const Paginainicial = () => {
                 src={`https://picsum.photos/id/${Math.floor(Math.random() * 230)}/200/300`}
               />
               <Card.Body>
-                <Card.Title>Curso SayanDevelopers {idx + 1 }</Card.Title>
+                <Card.Title> {cursoItem.name} </Card.Title>
                 <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
+                  {cursoItem.description}
                 </Card.Text>
               </Card.Body>
             </Card>
