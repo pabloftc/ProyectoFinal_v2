@@ -4,7 +4,7 @@ import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstr
 
 import SayanImageUrl from "../../img/logo.jpeg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import '../../styles/home.css';
 
