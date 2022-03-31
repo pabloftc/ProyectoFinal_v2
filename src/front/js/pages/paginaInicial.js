@@ -10,7 +10,7 @@ const PaginaInicial = () => {
     <Container>
       <Row>
         {Array.from({ length: 4 }).map((_, idx) => (
-          <Col>
+          <Col key={idx}>
             <Card style={{ width: "20rem" }}>
               <Card.Img
                 variant="top"

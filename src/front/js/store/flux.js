@@ -2,23 +2,19 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       playlists: [],
-      message: null,
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
     },
     actions: {
       // Use getActions to call a function within a fuction
-	  fetchYoutubePlaylist: () => {},
+      getYoutubePlaylist: () => {
+        const youTubeSearch =
+          "https://www.googleapis.com/youtube/v3/playlists";
+        const res = fetch(
+          `${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=25&key=${process.env.YOUTUBE_API_KEY}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({playlists: data.items})
+          });
+      },
 
       exampleFunction: () => {
         getActions().changeColor(0, "green");
