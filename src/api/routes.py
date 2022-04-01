@@ -46,3 +46,22 @@ def register():
         db.session.commit()
     
     return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
+
+
+@api.route("/miscursos", methods=["GET"])
+def ver_cursos():
+    email = request.json.get("email", None)
+    json_text = jsonify()
+    return json_text
+
+@api.route("/miscursos", methods=["POST"])
+def add_curso():
+    request_body = json.loads(request.data)
+    cursos.append(request_body)
+    print("Incoming request with the following body", request_body)
+    return jsonify(cursos)
+
+@api.route("/usuarios", methods=["GET"])
+def mis_cursos():
+    
+    return jsonify({"msg": "Bad username or password"})

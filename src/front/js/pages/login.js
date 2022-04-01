@@ -6,7 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errormessage, setErrormessage] = useState("");
-  console.log(password);
+
   const onSubmitHandler = async () => {
     sessionStorage.setItem("email", email);
     // sessionStorage.setItem("password", password);
