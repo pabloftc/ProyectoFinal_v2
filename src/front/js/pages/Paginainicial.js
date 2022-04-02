@@ -1,33 +1,76 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Container, Row, Card, Col } from "react-bootstrap";
+import Login from "./login.js";
+import { Row, Card, Col, Form, FormControl, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Paginainicial = () => {
-  const { store, actions } = useContext(Context);
+  const [ curso, setCurso ] = useState("");
+  const [cursos, setCursos] = useState([])
+  useEffect(()=> {
+    fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, 
+    {method: "GET",
+      headers: {"Content-Type": "application/json",},
+    })
+    .then((response)=> response.json())
+    .then((data)=> setCursos(data))
+  }, [])
+  const finderHandler = async() => {
+    const response = await fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, 
+    {method: "GET",
+      headers: {"Content-Type": "application/json",},
+    })
+    const data = await response.json()
+    setCursos(data)
+    }
+
 
   return (
-    <Container>
-      <Row xs={1} md={2} className="g-4">
-        {Array.from({ length: 4 }).map((_, idx) => (
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          paddingTop: "40px",
+          paddingBottom: "40px",
+        }}
+      >
+        <h1>Cursos o categoría de cursos</h1>{" "}
+        <Form className="d-flex" style={{ marginRight: "5px" }}>
+          <FormControl value={curso} onChange={(e) =>{setCurso(e.target.value)}}
+            type="search"
+            placeholder="Search . . ."
+            className="me"
+            aria-label="Search"
+          />
+          <Button variant="outline-secondary" onClick={finderHandler}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </Button>
+        </Form>
+      </div>
+      <Row xs={1} md={3} className="g-4">
+        {cursos.map((cursoItem, idx) => (
           <Col>
-            <Card style={{ width: '18rem' }}>
+            <Card>
               <Card.Img
+                style={{ height: "200px", objectFit: "cover" }}
                 variant="top"
-                src="https://picsum.photos/id/233/100/100"
+                src={`https://picsum.photos/id/${Math.floor(Math.random() * 230)}/200/300`}
               />
               <Card.Body>
-                <Card.Title>Curso SayanDevelopers</Card.Title>
+                <Card.Title> {cursoItem.name} </Card.Title>
                 <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content.
+                  {cursoItem.description}
                 </Card.Text>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </Container>
+      <Login />
+    </>
   );
 };
 export default Paginainicial;
