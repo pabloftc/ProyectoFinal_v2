@@ -25,7 +25,7 @@ export const Home = () => {
             gratis
           </p>
           <Button variant="primary">
-            <Link to={`/Signup`} className="btn-signup">
+            <Link to={`/Register`} className="btn-signup">
               Sign up
             </Link>
           </Button>{" "}
