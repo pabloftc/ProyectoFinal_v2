@@ -14,6 +14,7 @@ import Paginainicial from "./pages/Paginainicial";
 import { MisCursos } from "./pages/misCursos"
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/Register";
+import { Testing } from "./pages/testing";
 
 
 //create your first component
@@ -43,6 +44,9 @@ const Layout = () => {
 						
 						<Route exact path="/Login">
 						<Login />	
+						</Route>
+						<Route exact path="/Testing">
+						<Testing />	
 						</Route>
 						<Route exact path="/miscursos">
 							<MisCursos />

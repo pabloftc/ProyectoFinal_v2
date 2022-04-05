@@ -23,10 +23,11 @@ class User(db.Model):
 
 class Cursos(db.Model):
     # _tablename_='cursos'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(String(800), nullable=False)
-    created_at = Column(DateTime(), default=datetime.now())
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(200), nullable=False)
+    description = db.Column(String(800), nullable=False)
+    created_at = db.Column(DateTime(), default=datetime.now())
+    category = db.Column(String(400), nullable=False)
 
     def serialize(self):
         return {
@@ -34,4 +35,5 @@ class Cursos(db.Model):
             "name": self.name,
             "description": self.description,
             "created_at": self.created_at,
+            "category": self.category,
         }

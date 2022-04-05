@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import '../../styles/home.css';
+import { LogoutButton } from "./logoutButton";
 
 
  export const Navbars = () => {
@@ -38,6 +39,7 @@ import '../../styles/home.css';
       <Link to="/signup"> 
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link>
+      <LogoutButton />
     </Navbar.Collapse>
   </Container>
 </Navbar>
