@@ -13,7 +13,7 @@ import Login from "./pages/login";
 import Paginainicial from "./pages/Paginainicial";
 import { MisCursos } from "./pages/misCursos"
 import { Usuarios } from "./pages/usuarios";
-import { Register } from "./component/Register";
+import { Register } from "./component/register";
 
 
 //create your first component
@@ -21,6 +21,7 @@ const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
 	const basename = process.env.BASENAME || "";
+
 
 	return (
 		<div>
@@ -40,9 +41,9 @@ const Layout = () => {
 						<Route exact path="/Paginainicial">
 							<Paginainicial />
 						</Route>
-						
+
 						<Route exact path="/Login">
-						<Login />	
+							<Login />
 						</Route>
 						<Route exact path="/miscursos">
 							<MisCursos />

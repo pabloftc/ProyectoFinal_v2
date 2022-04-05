@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Route } from "react-router-dom";
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import { Row, Col } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import "../../styles/register.css";
 import logo2 from '../../img/logo2.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
 import { Formik, ErrorMessage } from 'formik';
+import { Context } from "../store/appContext";
+import Login from "../pages/login";
 
 export const Register = () => {
     const [username, setUsername] = useState("");
@@ -19,6 +18,7 @@ export const Register = () => {
     const [password2, setPassword2] = useState("");
     const [errormessage, setErrormessage] = useState(false)
     const { handleSubmit } = useForm();
+    const { store, actions } = useContext(Context);
 
     //const onSubmit = evento => {
     // console.log(evento);
@@ -38,7 +38,7 @@ export const Register = () => {
             },
         });
         const data = await response.json();
-        console.log("_".repeat(100));
+        console.log("_".repeat(80));
         console.log(data);
         if (response.ok == false) {
             setErrormessage(
@@ -70,10 +70,17 @@ export const Register = () => {
 
     if (errormessage) {
         return (
-            <div>
-                Faltan campos por completar
+            <div className="errorRegistro">
+                <h1>¡Algo salió mal! Tu registro falló. ¡Inténtalo de nuevo!</h1>
+                <Button variant="primary" type="" onClick="">
+                    Regresar al registro
+                </Button>
             </div>
         );
+    } else {
+        <Route exact path="/login">
+            <Login />
+        </Route>
     }
 
 
@@ -130,6 +137,7 @@ export const Register = () => {
                                             onChange={(e) => setUsername(e.target.value)}
                                             value={username}
                                             onBlur={handleBlur}
+                                            id="usuario"
                                         />
                                         <ErrorMessage nombre="usuario" component={() => (
                                             <span className="error">{errors.username}</span>
@@ -144,6 +152,7 @@ export const Register = () => {
                                             onChange={(e) => setEmail(e.target.value)}
                                             value={email}
                                             onBlur={handleBlur}
+                                            id="email"
                                         />
                                         <ErrorMessage nombre="correo" component={() => (
                                             <span className="error">{errors.email}</span>
@@ -185,11 +194,12 @@ export const Register = () => {
                                         type="submit"
                                         className="w-100"
                                         onClick={checkPassword}
-                                        onSubmit={onSubmitHandler}>
+                                        onSubmit={handleSubmit(onSubmitHandler)}
+                                        {...actions.exampleFunction()}>
                                         Sign up
                                     </Button>
                                     <p className="mensajexito">
-                                        ¡Registro realizado de forma exitosa!
+                                        {store.message || "Registro realizado de forma exitosa"}
                                     </p>
                                 </div>
                                 {false && <div className="w-100" id="exclamationerror">
