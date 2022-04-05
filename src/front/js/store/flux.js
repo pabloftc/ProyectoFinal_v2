@@ -50,6 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//para registrarse
 			register: async (username, email, password) => {
+				console.log('register')
 				const user = {
 					method: 'POST',
 					headers: {
@@ -66,13 +67,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						process.env.BACKEND_URL + "/api/register",
 						user
 					);
-					if (res.status != 200) {
-						throw new Error("Error", Error);
-					}
 					const data = await res.json();
 					console.log("Mensaje desde Backend", data);
-					setStore({ data: data });
-					return data;
+					//setStore({ data: data });
+					return res.status;
 				} catch (error) {
 					console.log(`Nuevo error en el usuario: ${error}`);
 				}

@@ -1,131 +1,109 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Image from "react-bootstrap/Image";
 import "../../styles/register.css";
 import logo2 from '../../img/logo2.png';
 import { Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import swal from "sweetalert";
 
 import { Context } from "../store/appContext";
 
 export const Register = () => {
     const { store, actions } = useContext(Context);
     const [errormessage, setErrormessage] = useState(false);
-    const [error, setError] = useState(false);
-    const [todo, setTodo] = useState();
+    const [todo, setTodo] = useState(false);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
-    const history = useHistory();
-    //const [state, setState] = useState({
-    //    username: "",
-    //    email: "",
-    //     password: "",
-    //     password2: ""
-    //   })
-
-    //function handleChange(e) {
-    //   setState({
-    //       ...state,
-    //        [e.target.name]: e.target.value
-    //
-    //    })
-    //  }
 
 
-    //const handleSubmit = async (e) => {
-    //   e.preventDefault()
-    //    console.log(state, "state")
-    //
-    //    const bodyContent = JSON.stringify(state)
-    //
-    //     const response = await fetch(process.env.BACKEND_URL + "/api/register", {
-    //         body: bodyContent,
-    //         method: "POST",
-    //           headers: {
-    //              "Content-Type": "application/json",
-    //          }
-    //       })
-    //
-    //       const data = await response.json()
-    //       console.log(data)
-    //   }
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
-    const registerClick = () => {
+    const registerClick = async (e) => {
+        e.preventDefault()
         let pass = password;
         let pass2 = password2;
         let user = username;
         let mail = email;
-        let todoHere = (pass != 0 && user != 0 && mail != 0 && pass == pass2);
+        let todoHere = (user != 0 && mail != 0 && pass != 0 && pass2 != 0);
+        let todoPass = (pass == pass2);
 
-        if (todoHere) {
-            if (user.length > 3 && pass > 4) {
-                actions.register(username, email, password).then((data) => {
-                    console.log(data, "data")
+        console.log('todoHere', todoHere)
+        if (todoHere && todoPass) {
+            //console.log('user.length', user.length, 'pass.length', pass.length)
+            if (user.length > 4 && pass.length > 4) {
+                const data = await actions.register(username, email, password)
+                console.log(data, "data")
+                if (data === 200) {
                     setTodo(true)
-                });
-
+                } else {
+                    swal("¡No me lo vas a creer!", "Este usuario y/o correo ya están en uso. Intenta con otro", "warning")
+                    //setErrormessage(true), 3000
+                }
             } else {
-                alert("Debes rellenar todos los campos")
+                swal("¡Oops!", "Error en el usuario y/o contraseña. Deben tener como mínimo 4 caracteres de largo", "error")
                 //setErrormessage(true)
             }
-        }
-    }
-
-
-    //Otro
-
-
-    const checkPassword = () => {
-        let pass = password;
-        let pass2 = password2;
-        let user = username;
-        let mail = email;
-        let todoHere = (pass != 0 && user != 0 && mail != 0 && pass == pass2);
-
-        console.log(pass, pass2);
-
-        if (todoHere) {
-            console.log("Están todos los datos ingresados")
-            return (
-                setTodo(true)
-            )
+        } else if (todoHere && !todoPass) {
+            swal("¡Oh oh!", "Las contraseñas deben coincidir", "error")
         }
         else {
-            console.log("Debes introducir un usuario, un correo y una contraseña")
-            setErrormessage(true)
-        };
+            swal("¡Ojo!", "Debes rellanar todos los campos", "warning")
+        }
     }
 
-    if (errormessage) {
+    if (errormessage && !todo) {
         return (
             <div>
-                <h1>Faltan campos por completar</h1>
+                <h1 className="mensajeError2">¡Ups! Ocurrió un error durante el registro, ya sea que ese correo está en uso o el usuario ya fue tomado. ¡Inténtalo de nuevo</h1>
                 <Button variant="primary" type="button" onClick={refreshPage}>
                     ¡Vuelve a intentarlo!
                 </Button>
             </div>
         );
-    }
-
-    if (todo) {
+    } else if (!errormessage && todo) {
         return (
-            <div>
-                <h1>¡Muy bien! Te has registrado en la plataforma</h1>
-                <Button variant="primary" type="button">
-                    <Link to={`/login`} className="btn-signup">
-                        Inicia sesión
-                    </Link>
-                </Button>
-            </div>
+            swal("¡Muy bien", "¡Registrado con éxito!", "success"),
+            <Redirect to='/login' />
         );
     }
 
-    function refreshPage() {
-        window.location.reload(false);
-    }
+
+
+
+
+
+
+    //Otro
+
+
+    //   const checkPassword = () => {
+    //       let pass = password;
+    //       let pass2 = password2;
+    //       let user = username;
+    //      let mail = email;
+    //      let todoHere = (pass != 0 && user != 0 && mail != 0 && pass == pass2);
+    //
+    //      console.log(pass, pass2);
+    //
+    //      if (todoHere) {
+    //         console.log("Están todos los datos ingresados")
+    //          return (
+    //              setTodo(true)
+    //          )
+    //      }
+    //      else {
+    //          console.log("Debes introducir un usuario, un correo y una contraseña")
+    //          setErrormessage(true)
+    //      };
+    // }
+
+
 
     return (
         <Container>
@@ -178,9 +156,9 @@ export const Register = () => {
                                 onChange={(e) => setPassword2(e.target.value)}
                             />
                         </div>
+
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
-                            <button type="submit" className="btn btn-primary mb-3" onClick={registerClick}>Sign in</button>
-                            <button type="button" className="btn btn-primary" onClick={() => actions.logout()} >Logout</button>
+                            <button type="submit" className="btn btn-primary mb-3" onClick={(e) => registerClick(e)}>Sign in</button>
                         </div>
                     </form>
                 </div>

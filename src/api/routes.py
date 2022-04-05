@@ -34,20 +34,29 @@ def login():
 
 @api.route("/register", methods=["POST"])
 def register():
-    username = request.json.get("username", None)
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    is_active = request.json.get("is_active", None)
+    response = {'mensaje': '', 'status': ''}
+    try:
+        username = request.json.get("username", None)
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+        #is_active = request.json.get("is_active", None)
 
-    existing_user = User.query.filter_by(email.email).first()
+        if username != None and email != None and password != None:
 
-    if existing_user:
-        return {'Error':'Este correo ya está en uso'}
-    else:
-        user=User(username=username, email=email, password=password, is_active=True)
-        db.session.add(user)
-        db.session.commit()
-        return {'mensaje':'Perfecto'}, 200
+            existing_user = User.query.filter_by(email=email).first()
+
+            if existing_user:
+                response['mensaje'] = 'Este correo ya está en uso'
+                response['status'] = 500
+            else:
+                user=User(username=username, email=email, password=password)
+                db.session.add(user)
+                db.session.commit()
+                response['mensaje'] = 'Perfecto'
+                response['status'] = 200
+    except Exception as e:
+        print(f'registerfailed: {e}')
+    return jsonify(response['mensaje']), response['status']
 
 
 
