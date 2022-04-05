@@ -15,6 +15,7 @@ import { MisCursos } from "./pages/misCursos"
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/Register";
 
+
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain

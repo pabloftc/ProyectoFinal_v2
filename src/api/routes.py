@@ -2,23 +2,15 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Cursos, Pedidos
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 api = Blueprint('api', __name__)
 
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
 
 @api.route("/login", methods=["POST"])
 def login():
@@ -29,6 +21,23 @@ def login():
         access_token = create_access_token(identity=email)
         return jsonify(access_token=access_token)   
     else:
+        return jsonify({"msg": "Bad username or password"}), 401    
+
+@api.route("/detalle_curso", methods=["GET"])
+def detalle_curso():
+    name = request.args.get("name", None)
+    print(name)
+    detalleCursos = Cursos.query.filter_by(name= name).all()
+    detalleCursos = Cursos.query.filter(Cursos.name.ilike("%"+name+"%")).all()
+    if len(detalleCursos) == 0:
+        return jsonify([]), 200
+    else:
+        lista = []
+        for det in detalleCursos:
+            lista.append(det.serialize())
+        return jsonify(lista), 200
+
+#CREO QUE DEBIESE HACER UN FETCH DESDE EL FRONT-END DE DETALLE CURSO, ME FALTA PONER EL IF, SI EL CURSO ESTÁ IR A VISTA DETALLE SINO MOSTRAR UN MENSAJE.
         return jsonify({"msg": "Bad username or password"}), 401
 
 
@@ -47,21 +56,81 @@ def register():
     
     return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
 
+# Crear Usuario
 
-@api.route("/miscursos", methods=["GET"])
-def ver_cursos():
-    email = request.json.get("email", None)
-    json_text = jsonify()
-    return json_text
-
-@api.route("/miscursos", methods=["POST"])
-def add_curso():
-    request_body = json.loads(request.data)
-    cursos.append(request_body)
-    print("Incoming request with the following body", request_body)
+# Get Todos los cursos
+@app.route('/cursos', methods=['GET'])
+def todos_los_cursos():
+    cursos = Cursos.query.all()
     return jsonify(cursos)
 
+# Get Curso
+@app.route('/cursos/<id>', methods=['GET'])
+def get_curso(id):
+    curso = Cursos.query.get(id)
+    return jsonify(curso)
+
+
+# Crear Curso
+
+@api.route("/cursos", methods=["POST"])
+def crear_curso():
+    nombre = request.json.get("nombre")
+    description = request.json.get("description")
+    categoria = request.json.get("categoria")
+    url = request.json.get("url")
+    url_portada = request.json.get("url_portada")
+    precio = request.json.get("precio")
+    duracion = request.json.get("duracion")
+    created_at = request.json.get("created_at")
+    user_id = request.json.get("user_id")
+
+    nuevo_curso = Cursos(nombre=nombre, description=description, categoria=categoria, url=url, url_portada=url_portada, precio=precio, duracion=duracion, created_at=created_at, user_id = user_id)
+    
+    db.session.add(nuevo_curso)
+    db.session.commit()
+
+    return jsonify({"success": "Su curso ha sido creado en la plataforma, "}), 200
+
+# Editar Curso
+
+@api.route("/cursos/<id>", methods=["PUT"])
+def editar_curso(id):
+    curso = Cursos.query.get(id)
+
+    nombre = request.json.get("nombre")
+    description = request.json.get("description")
+    categoria = request.json.get("categoria")
+    url = request.json.get("url")
+    url_portada = request.json.get("url_portada")
+    precio = request.json.get("precio")
+    duracion = request.json.get("duracion")
+
+    curso.nombre = nombre
+    curso.description = description
+    curso.categoria = categoria
+    curso.url = url
+    curso.url_portada = url_portada
+    curso.precio = precio
+    curso.duracion = duracion
+    
+    db.session.commit()
+
+    return jsonify({"success": "Su curso ha sido editado en la plataforma, "}), 200
+
+# Eliminar Curso
+
+@app.route('/cursos/<id>', methods=['DELETE'])
+def eliminar_curso(id):
+    curso = Cursos.query.get(id)
+
+    db.session.delete(curso)
+    db.session.commit()
+
+    return jsonify(curso)
+
+
 @api.route("/usuarios", methods=["GET"])
-def mis_cursos():
+def usuarios():
     
     return jsonify({"msg": "Bad username or password"})

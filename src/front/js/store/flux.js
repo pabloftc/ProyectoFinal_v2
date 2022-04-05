@@ -1,21 +1,100 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			usuarios: null,
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			cursos: null,
+			
 		},
 		actions: {
+			getCursos: async () => {
+				const opts = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					}};
+					try {
+						const resp = await fetch(
+							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+							opts
+						);
+						if (resp.status !== 200) {
+							alert("there has been an error");
+							return false;
+						}
+		
+						const data = await resp.json();
+						console.log("this came from the backend", data);
+						return true;
+						} catch (error) {
+						console.log("there an error while Loading the Courses", error);
+						}
+
+	
+					
+			},
+			crearCurso:	async (nombre, categoria, descripcion, precio, duracion, URL, URLPortada) => {
+				const opts = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					"nombre": nombre,
+					"categoria": categoria,
+					"descripcion": descripcion,
+					"precio": precio,
+					"duracion": duracion,
+					"URL": URL,
+					"URLPortada": URLPortada
+
+				}),
+				};
+				try {
+				const resp = await fetch(
+					"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+					opts
+				);
+				if (resp.status !== 200) {
+					alert("there has been an error");
+					return false;
+				}
+
+				const data = await resp.json();
+				console.log("this came from the backend", data);
+				alert("Curso creado con exito");
+				return true;
+				} catch (error) {
+				console.log("there an error while Creating the Course", error);
+				}
+			},
+			borrarCurso: async (id) => {const opts = {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+				  "id": id
+	  
+				}),
+			  };
+			  try {
+				const resp = await fetch(
+				  "https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+				  opts
+				);
+				if (resp.status !== 200) {
+				  alert("there has been an error");
+				  return false;
+				}
+				alert("Curso Eliminado con exito");
+						return true;	
+					}
+					catch (error) {
+					console.log("there an error while Creating the Course", error);
+				}
+				},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
