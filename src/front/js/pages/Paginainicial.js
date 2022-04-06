@@ -69,7 +69,7 @@ const Paginainicial = () => {
           </Col>
         ))}
       </Row>
-      <Login />
+      {/* <Login /> */}
     </>
   );
 };
