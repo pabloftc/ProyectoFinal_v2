@@ -14,7 +14,7 @@ import Login from "./pages/login";
 import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
-import { Register } from "./component/Register";
+import { Register } from "./component/register";
 
 //create your first component
 const Layout = () => {
@@ -31,12 +31,6 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
-            {/* <Route exact path="/demo">
-              <Demo />
-            </Route> */}
-            {/* <Route exact path="/paginainicial">
-              <PaginaInicial />
-            </Route> */}
             <Route exact path="/register">
               <Register />
             </Route>

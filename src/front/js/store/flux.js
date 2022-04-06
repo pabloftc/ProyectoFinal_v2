@@ -8,42 +8,120 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       // Use getActions to call a function within a fuction
+      login: async (email, password) => {
+				const user = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password,
+					}),
+				};
+				try {
+					const res = await fetch(
+						process.env.BACKEND_URL + "/api/login",
+						user
+					);
+					if (res.status !== 200) {
+						throw new Error("Error", Error);
+					}
+					const data = await res.json();
+					console.log("Mensaje desde Backend", data);
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token });
+					return data;
+				} catch (error) {
+					console.log(`Nuevo error en el login: ${error}`);
+				}
+			},
+
+			//para registrarse
+			register: async (username, email, password) => {
+				const user = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						username: username,
+						email: email,
+						password: password,
+					}),
+				};
+				try {
+					const res = await fetch(
+						process.env.BACKEND_URL + "/api/register",
+						user
+					);
+					if (res.status != 200) {
+						throw new Error("Error", Error);
+					}
+					const data = await res.json();
+					console.log("Mensaje desde Backend", data);
+					setStore({ data: data });
+					return data;
+				} catch (error) {
+					console.log(`Nuevo error en el usuario: ${error}`);
+				}
+			},
+
+			//para sincronizar sesión
+			loginToken: () => {
+				const token = sessionStorage.getItem("token");
+				console.log("Sincronización acoplada con token");
+				if (token && token != undefined && token != "")
+					setStore({ token: token });
+				console.log(token)
+			},
+
+			//para cerrar sesión
+			logout: () => {
+				sessionStorage.removeItem("token");
+				console.log("Sesión cerrada");
+				setStore({ token: null });
+			},
+
+      
       getYoutubePlaylist: () => {
         const youTubeSearch = "https://www.googleapis.com/youtube/v3/playlists";
         const res = fetch(
           `${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=9&key=${process.env.YOUTUBE_API_KEY}`
-        )
+          )
           .then((res) => res.json())
           .then((data) => {
             setStore({ playlists: data.items });
           });
-      },
-
-      getCourses: (curso) => {
-        fetch(
-          process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            setStore({ cursos: data });
-          });
-      },
-
-      courseToStore: (id) => {
-        fetch(process.env.BACKEND_URL + `/api/detalle_curso/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setStore({ curso_actual: data})
-        })
-      },
-
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
+        },
+        
+        getCourses: (curso) => {
+          fetch(
+            process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+            )
+            .then((response) => response.json())
+            .then((data) => {
+              setStore({ cursos: data });
+            });
+          },
+          
+          courseToStore: (id) => {
+            fetch(process.env.BACKEND_URL + `/api/detalle_curso/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+              setStore({ curso_actual: data})
+            })
+          },
+          
+          // Hasta aquí es el código Sayan
+          
+          exampleFunction: () => {
+            getActions().changeColor(0, "green");
+          },
 
       getMessage: () => {
         // fetching data from the backend
