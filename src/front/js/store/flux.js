@@ -1,19 +1,44 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       playlists: [],
+      cursos: [],
+      curso_actual: {}
     },
     actions: {
       // Use getActions to call a function within a fuction
       getYoutubePlaylist: () => {
-        const youTubeSearch =
-          "https://www.googleapis.com/youtube/v3/playlists";
+        const youTubeSearch = "https://www.googleapis.com/youtube/v3/playlists";
         const res = fetch(
-          `${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=25&key=${process.env.YOUTUBE_API_KEY}`)
+          `${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=9&key=${process.env.YOUTUBE_API_KEY}`
+        )
           .then((res) => res.json())
           .then((data) => {
-            setStore({playlists: data.items})
+            setStore({ playlists: data.items });
           });
+      },
+
+      getCourses: (curso) => {
+        fetch(
+          process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setStore({ cursos: data });
+          });
+      },
+
+      courseToStore: (id) => {
+        fetch(process.env.BACKEND_URL + `/api/detalle_curso/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setStore({ curso_actual: data})
+        })
       },
 
       exampleFunction: () => {

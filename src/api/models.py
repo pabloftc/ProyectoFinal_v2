@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+from sqlalchemy import Table, Column, ForeignKey, Integer, String, DateTime
 
 db = SQLAlchemy()
 
@@ -17,4 +19,19 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             # do not serialize the password, its a security breach
+        }
+
+class Cursos(db.Model):
+    # _tablename_='cursos'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(800), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.now())
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "created_at": self.created_at,
         }

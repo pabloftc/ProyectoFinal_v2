@@ -24,16 +24,16 @@ export const Home = () => {
             Ven y danos tu dinero por ver videos de YouTube que podrías ver
             gratis
           </p>
-          <Button variant="primary">
-            <Link to={`/Register`} className="btn-signup">
+          <Link to={`/Register`}>
+            <Button variant="primary" size="lg">
               Sign up
-            </Link>
-          </Button>{" "}
-          <Button variant="outline-primary">
-            <Link to={`/Login`} className="btn-login">
+            </Button>
+          </Link>{" "}
+          <Link to={`/Login`}>
+            <Button variant="outline-primary" size="lg">
               Login
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </Col>
         <Col>
           <Image fluid src={Hero} />

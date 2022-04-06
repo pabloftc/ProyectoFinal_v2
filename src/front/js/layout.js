@@ -10,7 +10,8 @@ import injectContext from "./store/appContext";
 import { Navbars } from "./component/navbars";
 import { Footer } from "./component/footer";
 import Login from "./pages/login";
-import PaginaInicial from "./pages/paginaInicial";
+// import PaginaInicial from "./pages/paginaInicial";
+import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/Register";
@@ -30,12 +31,12 @@ const Layout = () => {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/demo">
+            {/* <Route exact path="/demo">
               <Demo />
-            </Route>
-            <Route exact path="/paginainicial">
+            </Route> */}
+            {/* <Route exact path="/paginainicial">
               <PaginaInicial />
-            </Route>
+            </Route> */}
             <Route exact path="/register">
               <Register />
             </Route>
@@ -47,6 +48,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/usuarios">
               <Usuarios />
+            </Route>
+            <Route exact path="/courseDetail/:id">
+              <CourseDetail />
             </Route>
             <Route exact path="/single/:theid">
               <Single />
