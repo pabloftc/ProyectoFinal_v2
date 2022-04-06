@@ -11,6 +11,8 @@ import { LogoutButton } from "./logoutButton";
 
 
  export const Navbars = () => {
+   const token = sessionStorage.getItem("token");
+  //  console.log('TOKEN: ', token)
 	return (
 		<>
 		<Navbar bg="light" expand="lg">
@@ -33,13 +35,14 @@ import { LogoutButton } from "./logoutButton";
       
       </Nav>
      
-      <Link to="/login">
-      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In</Button>
-      </Link>
+     { token == null ? <Link to="/login">
+      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
+      </Button> 
+      </Link> :<></> }
       <Link to="/signup"> 
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link>
-      <LogoutButton />
+     { token == null ? <></> : <LogoutButton /> }
     </Navbar.Collapse>
   </Container>
 </Navbar>

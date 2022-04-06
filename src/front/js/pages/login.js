@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom"; 
 // import SayanImageUrl from "../../img/logo.jpeg";
 
 const Login = () => {
@@ -7,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errormessage, setErrormessage] = useState("");
   console.log(password);
+  let history = useHistory();
   const onSubmitHandler = async () => {
     sessionStorage.setItem("email", email);
     // sessionStorage.setItem("password", password);
@@ -29,7 +31,8 @@ const Login = () => {
         "Su usuario no está registrado en plataforma, o bien se ha equivocado en su contraseña"
       );
     } else {
-      sessionStorage.setItem("token", data.access_token); //Código para enviar a otra vista
+      sessionStorage.setItem("token", data.access_token) 
+      history.push("/miscursos"); //Código para enviar a otra vista
     }
 
     // .then(resp =>  { console.log(resp.json)

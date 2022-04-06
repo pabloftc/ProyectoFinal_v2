@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			token : null,
 			categorias: ["Programación", "Idiomas", "Sobrevivencia", "Cosas varias", "Aprendizaje", "Salud", "Alimentación" ],
 			message: null,
 			demo: [
@@ -17,6 +18,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			//Crear token
+			createToken: () => {
+				
+			},
+			//Eliminar token 
 			//Get para acceder a categorías
 			getCategorias: () => {
 				return (
