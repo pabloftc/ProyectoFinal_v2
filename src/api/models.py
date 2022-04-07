@@ -30,10 +30,10 @@ class User(db.Model):
 
 class Cursos(db.Model):
     # _tablename_='cursos'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(String(800), nullable=False)
-    created_at = Column(DateTime(), default=datetime.now())
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(800), nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.now())
 
     def serialize(self):
         return {
