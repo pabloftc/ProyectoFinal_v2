@@ -30,7 +30,6 @@ const injectContext = (PassedComponent) => {
        **/
       state.actions.getCourses("");
       state.actions.getMessage(); // <---- calling this function from the flux.js actions
-      state.actions.loginToken();
     }, []);
     // state.actions.getYoutubePlaylist();
 

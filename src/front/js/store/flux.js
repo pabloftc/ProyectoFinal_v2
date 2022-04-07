@@ -63,6 +63,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+			//para registrarse
+			register: async (username, email, password) => {
+				console.log('register')
+				const user = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						username: username,
+						email: email,
+						password: password,
+					}),
+				};
+				try {
+					const res = await fetch(
+						process.env.BACKEND_URL + "/api/register",
+						user
+					);
+					const data = await res.json();
+					console.log("Mensaje desde Backend", data);
+					//setStore({ data: data });
+					return res.status;
+				} catch (error) {
+					console.log(`Nuevo error en el usuario: ${error}`);
+				}
+			},
+
       //para sincronizar sesión
       loginToken: () => {
         const token = sessionStorage.getItem("token");
@@ -71,6 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ token: token });
         console.log(token);
       },
+
 
       //para cerrar sesión
       logout: () => {
