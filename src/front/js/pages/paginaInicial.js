@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import Login from "./login.js";
@@ -69,7 +69,6 @@ const PaginaInicial = () => {
               <Card.Body>
                 <Card.Title> {cursoItem.name} </Card.Title>
                 <Card.Text>{cursoItem.description}</Card.Text>
-                {/* <Link to={`/courseDetail/${cursoItem.id}`}> */}
                 <Button
                   variant="primary"
                   size="lg"
@@ -77,7 +76,6 @@ const PaginaInicial = () => {
                 >
                   Detalles
                 </Button>
-                {/* </Link> */}
               </Card.Body>
             </Card>
           </Col>

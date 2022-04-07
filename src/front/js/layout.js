@@ -3,14 +3,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbars } from "./component/navbars";
 import { Footer } from "./component/footer";
 import Login from "./pages/login";
-// import PaginaInicial from "./pages/paginaInicial";
 import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
