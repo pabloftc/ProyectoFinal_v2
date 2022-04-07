@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import Login from "./login.js";
@@ -20,6 +20,13 @@ const PaginaInicial = () => {
     const data = await response.json();
     setCursos(data);
   };
+  
+  let history = useHistory();
+  
+  function handleClick(id) {
+    actions.courseToStore(id);
+    history.push(`/courseDetail/${id}`);
+  }
 
   return (
     <>
@@ -62,11 +69,15 @@ const PaginaInicial = () => {
               <Card.Body>
                 <Card.Title> {cursoItem.name} </Card.Title>
                 <Card.Text>{cursoItem.description}</Card.Text>
-                <Link to={`/courseDetail/${cursoItem.id}`}>
-                <Button variant="primary" size="lg">
+                {/* <Link to={`/courseDetail/${cursoItem.id}`}> */}
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={(id) => handleClick(cursoItem.id)}
+                >
                   Detalles
                 </Button>
-                </Link>
+                {/* </Link> */}
               </Card.Body>
             </Card>
           </Col>
@@ -94,6 +105,6 @@ export default PaginaInicial;
   }, []); */
 
 // function handleClick() {
-  //   let history = useHistory();
-  //   history.push("/courseDetail");
-  // } /* useHistory -- crear "actions" -- quitar <Link> */
+//   let history = useHistory();
+//   history.push("/courseDetail");
+// } /* useHistory -- crear "actions" -- quitar <Link> */
