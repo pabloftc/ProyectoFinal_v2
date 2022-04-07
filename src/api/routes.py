@@ -33,23 +33,29 @@ def login():
 
 @api.route("/detalle_curso", methods=["GET"])
 def detalle_curso():
-    name = request.args.get("name", None)
-    print(name)
+    name = request.args.get("name")
+    if name == None:
+        name = ""
     # detalleCursos = Cursos.query.filter_by(name= name).all()
     detalleCursos = Cursos.query.filter(Cursos.name.ilike("%"+name+"%")).all()
     if len(detalleCursos) == 0:
         return jsonify([]), 200
     else:
-         
         lista = []
         for det in detalleCursos:
             lista.append(det.serialize())
         return jsonify(lista), 200
 
-
 #CREO QUE DEBIESE HACER UN FETCH DESDE EL FRONT-END DE DETALLE CURSO, ME FALTA PONER EL IF, SI EL CURSO ESTÁ IR A VISTA DETALLE SINO MOSTRAR UN MENSAJE.
-        return jsonify({"msg": "Bad username or password"}), 401
+        # return jsonify({"msg": "Bad username or password"}), 401
 
+@api.route("/detalle_curso/<int:id>", methods=["GET"])
+def get_course(id):
+    
+    curso = Cursos.query.get(id)
+    un_curso = curso.serialize()
+
+    return jsonify(un_curso), 200
 
 @api.route("/register", methods=["POST"])
 def register():
