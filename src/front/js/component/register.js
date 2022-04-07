@@ -73,38 +73,6 @@ export const Register = () => {
         );
     }
 
-
-
-
-
-
-
-    //Otro
-
-
-    //   const checkPassword = () => {
-    //       let pass = password;
-    //       let pass2 = password2;
-    //       let user = username;
-    //      let mail = email;
-    //      let todoHere = (pass != 0 && user != 0 && mail != 0 && pass == pass2);
-    //
-    //      console.log(pass, pass2);
-    //
-    //      if (todoHere) {
-    //         console.log("Están todos los datos ingresados")
-    //          return (
-    //              setTodo(true)
-    //          )
-    //      }
-    //      else {
-    //          console.log("Debes introducir un usuario, un correo y una contraseña")
-    //          setErrormessage(true)
-    //      };
-    // }
-
-
-
     return (
         <Container>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '100vh' }}>
