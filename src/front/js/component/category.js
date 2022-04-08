@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Form } from "react-bootstrap";
+import { Form } from "react-bootstrap"; 
 import {Context} from "../store/appContext";
 
 export const Category = () => {
