@@ -10,13 +10,6 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
 
-
-#def __init__(self, username, email, password, is_active):
-   # self.username = username
-    #self.email = email
-   # self.password = password
-   # self.is_active = is_active
-
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -41,4 +34,24 @@ class Cursos(db.Model):
             "name": self.name,
             "description": self.description,
             "created_at": self.created_at,
+        }
+
+
+# _tablename_='compra'
+class Compra(db.Model):
+    # _tablename_='cursos'
+    id = db.Column(Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    total_price = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.now())
+    metodopago = db.Column(db.String(50))
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "total_price": self.total_price,
+            "created_at": self.created_at,
+            "metodopago": self.metodopago
         }
