@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import {Context} from "../store/appContext";
 import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstrap';
 
 import SayanImageUrl from "../../img/logo.jpeg";
@@ -8,10 +9,18 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import '../../styles/home.css';
 import { LogoutButton } from "./logoutButton";
+// import state from "sweetalert/typings/modules/state";
 
 
  export const Navbars = () => {
-   const token = sessionStorage.getItem("token");
+   const { store, actions } = useContext(Context);
+   const isLoggedIn = store.isLoggedIn
+  //  const token = sessionStorage.getItem("token");
+  //Manejo de estado para el renderizado del botón login y logout 
+  //  const [isLoggedIn, setIsLoggedIn] = useState(False);
+  //  useEffect(() => {
+  //    state.actions.getIsLoggedIn();
+  //  }, []);
   //  console.log('TOKEN: ', token)
 	return (
 		<>
@@ -34,15 +43,15 @@ import { LogoutButton } from "./logoutButton";
         <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
       
       </Nav>
-     
-     { token == null ? <Link to="/login">
+    {/* ! significa contrario al valor del booleano  */}
+     { ! isLoggedIn ? <Link to="/login">
       <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
       </Button> 
       </Link> :<></> }
       <Link to="/signup"> 
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link>
-     { token == null ? <></> : <LogoutButton /> }
+     { ! isLoggedIn ? <></> : <LogoutButton /> }
     </Navbar.Collapse>
   </Container>
 </Navbar>

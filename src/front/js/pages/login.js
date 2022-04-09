@@ -1,27 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import SayanImageUrl from "../../img/logo.jpeg";
 
 const Login = () => {
-  //CÓDIGO PASADO A FLUX
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errormessage, setErrormessage] = useState("");
   console.log(password);
   let history = useHistory();
   const { store, actions } = useContext(Context);
+  const isLoggedIn = store.isLoggedIn
+  useEffect (() => {
+    if (isLoggedIn == true) {
+      //Código para enviar a otra vista  
+      history.push("/miscursos");
+    }
+  }, [isLoggedIn]);
   const onSubmitHandler = () => {
     actions.createToken(email, password);
-    const token = sessionStorage.getItem("token");
-    console.log(token)
-    if (token != null) {
-        history.push("/miscursos");
-    } 
-     //Código para enviar a otra vista
-
-  };
+     } 
+    
   // CÓDIGO QUE PASÉ A FLUX, hasta la línea 37
   // const onSubmitHandler = async () => {
   //   sessionStorage.setItem("email", email);

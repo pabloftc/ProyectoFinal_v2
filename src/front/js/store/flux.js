@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token : null,
-			usuarioLogueado : {},
+			isLoggedIn : false,
 			categorias: ["Programación", "Idiomas", "Sobrevivencia", "Cosas varias", "Aprendizaje", "Salud", "Alimentación" ],
 			message: null,
 			demo: [
@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			//Crear token
-			
+
 			createToken: async (email, password) => {
 					sessionStorage.setItem("email", email);
 					// sessionStorage.setItem("password", password);
@@ -44,13 +44,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  );
 					} else {
 					  sessionStorage.setItem("token", data.access_token) 
+					  //reset the global store- Función que cambia el estado de isLoggedIn del store a true
+					  setStore({ isLoggedIn : true });
 					//   history.push("/miscursos"); //Código para enviar a otra vista
 					}
 			}, 
 			//Eliminar token 
+			deleteToken: () => {
+				sessionStorage.clear()
+				setStore({ isLoggedIn: false});
+			},
 
 			//acción que verifica si es que existe un usuario logueado
-
+			getIsLoggedIn: () => {
+				return (
+					getStore().isLoggedIn
+				)
+			},
+	
 			//Get para acceder a categorías
 			getCategorias: () => {
 				return (
