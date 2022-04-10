@@ -14,6 +14,7 @@ import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/register";
 import { Compra } from "./component/compra";
+import { PaymentForm } from "./component/Formulariopago";
 
 //create your first component
 const Layout = () => {
@@ -37,8 +38,11 @@ const Layout = () => {
               <Login />
             </Route>
             <Route exact path="/compra">
-							<Compra />
-						</Route>
+              <Compra />
+            </Route>
+            <Route exact path="/payment-form">
+              <PaymentForm />
+            </Route>
             <Route exact path="/miscursos">
               <MisCursos />
             </Route>
