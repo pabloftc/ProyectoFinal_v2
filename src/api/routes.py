@@ -57,25 +57,76 @@ def register():
     return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
 
 # Crear Usuario
+@api.route("/usuarios", methods=["POST"])
+def crear_user():
+    username = request.json.get("username", None)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    rol = request.json.get("rol", None)
+    is_active = request.json.get("is_active", None)
+    user=User(username=username, email=email, password=password, rol=rol, is_active = is_active)
+    #len es una función que cuenta el largo de un array, y en el código de a continuación dice si el largo del array es mayor a 0 entonces error, porque ya existe un usuario con esos datos.
+    if len(User.query.filter_by(username=username).all()) > 0:
+        return jsonify({"Error": "Ya existe un usuario registrado con este nombre en la plataforma"}), 400
+    else:
+        db.session.add(user)
+        db.session.commit()
+    
+    return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
 
+#Todos los usuarios
+@api.route("/usuarios", methods=["GET"])
+def lista_usuarios():
+    lista_usuarios = User.query.all()
+    todos_los_usuarios = list(map(lambda x: x.serialize(), lista_usuarios))
+    return jsonify(todos_los_usuarios)
+
+#Borrar un Usuario
+@api.route('/usuarios/<int:id>', methods=["DELETE"])
+def borrar_usuario(id):
+    usuario = User.query.get(id)
+
+    db.session.delete(usuario)
+    db.session.commit()
+
+    return jsonify({"msg": "Usuario Eliminado"})
+
+# Editar Usuario
+@api.route("/usuarios/<int:id>", methods=["PUT"])
+def editar_user(id):
+    user = User.query.get(id)
+    body=request.get_json()
+
+    user.username=body["username"]
+    user.email=body["email"]
+    user.password=body["password"]
+    user.rol=body["rol"]
+    user.is_active=body["is_active"]
+
+    db.session.commit()
+    
+    return jsonify({"success": "Su usuario ha sido actualizado en la plataforma"}), 201
 # Get Todos los cursos
-@app.route('/cursos', methods=['GET'])
+@api.route('/cursos', methods=['GET'])
 def todos_los_cursos():
-    cursos = Cursos.query.all()
-    return jsonify(cursos)
+    lista_cursos = Cursos.query.all()
+    todos_los_cursos = list(map(lambda x: x.serialize(), lista_cursos))
+    return jsonify(todos_los_cursos)
 
-# Get Curso
-@app.route('/cursos/<id>', methods=['GET'])
+# Get Curso por id
+@api.route('/cursos/<id>', methods=['GET'])
 def get_curso(id):
     curso = Cursos.query.get(id)
-    return jsonify(curso)
+    el_curso = curso.serialize()
+    return jsonify(el_curso)
 
 
 # Crear Curso
 
 @api.route("/cursos", methods=["POST"])
 def crear_curso():
-    nombre = request.json.get("nombre")
+    id = request.json.get("id")
+    name = request.json.get("name")
     description = request.json.get("description")
     categoria = request.json.get("categoria")
     url = request.json.get("url")
@@ -85,7 +136,7 @@ def crear_curso():
     created_at = request.json.get("created_at")
     user_id = request.json.get("user_id")
 
-    nuevo_curso = Cursos(nombre=nombre, description=description, categoria=categoria, url=url, url_portada=url_portada, precio=precio, duracion=duracion, created_at=created_at, user_id = user_id)
+    nuevo_curso = Cursos(id=id, name=name, description=description, categoria=categoria, url=url, url_portada=url_portada, precio=precio, duracion=duracion, created_at=created_at, user_id = user_id)
     
     db.session.add(nuevo_curso)
     db.session.commit()
@@ -98,7 +149,7 @@ def crear_curso():
 def editar_curso(id):
     curso = Cursos.query.get(id)
 
-    nombre = request.json.get("nombre")
+    name = request.json.get("name")
     description = request.json.get("description")
     categoria = request.json.get("categoria")
     url = request.json.get("url")
@@ -106,7 +157,7 @@ def editar_curso(id):
     precio = request.json.get("precio")
     duracion = request.json.get("duracion")
 
-    curso.nombre = nombre
+    curso.name = name
     curso.description = description
     curso.categoria = categoria
     curso.url = url
@@ -120,7 +171,7 @@ def editar_curso(id):
 
 # Eliminar Curso
 
-@app.route('/cursos/<id>', methods=['DELETE'])
+@api.route('/cursos/<id>', methods=['DELETE'])
 def eliminar_curso(id):
     curso = Cursos.query.get(id)
 
@@ -129,8 +180,3 @@ def eliminar_curso(id):
 
     return jsonify(curso)
 
-
-@api.route("/usuarios", methods=["GET"])
-def usuarios():
-    
-    return jsonify({"msg": "Bad username or password"})

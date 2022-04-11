@@ -1,13 +1,99 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			usuarios: null,
+			lista_usuarios: [],
+			categorias: ["Programación", "Idiomas", "Sobrevivencia", "Cosas varias", "Aprendizaje", "Salud", "Alimentación" ],
 			message: null,
 			cursos: null,
+			token: null,
+			rol: "Admin",
 			
 		},
 		actions: {
-			getCursos: async () => {
+				//Usuarios
+
+			crearUser: 	async (username, password, rol, email) => {
+				const opts = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					"username": username,
+					"email": email,
+					"password": password,
+					"rol": rol,
+					"is_active" : false
+				
+				}),
+				};
+				try {
+				const resp = await fetch(
+					"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios" + id,
+					opts
+				);
+				if (resp.status < 200 || resp.status > 299) {
+					alert("there has been an error");
+					return false;
+				}
+
+				const data = await resp.json();
+				console.log("this came from the backend", data);
+				alert("Usuario creado con exito");
+				return true;
+				} catch (error) {
+				console.log("theres an error while Creating the User", error);
+				}},
+
+			borrarUsuario:  (e) => {
+				const opts = {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					}};
+				fetch ("https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios/" + e.id,opts)
+				.then(response => response.text())
+				.then(result => {
+					console.log(result);
+					
+				})
+				.catch(error => console.log("error", error));
+			},
+			actualizarUser: async (id, username, password, rol, email) => {
+				const opts = {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					"id": id,
+					"username": username,
+					"email": email,
+					"password": password,
+					"rol": rol,
+					"is_active" : false
+				
+				}),
+				};
+				try {
+				const resp = await fetch(
+					"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios/" + id,
+					opts
+				);
+				if (resp.status < 200 || resp.status > 299) {
+					alert("there has been an error");
+					return false;
+				}
+
+				const data = await resp.json();
+				console.log("this came from the backend", data);
+				alert("Usuario actualizado con exito");
+				return true;
+				} catch (error) {
+				console.log("theres an error while Updating the User", error);
+				}},
+			getusuarios: async () => {
+				const store = getStore()
 				const opts = {
 					method: "GET",
 					headers: {
@@ -15,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}};
 					try {
 						const resp = await fetch(
-							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios",
 							opts
 						);
 						if (resp.status !== 200) {
@@ -25,11 +111,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 						const data = await resp.json();
 						console.log("this came from the backend", data);
+						setStore({ lista_usuarios: data });
 						return true;
 						} catch (error) {
 						console.log("there an error while Loading the Courses", error);
 						}
+			},
+			getCursos: async () => {
 
+				const opts = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					}};
+					try {
+						const resp = await fetch(
+							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/api/cursos",
+							opts
+						);
+						if (resp.status !== 200) {
+							alert("there has been an error");
+							return false;
+						}
+		
+						const data = await resp.json();
+						console.log("this came from the backend", data);
+						setStore({ cursos: data });
+						return true;
+						} catch (error) {
+						console.log("there an error while Loading the Courses", error);
+						}
+				
 	
 					
 			},
@@ -40,9 +152,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					"nombre": nombre,
+					"name": nombre,
 					"categoria": categoria,
-					"descripcion": descripcion,
+					"description": descripcion,
 					"precio": precio,
 					"duracion": duracion,
 					"URL": URL,
@@ -52,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				try {
 				const resp = await fetch(
-					"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+					"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/api/cursos",
 					opts
 				);
 				if (resp.status !== 200) {
@@ -65,7 +177,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				alert("Curso creado con exito");
 				return true;
 				} catch (error) {
-				console.log("there an error while Creating the Course", error);
+				console.log("theres an error while Creating the Course", error);
 				}
 			},
 			borrarCurso: async (id) => {const opts = {

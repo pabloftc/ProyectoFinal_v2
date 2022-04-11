@@ -8,6 +8,7 @@ import ModalCursos from "../component/modalCursos";
 export const MisCursos = () => {
     const [modalShow, setModalShow] = useState(false);
 
+    
 return (
         <>
         <Container>

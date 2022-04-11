@@ -78,17 +78,13 @@ const ModalCursos = (props) => {
                     value={categoria}
                     onChange={(e) => setCategoria(e.target.value)}
                     >
-                        <option>Seleccionar</option>
-                        <option>Programacion</option>
-                        <option>Ciencias Naturales</option>
-                        <option>Idioma</option>
-                        <option>PSU</option>
-                        <option>Matematica</option>
-                        <option>Fisica</option>
-                        <option>Teatro</option>
-                        <option>Quimica</option>
-                        <option>Biologia</option>
-                        <option>Filosofia</option>
+                      {store.categorias.map((e, id) => {
+                        return (
+                          <option key={id}>{e}</option>
+                        )
+                      })
+
+                      }
                         
                     </Form.Select>
                     </Form.Group>
@@ -104,7 +100,7 @@ const ModalCursos = (props) => {
         </Modal.Body>
         <Modal.Footer>
                 <Button variant="primary" type="submit" onClick={crearCurso}>
-                    Guardar
+                    Crear Curso
                 </Button>{'  '}
                 
         </Modal.Footer>
