@@ -106,6 +106,7 @@ def editar_user(id):
     db.session.commit()
     
     return jsonify({"success": "Su usuario ha sido actualizado en la plataforma"}), 201
+
 # Get Todos los cursos
 @api.route('/cursos', methods=['GET'])
 def todos_los_cursos():
@@ -113,13 +114,12 @@ def todos_los_cursos():
     todos_los_cursos = list(map(lambda x: x.serialize(), lista_cursos))
     return jsonify(todos_los_cursos)
 
-# Get Curso por id
-@api.route('/cursos/<id>', methods=['GET'])
-def get_curso(id):
-    curso = Cursos.query.get(id)
-    el_curso = curso.serialize()
-    return jsonify(el_curso)
-
+# Get Cursos por id user
+@api.route('/miscursos/<int:user_id>', methods=['GET'])
+def get_cursos_user(user_id):
+    curso = Cursos.query.filter_by(user_id = user_id)
+    los_cursos = list(map(lambda x: x.serialize(), curso))
+    return jsonify(los_cursos)
 
 # Crear Curso
 
@@ -171,9 +171,9 @@ def editar_curso(id):
 
 # Eliminar Curso
 
-@api.route('/cursos/<id>', methods=['DELETE'])
-def eliminar_curso(id):
-    curso = Cursos.query.get(id)
+@api.route('/cursos/<int:id>/<int:user_id>', methods=['DELETE'])
+def eliminar_curso(id, user_id):
+    curso = Cursos.query.filter_by(id=id, user_id = user_id)
 
     db.session.delete(curso)
     db.session.commit()

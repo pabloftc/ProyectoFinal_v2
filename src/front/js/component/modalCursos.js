@@ -12,10 +12,12 @@ const ModalCursos = (props) => {
   const [duracion ,setDuracion] = useState();
   const [URL ,setURL] = useState();
   const [URLPortada ,setURLPortada] = useState();
+  const [userId ,setUserId] = useState();
   const [modalShow, setModalShow] = useState(false);
   
   const crearCurso = () => {
-    actions.crearCurso(nombre, categoria, descripcion, precio, duracion, URL, URLPortada);
+    setUserId(store.user_id)
+    actions.crearCurso(nombre, categoria, descripcion, precio, duracion, URL, URLPortada,userId);
   };
 
     return(

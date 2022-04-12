@@ -1,14 +1,23 @@
+//import 'dotenv'  // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+
+//dotenv.config();
+console.log(process.env.ADMIN_EMAIL)
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
 			lista_usuarios: [],
 			categorias: ["Programación", "Idiomas", "Sobrevivencia", "Cosas varias", "Aprendizaje", "Salud", "Alimentación" ],
 			message: null,
-			cursos: null,
+			cursos: [],
 			token: null,
 			rol: "Admin",
+			user_id: "3",
+			lista_mis_cursos:[],
+			usuario: null,
+			}
 			
-		},
+		,
 		actions: {
 				//Usuarios
 
@@ -50,8 +59,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "DELETE",
 					headers: {
 						"Content-Type": "application/json",
-					}};
-				fetch ("https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios/" + e.id,opts)
+					},
+					body: JSON.stringify({
+						"id": e.id,
+					
+					})};
+				fetch ("https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios/" + id,opts)
 				.then(response => response.text())
 				.then(result => {
 					console.log(result);
@@ -92,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 				console.log("theres an error while Updating the User", error);
 				}},
-			getusuarios: async () => {
+			getUsuarios: async () => {
 				const store = getStore()
 				const opts = {
 					method: "GET",
@@ -101,7 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}};
 					try {
 						const resp = await fetch(
-							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us39.gitpod.io/api/usuarios",
+							"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/api/usuarios",
 							opts
 						);
 						if (resp.status !== 200) {
@@ -145,7 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 					
 			},
-			crearCurso:	async (nombre, categoria, descripcion, precio, duracion, URL, URLPortada) => {
+			crearCurso:	async (nombre, categoria, descripcion, precio, duracion, URL, URLPortada, userId) => {
 				const opts = {
 				method: "POST",
 				headers: {
@@ -158,7 +171,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"precio": precio,
 					"duracion": duracion,
 					"URL": URL,
-					"URLPortada": URLPortada
+					"URLPortada": URLPortada,
+					"user_id" : userId
 
 				}),
 				};
@@ -180,19 +194,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("theres an error while Creating the Course", error);
 				}
 			},
-			borrarCurso: async (id) => {const opts = {
-				method: "POST",
+			borrarCurso: async (id, user_id) => {const opts = {
+				method: "DELETE",
 				headers: {
 				  "Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-				  "id": id
+				  "id": id,
+				  "user_id": user_id
 	  
 				}),
 			  };
 			  try {
 				const resp = await fetch(
-				  "https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/?vscodeBrowserReqId=1649139294682/api/cursos",
+				  "https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/api/cursos/" + id +"/"+ user_id,
 				  opts
 				);
 				if (resp.status !== 200) {
@@ -207,6 +222,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				},
 
+				// MisCursos por usuario
+				getCursosUser: async (user_id) => {
+
+					const opts = {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						}};
+						try {
+							const resp = await fetch(
+								"https://3001-4geeksacademy-reactflask-hxq1jnfs26u.ws-us38.gitpod.io/api/miscursos/" + user_id,
+								opts
+							);
+							if (resp.status !== 200) {
+								alert("there has been an error");
+								return false;
+							}
+			
+							const data = await resp.json();
+							console.log("this came from the backend", data);
+							setStore({ lista_mis_cursos: data });
+							return true;
+							} catch (error) {
+							console.log("there an error while Loading the Courses", error);
+							}
+					
+		
+						
+				},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

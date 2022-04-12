@@ -22,7 +22,7 @@ export const ListaDeUsuario = () => {
     }
      useEffect(() => {
 			
-         actions.getusuarios();
+         actions.getUsuarios();
      }, []);
 
     return (
@@ -56,7 +56,7 @@ export const ListaDeUsuario = () => {
                                         <td>
                                         <Button variant="info" onClick={(e) => {modalData(e); console.log(e)}}>Editar</Button> 
                                         {'  '}
-                                        <Button variant="danger" onClick={() => {actions.borrarUsuario(e);}} href="/usuarios"> Eliminar</Button>
+                                        <Button variant="danger" onClick={(e) => {actions.borrarUsuario(e.id);}} href="/usuarios"> Eliminar</Button>
                                         </td>
                                     
                                 </tr>

@@ -6,30 +6,28 @@ import ModalCursos from "../component/modalCursos";
 import { Context } from "../store/appContext";
 
 
-export const MisCursos = () => {
+const Cursos = () => {
     const [modalShow, setModalShow] = useState(false);
     const {store, actions} = useContext(Context);
-
+    const user = store.rol;
     useEffect(() => {
         // Update the document title using the browser API
-        actions.getCursosUser(store.user_id);
+        actions.getCursos();
       }, []);
-    
-      const borrarCursoUser = () => {
-          actions.borrarCurso();
-      }
-    console.log(store.lista_mis_cursos)
-
+      console.log(store.cursos)
 return (
-        <>
+    <>
         <Container>
-             <Button variant="success" onClick={() => setModalShow(true) }>Crea un Nuevo Curso</Button>
+
+        { user == "Admin" ? (<>
+             {/* <Button variant="success" onClick={() => setModalShow(true) }>Crea un Nuevo Curso</Button> */}
              <br />
 
 
              <Table>
                  <thead>
                      <tr>
+                         <th>Profesor Idi</th>
                          <th>Curso</th>
                          <th>Categoria</th>
                          <th>Descripcion</th>
@@ -42,9 +40,10 @@ return (
                      </tr>
                  </thead>
                  <tbody>
-                 {store.lista_mis_cursos.map((e, id) => {
+                 {store.cursos.map((e, id) => {
                             return(
                                     <tr key={id}>
+                                            <td>{e.user_id}</td>
                                             <td>{e.name}</td>
                                             <td>{e.categoria}</td>
                                             <td>{e.description}</td>
@@ -56,18 +55,19 @@ return (
                                             <td><a href={e.url} target="_blank">Video</a></td>
                                             <td>{e.created_at}</td>
                                             <td><Button variant="info" onClick={() => setModalShow(true) }>Editar</Button> {'  '}
-                                            <Button variant="danger" onClick={() => borrarCursoUser() }> Eliminar</Button></td>
+                                            <Button variant="danger" onClick ={()=> {}}> Eliminar</Button></td>
 
                                     </tr>
                             )}
                     )}
                  </tbody>
              </Table>
-
-             <ModalCursos show={modalShow} onHide= {() => setModalShow(false)}/>
+             </>
+            ): (<h1>You are not an Allowed Here, get out!</h1>)}            
         </Container>
-        
-        </>
-        
+            
+    </>
 )
 }
+
+export default Cursos
