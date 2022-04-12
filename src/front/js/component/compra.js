@@ -3,18 +3,42 @@ import { Container, Image } from "react-bootstrap";
 import logo2 from '../../img/logo2.png';
 import "../../styles/compra.css";
 import { Carritodecompra } from './carritodecompra';
-
-
+import { useHistory, Link } from "react-router-dom";
+import { Context } from '../store/appContext';
+import swal from 'sweetalert';
 
 
 export const Compra = () => {
-    //const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
+    const [carrito, setCarrito] = useState([
+        {
+            name: `${store.curso_actual.name}`,
+            description: `${store.curso_actual.description}`,
+            categoria: `${store.curso_actual.categoria}`,
+            precio: `${store.curso_actual.precio}`
+        }
+    ]);
+
+
     const [errormessage, setErrormessage] = useState(false);
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [pago, setPago] = useState("");
+    const history = useHistory();
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (firstname != 0 && lastname != 0 && email != 0 && pago != 0) {
+            history.push('/payment-form')
+        } else {
+            swal('¡Algo salió mal!', 'Debes rellenar todos los datos', 'error')
+        }
+    }
+
+    const saveData = () => {
+
+    }
 
     return (
         <Container>
@@ -23,10 +47,10 @@ export const Compra = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-1">
-                            1 of 3
+
                         </div>
                         <div className="col">
-                            <form>
+                            <form onSubmit={saveData}>
                                 <div className="container">
                                     <div className="row">
                                         <div className="col">
@@ -143,7 +167,9 @@ export const Compra = () => {
                                                         />
                                                         <label htmlFor="paypal" className="pagar">Paypal</label>
                                                     </div>
-                                                    <button type="submit" className="btn btn-primary mb-3">Confirmar la compra</button>
+
+                                                    <button type="submit" className="btn btn-primary mb-3" onClick={(e) => onSubmit(e)}>Confirmar la compra</button>
+
                                                 </div>
                                             </Container>
                                         </div>
@@ -155,10 +181,10 @@ export const Compra = () => {
                             </form>
                         </div>
                         <div className="col-1">
-                            3 of 3
+
                         </div>
                     </div>
-                </div>
+                </div >
 
 
 

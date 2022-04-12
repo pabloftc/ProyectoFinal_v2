@@ -7,3 +7,42 @@
   border-left: 1px solid #ebebf3;
   padding-left: 10%;
 }
+
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+#card-form {
+  border-radius: 10px;
+  box-shadow: 0 0 10px #dadada;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  margin-left: 10%;
+
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+.boton-pago {
+  margin-top: 20px;
+  background-color: rgb(44, 109, 44);
+  color: white;
+  padding: 10px;
+  border-radius: 3%;
+  width: 100%;
+  font-size: large;
+  box-shadow: 0 0 10px #dadada;
+  font-weight: bold;
+}
+
+.boton-pago:hover {
+  background-color: green;
+}
+
+#superdiv {
+  display: flex;
+}

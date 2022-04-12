@@ -1,0 +1,70 @@
+.superdiv {
+  align-items: center;
+  padding-left: 25%;
+  padding-top: 10%;
+  margin-bottom: 20%;
+}
+
+#botonfallido {
+  align-self: center;
+  padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  font-size: large;
+  margin-top: 5%;
+  margin-left: 25%;
+  border-radius: 10px;
+  position: relative;
+}
+
+.cuadrocorrecto {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: 30%;
+  margin-top: 10%;
+  margin-right: 30%;
+  margin-bottom: 20%;
+}
+
+.h1 {
+  align-items: center;
+  align-content: center;
+  position: relative;
+}
+
+.form-control {
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  font-size: large;
+}
+
+.label {
+  margin-top: 10px;
+}
+
+#botoncorrecto {
+  align-self: center;
+  padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  font-size: large;
+  margin-top: 5%;
+  margin-left: 40%;
+  margin-right: 30%;
+  border-radius: 10px;
+  position: relative;
+}
+
+#botonvolver {
+  padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  font-size: larger;
+  margin-top: 5%;
+  border-radius: 10px;
+  width: 100%;
+}

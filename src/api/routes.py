@@ -67,6 +67,7 @@ def register():
         username = request.json.get("username", None)
         email = request.json.get("email", None)
         password = request.json.get("password", None)
+        #acá se debería cambiar el rol a "user" en el paréntesis
         rol = request.json.get("rol", None)
         #is_active = request.json.get("is_active", None)
 
@@ -78,7 +79,7 @@ def register():
                 response['mensaje'] = 'Este correo ya está en uso'
                 response['status'] = 500
             else:
-                user=User(username=username, email=email, password=password, rol=rol, is_active=True)
+                user=User(username=username, email=email, password=password, rol="user", is_active=True)
                 db.session.add(user)
                 db.session.commit()
                 response['mensaje'] = 'Perfecto'
@@ -99,7 +100,6 @@ def compra():
     except Exception as e:
         print(f"Error: {e}")
         return "Error", 500
-
 
 
 #obtener datos del proceso de compra

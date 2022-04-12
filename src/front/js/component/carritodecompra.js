@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
+
 import "../../styles/carritodecompra.css";
 
 export const Carritodecompra = () => {
+    const { store, actions } = useContext(Context);
     const [carrito, setCarrito] = useState([
+        //{
+        //    nombre: "Excel básico 1",
+        //    description: "Curso para aprender Excel",
+        //    precio: 15000
+        //},
         {
-            nombre: "Excel básico 1",
-            description: "Curso para aprender Excel",
-            precio: 15000
-        },
-        {
-            nombre: "Javascript 2",
-            description: "Curso para aprender Javascript",
-            precio: 30000
-        },
-        {
-            nombre: "Artes plásticas III",
-            description: "Curso para aprender a realizar proyectos de artes",
-            precio: 10000
+            name: `${store.curso_actual.name}`,
+            description: `${store.curso_actual.description}`,
+            //categoria: `${store.curso_actual.categoria}`,
+            precio: `${store.curso_actual.precio}`
         }
     ]);
 
@@ -27,9 +26,12 @@ export const Carritodecompra = () => {
                     return (
                         <>
                             <div className="producto-carrito" key={index}>
-                                <p className="nombre-producto">{carrito.nombre}</p>
+                                <p className="nombre-producto">{carrito.name}</p>
                                 <p>{carrito.description}</p>
                                 <p className="precio">{carrito.precio} CLP</p>
+                            </div>
+                            <div>
+                                <button className="btn btn-danger">Eliminar del carrito</button>
                             </div>
                             <div>
                                 <p className="precio">Total (CLP) { }</p>
