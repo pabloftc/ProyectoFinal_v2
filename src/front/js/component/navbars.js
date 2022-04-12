@@ -48,9 +48,9 @@ import { LogoutButton } from "./logoutButton";
       <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
       </Button> 
       </Link> :<></> }
-      <Link to="/signup"> 
+      {! isLoggedIn ? <Link to="/signup"> 
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
-      </Link>
+      </Link> : <></> }
      { ! isLoggedIn ? <></> : <LogoutButton /> }
     </Navbar.Collapse>
   </Container>

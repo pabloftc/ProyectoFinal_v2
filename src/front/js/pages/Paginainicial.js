@@ -39,7 +39,7 @@ const Paginainicial = () => {
       >
         <h1>Cursos o categoría de cursos</h1>{" "}
         <Form className="d-flex" style={{ marginRight: "5px" }}>
-          <FormControl value={curso} onChange={(e) =>{setCurso(e.target.value)}}
+          <FormControl value={curso} onChange={(e) =>{setCurso(e.target.value)}} 
             type="search"
             placeholder="Search . . ."
             className="me"

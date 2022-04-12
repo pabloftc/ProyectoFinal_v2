@@ -7,7 +7,7 @@ export const LogoutButton = () => {
     const {store, actions } = useContext(Context);
     const tokenDestroyer = actions.deleteToken
   return (   
-    <Link to="/Paginainicial"> 
+    <Link to="/"> 
     <Button variant="primary" onClick={tokenDestroyer} style={{marginRight: '5px'}}>Log out</Button>
   </Link>
   );
