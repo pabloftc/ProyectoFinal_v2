@@ -6,6 +6,7 @@ import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstr
 import SayanImageUrl from "../../img/logo.jpeg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 
 import '../../styles/home.css';
 import { LogoutButton } from "./logoutButton";
@@ -52,6 +53,10 @@ import { LogoutButton } from "./logoutButton";
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link> : <></> }
      { ! isLoggedIn ? <></> : <LogoutButton /> }
+        <Link to="/compra">
+             <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
+        </Link>
+         <span className="productosencarrito">0</span>
     </Navbar.Collapse>
   </Container>
 </Navbar>

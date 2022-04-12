@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       playlists: [],
       cursos: [],
       curso_actual: {},
+      pago: {},
 		},
 		actions: {
 			//Crear token
@@ -125,8 +126,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						username: username,
 						email: email,
 						password: password,
+						rol: "user",
+						//is_active: "activo"
 					}),
 				};
+				console.log("hola desde el backend")
 				try {
 					const res = await fetch(
 						process.env.BACKEND_URL + "/api/register",
@@ -141,63 +145,92 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-      //para sincronizar sesión
-      loginToken: () => {
-        const token = sessionStorage.getItem("token");
-        console.log("Sincronización acoplada con token");
-        if (token && token != undefined && token != "")
-          setStore({ token: token });
-        console.log(token);
-      },
-      //para cerrar sesión
-      logout: () => {
-        sessionStorage.removeItem("token");
-        console.log("Sesión cerrada");
-        setStore({ token: null });
-      },
+			//para sincronizar sesión
+			loginToken: () => {
+				const token = sessionStorage.getItem("token");
+				console.log("Sincronización acoplada con token");
+				if (token && token != undefined && token != "")
+					setStore({ token: token });
+				console.log(token);
+			},
 
-      getYoutubePlaylist: () => {
-        const youTubeSearch = "https://www.googleapis.com/youtube/v3/playlists";
-        const res = fetch(
-          `${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=9&key=${process.env.YOUTUBE_API_KEY}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            setStore({ playlists: data.items });
-          });
-      },
+			//para cerrar sesión
+			logout: () => {
+				sessionStorage.removeItem("token");
+				console.log("Sesión cerrada");
+				setStore({ token: null });
+			},
 
-      getCourses: (curso) => {
-        fetch(
-          process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            setStore({ cursos: data });
-          });
-      },
+			getYoutubePlaylist: () => {
+				const youTubeSearch = "https://www.googleapis.com/youtube/v3/playlists";
+				const res = fetch(
+					`${youTubeSearch}?part=snippet&channelId=UC8butISFwT-Wl7EV0hUK0BQ&maxResults=9&key=${process.env.YOUTUBE_API_KEY}`
+				)
+					.then((res) => res.json())
+					.then((data) => {
+						setStore({ playlists: data.items });
+					});
+			},
 
-      courseToStore: (id) => {
-        const store = getStore();
-        const cursoActual = store.cursos.find((curso) => curso.id === id);
-        setStore({ curso_actual: cursoActual });
-      },  
-      getMessage: () => {
+
+			getCourses: (curso) => {
+				fetch(
+					process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`,
+					{
+						method: "GET",
+						headers: { "Content-Type": "application/json" },
+					}
+				)
+					.then((response) => response.json())
+					.then((data) => {
+						setStore({ cursos: data });
+					});
+			},
+
+			courseToStore: (id) => {
+				const store = getStore();
+				const cursoActual = store.cursos.find((curso) => curso.id === id);
+				setStore({ curso_actual: cursoActual });
+			},
+
+			//almacenar el metodo de pago en el store
+			pagoToStore: () => {
+				const store = getStore();
+				const metodo_de_pago = store.pago;
+				setStore({ pago: metodo_de_pago });
+			},
+
+			// Hasta aquí es el código Sayan
+
+			exampleFunction: () => {
+				getActions().changeColor(0, "green");
+			},
+
+			getMessage: () => {
 				// fetching data from the backend
 				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},  
-			// Use getActions to call a function within a fuction
-		
- 
-      // Hasta aquí es el código Sayan
-  },
+					.then((resp) => resp.json())
+					.then((data) => setStore({ message: data.message }))
+					.catch((error) =>
+						console.log("Error loading message from backend", error)
+					);
+			},
+			changeColor: (index, color) => {
+				//get the store
+				const store = getStore();
+
+				//we have to loop the entire demo array to look for the respective index
+				//and change its color
+				const demo = store.demo.map((elm, i) => {
+					if (i === index) elm.background = color;
+					return elm;
+				});
+
+				//reset the global store
+				setStore({ demo: demo });
+			},
+		},
+	};
 };
 }
 
