@@ -130,3 +130,24 @@ def payment():
         print(f'pedidosfailed: {e}')
     return jsonify(response['mensaje']), response['status']
 
+#para mandar email
+#@app.route("/send-email", methods=["POST"])
+#def sendemail():
+#    response = {'mensaje': '', 'status': ''}
+#    try:
+#        name = request.json.get("name", None)
+#        description = request.json.get("description", None)
+#        categoria = request.json.get("categoria", None)
+#        precio = request.json.get("precio", None)
+#        for cursos in Cursos.query.all()
+#
+#        message = Mail(
+#            from_email="matthegamer@gmail.com"
+#            
+#        )
+
+
+
+#@app.listen(3000, () => {
+   # console.log("Servidor en -> http://localhost:3000")
+#})
