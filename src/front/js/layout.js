@@ -18,6 +18,8 @@ import { PaymentForm } from "./component/Formulariopago";
 import { Pagobueno } from "./pages/Pagocorrecto";
 import { Pagomalo } from "./pages/Pagoinfallido";
 
+
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -51,6 +53,7 @@ const Layout = () => {
             <Route exact path="/pagofallido">
               <Pagomalo />
             </Route>
+
             <Route exact path="/miscursos">
               <MisCursos />
             </Route>
