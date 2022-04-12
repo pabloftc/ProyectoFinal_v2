@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-import Paginainicial from "./Paginainicial";
+import PaginaInicial from "./paginaInicial";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -24,22 +24,22 @@ export const Home = () => {
             Ven y danos tu dinero por ver videos de YouTube que podrías ver
             gratis
           </p>
-          <Button variant="primary">
-            <Link to={`/Signup`} className="btn-signup">
+          <Link to={`/Register`}>
+            <Button variant="primary" size="lg">
               Sign up
-            </Link>
-          </Button>{" "}
-          <Button variant="outline-primary">
-            <Link to={`/Login`} className="btn-login">
+            </Button>
+          </Link>{" "}
+          <Link to={`/Login`}>
+            <Button variant="outline-primary" size="lg">
               Login
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </Col>
         <Col>
           <Image fluid src={Hero} />
         </Col>
       </Row>
-      <Paginainicial />
+      <PaginaInicial />
     </Container>
   );
 };

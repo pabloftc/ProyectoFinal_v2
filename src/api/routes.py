@@ -33,35 +33,73 @@ def login():
 
 @api.route("/detalle_curso", methods=["GET"])
 def detalle_curso():
-    name = request.args.get("name", None)
-    print(name)
+    name = request.args.get("name")
+    if name == None:
+        name = ""
     # detalleCursos = Cursos.query.filter_by(name= name).all()
     detalleCursos = Cursos.query.filter(Cursos.name.ilike("%"+name+"%")).all()
     if len(detalleCursos) == 0:
         return jsonify([]), 200
     else:
-         
         lista = []
         for det in detalleCursos:
             lista.append(det.serialize())
         return jsonify(lista), 200
 
-
 #CREO QUE DEBIESE HACER UN FETCH DESDE EL FRONT-END DE DETALLE CURSO, ME FALTA PONER EL IF, SI EL CURSO ESTÁ IR A VISTA DETALLE SINO MOSTRAR UN MENSAJE.
-        return jsonify({"msg": "Bad username or password"}), 401
+        # return jsonify({"msg": "Bad username or password"}), 401
 
+@api.route("/detalle_curso/<int:id>", methods=["GET"])
+def get_course(id):
+    
+    curso = Cursos.query.get(id)
+    un_curso = curso.serialize()
+
+    return jsonify(un_curso), 200
 
 @api.route("/register", methods=["POST"])
 def register():
-    username = request.json.get("username", None)
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    user=User(username=username, email=email, password=password)
-    #len es una función que cuenta el largo de un array, y en el código de a continuación dice si el largo del array es mayor a 0 entonces error, porque ya existe un usuario con esos datos.
-    if len(User.query.filter_by(username=username).all()) > 0:
-        return jsonify({"Error": "Ya existe un usuario registrado con este nombre en la plataforma"}), 400
-    else:
-        db.session.add(user)
-        db.session.commit()
-    
-    return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
+    response = {'mensaje': '', 'status': ''}
+    try:
+        username = request.json.get("username", None)
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+        #is_active = request.json.get("is_active", None)
+
+        if username != None and email != None and password != None:
+
+            existing_user = User.query.filter_by(email=email).first()
+
+            if existing_user:
+                response['mensaje'] = 'Este correo ya está en uso'
+                response['status'] = 500
+            else:
+                user=User(username=username, email=email, password=password)
+                db.session.add(user)
+                db.session.commit()
+                response['mensaje'] = 'Perfecto'
+                response['status'] = 200
+    except Exception as e:
+        print(f'registerfailed: {e}')
+    return jsonify(response['mensaje']), response['status']
+
+
+
+#@api.route("/register", methods=["POST"])
+#def register():
+  #  username = request.json.get("username", None)
+  #  email = request.json.get("email", None)
+  #  password = request.json.get("password", None)
+
+ #   user=User(username=username, email=email, password=password, is_active=True)
+
+  #  existing_user = User.query.filter_by(username=username).first()
+
+    # len es una función que cuenta el largo de un array, y en el código de a continuación dice si el largo del array es mayor a 0 entonces error, porque ya existe un usuario con esos datos.
+  #  if existing_user:
+ #       return jsonify({"Error": "Ya existe un usuario registrado con este nombre en la plataforma"}), 400
+#    else:
+#        db.session.add(user)
+ #       db.session.commit()
+#        return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
+

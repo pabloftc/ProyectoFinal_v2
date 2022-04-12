@@ -14,6 +14,12 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
 
+#def __init__(self, username, email, password, is_active):
+   # self.username = username
+    #self.email = email
+   # self.password = password
+   # self.is_active = is_active
+
     def __repr__(self):
         return '<User %r>' % self.username
 
