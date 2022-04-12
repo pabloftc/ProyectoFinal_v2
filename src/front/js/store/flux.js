@@ -180,7 +180,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ cursos: data });
           });
       },
-
+      
+      setCursos: (cursos) => {
+        setStore({cursos:cursos});
+      },
       courseToStore: (id) => {
         const store = getStore();
         const cursoActual = store.cursos.find((curso) => curso.id === id);

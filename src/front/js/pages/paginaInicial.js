@@ -18,7 +18,7 @@ const PaginaInicial = () => {
       { method: "GET", headers: { "Content-Type": "application/json" } }
     );
     const data = await response.json();
-    setCursos(data);
+    actions.setCursos(data);
   };
   
   let history = useHistory();
