@@ -24,7 +24,7 @@ export const Home = () => {
             Ven y danos tu dinero por ver videos de YouTube que podrías ver
             gratis
           </p>
-          <Link to={`/Register`}>
+          <Link to={`/register`}>
             <Button variant="primary" size="lg">
               Sign up
             </Button>
