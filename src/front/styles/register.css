@@ -48,3 +48,13 @@ b {
 .mensajeError2 {
   width: 50%;
 }
+
+.containerregistro {
+  margin-bottom: 100px;
+  margin-top: 20px;
+}
+
+.inputregistro {
+  padding: 5px;
+  font-size: 20px;
+}

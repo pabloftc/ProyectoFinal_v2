@@ -115,6 +115,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//para comprar
+			compra: async (pago, fecha, precio_total) => {
+				console.log('comprando')
+				const pedidos = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						metodo_de_pago: pago,
+						created_at: fecha,
+						precio_total: precio_total,
+						curso_id: "2",
+					}),
+				};
+				console.log("vamos bien hasta aquí comprando", pedidos)
+				try {
+					const res = await fetch(
+						process.env.BACKEND_URL + "/api/compra",
+						pedidos
+					);
+					const data = await res.json();
+					console.log("Mensaje desde Backend para compra", data);
+					return res.status;
+				} catch (error) {
+					console.log(`Nuevo error en el usuario: ${error}`);
+				}
+			},
+
+
 			//para sincronizar sesión
 			loginToken: () => {
 				const token = sessionStorage.getItem("token");

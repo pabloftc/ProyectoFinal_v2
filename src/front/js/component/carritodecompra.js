@@ -22,7 +22,7 @@ export const Carritodecompra = () => {
     return (
         <div className="carro-grande" style={{ width: "20vh", marginBottom: "8px" }}>
             <ul className="lista-carrito" >
-                {carrito.length > 0 ? carrito.map((carrito, index) => {
+                {carrito == undefined ? carrito.map((carrito, index) => {
                     return (
                         <>
                             <div className="producto-carrito" key={index}>

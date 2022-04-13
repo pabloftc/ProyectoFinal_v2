@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -68,7 +69,7 @@ def register():
         email = request.json.get("email", None)
         password = request.json.get("password", None)
         #acá se debería cambiar el rol a "user" en el paréntesis
-        rol = request.json.get("rol", None)
+        rol = request.json.get("user", None)
         #is_active = request.json.get("is_active", None)
 
         if username != None and email != None and password != None:
@@ -100,6 +101,34 @@ def compra():
     except Exception as e:
         print(f"Error: {e}")
         return "Error", 500
+
+
+#endpoint de compra con post para enviar dato a la base de datos
+@api.route("/compra", methods=["POST"])
+def guardarcompra():
+    response = {'mensaje': '', 'status': ''}
+    try:
+        precio_total = request.json.get("precio_total", None)
+        metodo_de_pago = request.json.get("metodo_de_pago", None)
+        created_at = request.json.get("created_at", None)
+        curso_id = request.json.get("curso_id", None)
+
+        if precio_total != None and metodo_de_pago != None and curso_id != None:
+
+            existing_pedidos = Pedidos.query.filter_by(curso_id=curso_id).first()
+
+            if existing_pedidos:
+                response['mensaje'] = 'Ya tienes comprado este curso'
+                response['status'] = 500
+            else:
+                pedidos=Pedidos(precio_total=precio_total, metodo_de_pago=metodo_de_pago, created_at=created_at, curso_id=curso_id)#, user_id=user_id )
+                db.session.add(pedidos)
+                db.session.commit()
+                response['mensaje'] = 'Compra exitosa'
+                response['status'] = 200
+    except Exception as e:
+        print(f'pedidosfailed: {e}')
+    return jsonify(response['mensaje']), response['status']
 
 
 #obtener datos del proceso de compra
