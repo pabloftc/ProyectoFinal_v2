@@ -20,10 +20,10 @@ export const Home = () => {
       <Row className="p-5">
         <Col className="pt-5">
           <h1 className="pb-3">Cursos SayanDevelopers</h1>
-          <p className="pb-3">
+          <h4 className="pb-3">
             Ven y danos tu dinero por ver videos de YouTube que podrías ver
             gratis
-          </p>
+          </h4>
           <Link to={`/register`}>
             <Button variant="primary" size="lg">
               Sign up
