@@ -1,0 +1,51 @@
+#tarjetas {
+  display: flex;
+  background-color: red;
+  margin-right: 0;
+  padding-right: 100px;
+}
+
+#botonlimpiar {
+  margin-left: 15%;
+  font-size: xx-small;
+}
+
+#botonborrar {
+  font-size: xx-small;
+}
+
+#muestrario {
+  margin-bottom: 10%;
+}
+
+#carritovacio {
+  margin-top: 10%;
+}
+
+#imagendetarjeta {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#listadecursos {
+  flex-direction: row;
+}
+
+#tarjetasdecursos {
+  display: flex;
+}
+
+#supercontainertarjetas {
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#botonparacomprar {
+  width: 100%;
+  margin-top: 30px;
+  padding: 2px;
+  font-size: large;
+}

@@ -7,7 +7,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			playlists: [],
 			cursos: [],
 			curso_actual: {},
-			pago: {},
 		},
 		actions: {
 			//Crear token
@@ -115,8 +114,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+
 			//para comprar
-			compra: async (pago, fecha, precio_total) => {
+			compra: async (pago, fecha, precio_total, idcurso) => {
 				console.log('comprando')
 				const pedidos = {
 					method: 'POST',
@@ -127,7 +127,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						metodo_de_pago: pago,
 						created_at: fecha,
 						precio_total: precio_total,
-						curso_id: "2",
+						curso_id: idcurso,
 					}),
 				};
 				console.log("vamos bien hasta aquí comprando", pedidos)
@@ -138,6 +138,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					);
 					const data = await res.json();
 					console.log("Mensaje desde Backend para compra", data);
+					return res.status;
+				} catch (error) {
+					console.log(`Nuevo error en el usuario: ${error}`);
+				}
+			},
+
+
+			//para mandar correo
+			send_email: async (email) => {
+				console.log('comenzar a enviar correo')
+				const correo = {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						email: email,
+					}),
+				};
+				console.log("Vamos bien, se está enviando", correo)
+				try {
+					const res = await fetch(
+						process.env.BACKEND_URL + "/api/email",
+						correo
+					);
+					const data = await res.json();
+					console.log("Mensaje desde Backend para correo", data);
 					return res.status;
 				} catch (error) {
 					console.log(`Nuevo error en el usuario: ${error}`);
@@ -193,11 +220,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ curso_actual: cursoActual });
 			},
 
-			//almacenar el metodo de pago en el store
-			pagoToStore: () => {
-				const store = getStore();
-				const metodo_de_pago = store.pago;
-				setStore({ pago: metodo_de_pago });
+
+			//guardar en localstorage
+			subscribe: () => {
+				saveToLocalStorage(store.getState());
 			},
 
 			// Hasta aquí es el código Sayan

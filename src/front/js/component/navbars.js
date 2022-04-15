@@ -38,7 +38,9 @@ export const Navbars = () => {
               navbarScroll
             >
               <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
-              <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+              <Link to="/cursos">
+                <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+              </Link>
               <Nav.Link href="precios" className="navpaginas"><p>Precios</p></Nav.Link>
               <Nav.Link href="favoritos" className="navpaginas"><p>Favoritos</p></Nav.Link>
               <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
@@ -53,10 +55,10 @@ export const Navbars = () => {
               <Button variant="primary" style={{ marginRight: '5px' }}>Sign Up</Button>
             </Link> : <></>}
             {!isLoggedIn ? <></> : <LogoutButton />}
-            {!isLoggedIn ? <></> : <><Link to="/compra">
+            {/* {!isLoggedIn ? <></> : <><Link to="/compra">
               <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
             </Link>
-              <span className="productosencarrito">0</span></>}
+              <span className="productosencarrito">0</span></>} */}
           </Navbar.Collapse>
         </Container>
       </Navbar>
