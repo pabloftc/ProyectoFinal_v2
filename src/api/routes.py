@@ -9,6 +9,11 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 import smtplib
 from email.message import EmailMessage
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import os
+
+API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 
 api = Blueprint('api', __name__)
@@ -182,7 +187,7 @@ def send_email():
 
 #endpoint para que le llegue un correo al usuario (gmail)
 @api.route('/email_gmail', methods=['POST'])
-def send_email():
+def send_gmail():
     try:
         email = request.json.get("email", None)
 
@@ -203,3 +208,29 @@ def send_email():
     except Exception as e:
         print(f"Error: {e}")
         return "Error", 500
+
+
+#endpoint de SENDGRID para enviar correo ¡FUNCIONANDOOOOOO!
+@api.route('/enviarcorreo', methods=['POST'])
+def enviarcorreo():
+    try:
+        email = request.json.get("email", None)
+
+        template = """
+            Gracias por comprar con nosotros. ¡Disfruta tu curso!
+        """
+        message = Mail(
+            from_email="matias.gonzalezl@usach.cl",
+            to_emails=email,
+            subject="Confirmación de compra",
+            html_content=template
+        )
+        sg = SendGridAPIClient(API_KEY)
+        response = sg.send(message)
+        response_body = {
+            "msg": "correo enviado",
+        }
+        return jsonify(response_body), 200
+    except Exception as e:
+        print(f"Error enviar correo: {e}")
+        return "ERROR", 500

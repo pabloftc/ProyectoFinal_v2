@@ -36,7 +36,7 @@ export const Pagobueno = () => {
     //     }
     // };
 
-
+    //submit 1 de prueba
     const submitRequest = async () => {
         //e.preventDefault();
         console.log({ email });
@@ -57,6 +57,29 @@ export const Pagobueno = () => {
     };
 
 
+    //submit 2 de prueba con SENDGRID
+    const manejarSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(
+            `https://3001-4geeksacademy-reactflask-tliugxuopuj.ws-us40.gitpod.io/api/enviarcorreo`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: e.target.elements.correo.value,
+                }),
+            }
+        );
+        let data = await response.json();
+        alert("Confirmación enviada con éxito");
+        console.log(data);
+    }
+
+
+
     const handleClick = () => {
         history.push('/');
     };
@@ -71,21 +94,21 @@ export const Pagobueno = () => {
                 </h1>
             </div>
             <div>
-                <form onSubmit={submitRequest}>
+                <form onSubmit={(e) => manejarSubmit(e)}>
                     <div>
                         <h1 className='h1'>
                             ¿Quieres enviar los datos de tu compra por Email?
                         </h1>
-                        <label className='label'>
+                        <label htmlFor="formFile" className='form-label'>
                             Envía la confirmación por correo:
                         </label>
                         <input
                             className='form-control'
                             type="email"
                             placeholder="Escribe el correo aquí"
-                            name="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            name="correo"
+                        // value={email}
+                        // onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
@@ -93,7 +116,6 @@ export const Pagobueno = () => {
                             id="botoncorrecto"
                             type="submit"
                             className='btn btn-primary'
-                            onClick={(e) => submitRequest(e)}
                         >
                             Enviar
                         </button>
