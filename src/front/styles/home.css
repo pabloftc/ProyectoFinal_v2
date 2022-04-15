@@ -30,3 +30,12 @@
   top: -15px;
   font-size: larger;
 }
+
+.registroconnosotros {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#botonregistrologin {
+  margin-left: 20px;
+}

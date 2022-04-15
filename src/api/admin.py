@@ -17,5 +17,4 @@ def setup_admin(app):
     admin.add_view(ModelView(Pedidos, db.session)) 
 
     # You can duplicate that line to add mew models
-=======
 
