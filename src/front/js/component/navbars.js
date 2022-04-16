@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import {Context} from "../store/appContext";
 import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstrap';
 
 import SayanImageUrl from "../../img/logo.jpeg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 
 import '../../styles/home.css';
+import { LogoutButton } from "./logoutButton";
+// import state from "sweetalert/typings/modules/state";
 
 
  export const Navbars = () => {
+   const { store, actions } = useContext(Context);
+   const isLoggedIn = store.isLoggedIn
+  //  const token = sessionStorage.getItem("token");
+  //Manejo de estado para el renderizado del botón login y logout 
+  //  const [isLoggedIn, setIsLoggedIn] = useState(False);
+  //  useEffect(() => {
+  //    state.actions.getIsLoggedIn();
+  //  }, []);
+  //  console.log('TOKEN: ', token)
 	return (
 		<>
 		<Navbar bg="light" expand="lg">
@@ -31,13 +44,19 @@ import '../../styles/home.css';
         <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
       
       </Nav>
-     
-      <Link to="/login">
-      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In</Button>
-      </Link>
-      <Link to="/signup"> 
+    {/* ! significa contrario al valor del booleano  */}
+     { ! isLoggedIn ? <Link to="/login">
+      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
+      </Button> 
+      </Link> :<></> }
+      {! isLoggedIn ? <Link to="/register"> 
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
-      </Link>
+      </Link> : <></> }
+     { ! isLoggedIn ? <></> : <LogoutButton /> }
+        <Link to="/compra">
+             <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
+        </Link>
+         <span className="productosencarrito">0</span>
     </Navbar.Collapse>
   </Container>
 </Navbar>
