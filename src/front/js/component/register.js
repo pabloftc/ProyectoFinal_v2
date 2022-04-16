@@ -53,7 +53,7 @@ export const Register = () => {
             swal("¡Oh oh!", "Las contraseñas deben coincidir", "error")
         }
         else {
-            swal("¡Ojo!", "Debes rellanar todos los campos", "warning")
+            swal("¡Ojo!", "Debes rellenar todos los campos", "warning")
         }
     }
 

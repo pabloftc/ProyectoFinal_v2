@@ -63,33 +63,33 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-			//para registrarse
-			register: async (username, email, password) => {
-				console.log('register')
-				const user = {
-					method: 'POST',
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						username: username,
-						email: email,
-						password: password,
-					}),
-				};
-				try {
-					const res = await fetch(
-						process.env.BACKEND_URL + "/api/register",
-						user
-					);
-					const data = await res.json();
-					console.log("Mensaje desde Backend", data);
-					//setStore({ data: data });
-					return res.status;
-				} catch (error) {
-					console.log(`Nuevo error en el usuario: ${error}`);
-				}
-			},
+      //para registrarse
+      register: async (username, email, password) => {
+        console.log("register");
+        const user = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+          }),
+        };
+        try {
+          const res = await fetch(
+            process.env.BACKEND_URL + "/api/register",
+            user
+          );
+          const data = await res.json();
+          console.log("Mensaje desde Backend", data);
+          //setStore({ data: data });
+          return res.status;
+        } catch (error) {
+          console.log(`Nuevo error en el usuario: ${error}`);
+        }
+      },
 
       //para sincronizar sesión
       loginToken: () => {
@@ -100,12 +100,52 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(token);
       },
 
-
       //para cerrar sesión
       logout: () => {
         sessionStorage.removeItem("token");
         console.log("Sesión cerrada");
         setStore({ token: null });
+      },
+
+      registerCourse: async (
+        nombreCurso,
+        descripcionCurso,
+        duracionCurso,
+        categoriaCurso,
+        urlCurso,
+        imgCurso
+      ) => {
+        console.log("1");
+        const course = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombreCurso: nombreCurso,
+            descripcionCurso: descripcionCurso,
+            duracionCurso: duracionCurso,
+            categoriaCurso: categoriaCurso,
+            urlCurso: urlCurso,
+            imgCurso: imgCurso,
+          }),
+        };
+        console.log("2");
+        try {
+          const res = await fetch(
+            process.env.BACKEND_URL + "/api/cursos",
+            course
+          );
+          if (res.status != 200) {
+            throw new Error("El Curso ya existe", Error);
+          }
+          console.log("3", res.status);
+          const data = await res.json();
+          console.log("Curso agregado!", data);
+          return res.status // Revisar "Promesa"
+        } catch (error) {
+          console.log(`No se pudo agregar el curso: ${error}`);
+        }
       },
 
       getYoutubePlaylist: () => {

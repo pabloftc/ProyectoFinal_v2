@@ -13,7 +13,7 @@ import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/register";
-import { Compra } from "./component/compra";
+// import { Compra } from "./component/compra";
 
 //create your first component
 const Layout = () => {
@@ -36,9 +36,9 @@ const Layout = () => {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/compra">
+            {/* <Route exact path="/compra">
 							<Compra />
-						</Route>
+						</Route> */}
             <Route exact path="/miscursos">
               <MisCursos />
             </Route>

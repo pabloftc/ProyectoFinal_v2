@@ -20,9 +20,9 @@ const PaginaInicial = () => {
     const data = await response.json();
     setCursos(data);
   };
-  
+
   let history = useHistory();
-  
+
   function handleClick(id) {
     actions.courseToStore(id);
     history.push(`/courseDetail/${id}`);
