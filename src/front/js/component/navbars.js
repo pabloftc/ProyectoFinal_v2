@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import {
-  Navbar,
-  Container,
-  Form,
-  Button,
-  Nav,
-  FormControl,
-} from "react-bootstrap";
+import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstrap';
 
 import SayanImageUrl from "../../img/logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,54 +41,31 @@ export const Navbars = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href="/" className="navpaginas">
-                Home
-              </Nav.Link>
-              <Nav.Link href="cursos" className="navpaginas">
-                <p>Cursos</p>
-              </Nav.Link>
-              <Nav.Link href="precios" className="navpaginas">
-                <p>Precios</p>
-              </Nav.Link>
-              <Nav.Link href="favoritos" className="navpaginas">
-                <p>Favoritos</p>
-              </Nav.Link>
-              <Nav.Link href="sobrenosotros" className="navpaginas">
-                <p>Sobre Nosotros</p>
-              </Nav.Link>
+              <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
+              <Link to="/cursos">
+                <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+              </Link>
+              <Nav.Link href="precios" className="navpaginas"><p>Precios</p></Nav.Link>
+              <Nav.Link href="favoritos" className="navpaginas"><p>Favoritos</p></Nav.Link>
+              <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
+
             </Nav>
-            <div style= {{display:"flex", alignItems: "flex-end"}}>
-            {/* Operador ternario, ! significa contrario al valor del booleano, sí isLoggedIn es falso, muestrame el botón del link, sino muestrame un tag vacío (que es como no mostrar nada)  */}
-            {!isLoggedIn ? (
-              <Link to="/login">
-                <Button
-                  variant="outline-primary"
-                  style={{ marginRight: "5px" }}
-                >
-                  Log In
-                </Button>
-              </Link>
-            ) : (
-              <></>
-            )}
-            {!isLoggedIn ? (
-              <Link to="/signup">
-                <Button variant="primary" style={{ marginRight: "5px" }}>
-                  Sign Up
-                </Button>
-              </Link>
-            ) : (
-              <></>
-            )}
+            {/* ! significa contrario al valor del booleano  */}
+            {!isLoggedIn ? <Link to="/login">
+              <Button variant="outline-primary" style={{ marginRight: '5px' }}>Log In
+              </Button>
+            </Link> : <></>}
+            {!isLoggedIn ? <Link to="/register">
+              <Button variant="primary" style={{ marginRight: '5px' }}>Sign Up</Button>
+            </Link> : <></>}
             {!isLoggedIn ? <></> : <LogoutButton />}
-            <Link to="/compra">
+            {/* {!isLoggedIn ? <></> : <><Link to="/compra">
               <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
             </Link>
-            <span className="productosencarrito">0</span>
-            </div>
+              <span className="productosencarrito">0</span></>} */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

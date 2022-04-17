@@ -3,15 +3,10 @@ import { Container, Image } from "react-bootstrap";
 import logo2 from '../../img/logo2.png';
 import "../../styles/compra.css";
 import "../../styles/carritodecompra.css";
-import { Carritodecompra } from '../respaldos/carritodecompra copy';
+import { Carritodecompra } from '../component/carritodecompra';
 import { useHistory, Link } from "react-router-dom";
 import { Context } from '../store/appContext';
 import swal from 'sweetalert';
-import { BotonPagoDummy, Cart } from './Carritofinal';
-
-import { useCart } from 'react-use-cart';
-import { PaymentForm } from './Formulariopago';
-
 
 
 export const Compra = () => {
@@ -30,14 +25,6 @@ export const Compra = () => {
         // }
     ]);
 
-    const {
-        isEmpty,
-        cartTotal,
-        removeItem,
-        emptyCart,
-        totalItems,
-        totalUniqueItems,
-        items } = useCart();
 
     const [errormessage, setErrormessage] = useState(false);
     const [firstname, setFirstname] = useState("");
@@ -45,16 +32,16 @@ export const Compra = () => {
     const [email, setEmail] = useState("");
     const [pago, setPago] = useState("");
     const history = useHistory();
-    const precio_total = `${cartTotal}`;
+    const precio_total = `${store.curso_actual.precio}`;
     const fecha = new Date();
-    const idcurso = Math.floor(Math.random() * 10000) + 1;
+    const idcurso = `${store.curso_actual.id}`
 
     const onSubmit = async (e) => {
         e.preventDefault();
         if (firstname != 0 && lastname != 0 && email != 0 && pago != 0) {
             const data = await actions.compra(pago, fecha, precio_total, idcurso)
             console.log(data, "data")
-            if (data === 200 || 304) {
+            if (data === 200) {
                 history.push('/payment-form')
             } else {
                 swal('¡Ups!', 'Según nuestros registros ya tienes este curso', 'warning')
@@ -64,13 +51,25 @@ export const Compra = () => {
         }
     }
 
+    const borrarCurso = (e, carrito) => {
+        e.preventDefault;
+        if (carrito == carrito) {
+            e.preventDefault;
+            return swal("Oh ho", "no seas pollo", "error");
+        } else {
+            return <div>Hay cursos</div>
+        }
+    }
+
     return (
         <Container>
             <>
 
                 <div className="container">
                     <div className="row">
+                        <div className="col-1">
 
+                        </div>
                         <div className="col">
                             <form>
                                 <div className="container">
@@ -91,7 +90,7 @@ export const Compra = () => {
 
                                 <div className="container">
                                     <div className="row">
-                                        <div className="col-7">
+                                        <div className="col-md-auto pt-2">
                                             <Container>
                                                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '30vh', marginBottom: "30px", marginTop: "8px" }}>
                                                     <div style={{ width: "600px" }}>
@@ -145,16 +144,30 @@ export const Compra = () => {
                                                 </div>
                                             </Container>
                                         </div>
-                                        <div className="col-5" id="columna2">
+                                        <div className="col-md-auto pt-2" id="columna2">
                                             <Container>
-                                                <div className="componente-carritos" style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: '30vh', marginBottom: "30px", marginTop: "15px" }}>
+                                                <div className="componente-carritos" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: '30vh', width: '20vh', marginBottom: "30px", marginTop: "15px" }}>
                                                     <div>
                                                         <h2>Carrito de compra</h2>
-                                                        <div className="carro-grande" style={{ marginBottom: "8px" }}>
-                                                            {/* <Carritodecompra /> */}
-                                                            <Cart />
-                                                            {/* {<PaymentForm />} */}
-                                                            {!<Cart /> && <BotonPagoDummy / >}
+                                                        <div className="carro-grande" style={{ width: "20vh", marginBottom: "8px" }}>
+                                                            <Carritodecompra />
+
+                                                            {/* <ul className="lista-carrito" >
+                                                                <div className="carro-grande" style={{ width: "20vh", marginBottom: "8px" }}>
+                                                                    <ul className="lista-carrito" >
+                                                                        <div className="card" style={{ width: "30rem" }}>
+                                                                            <div className="card-body">
+                                                                                <h5 className="card-title">{carrito.name}</h5>
+                                                                                <hr />
+                                                                                <p className="card-text">{carrito.description}</p>
+                                                                                <p className="precio">{carrito.precio} CLP</p>
+                                                                            </div>
+
+                                                                            <button style={{ width: "10rem" }} id="eliminar" className="btn btn-danger">Eliminar del carrito</button>
+                                                                        </div>
+                                                                    </ul> */}
+                                                            {/* </div> <div>No hay items en el carrito</div>
+                                                            </ul> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -195,7 +208,7 @@ export const Compra = () => {
                                                         <label htmlFor="paypal" className="pagar">Paypal</label>
                                                     </div>
 
-                                                    <button id="botondeconfirmacionpago" type="submit" className="btn btn-primary mb-3" onClick={(e) => onSubmit(e)}>Confirmar la compra</button>
+                                                    <button type="submit" className="btn btn-primary mb-3" onClick={(e) => onSubmit(e)}>Confirmar la compra</button>
 
                                                 </div>
                                             </Container>
@@ -206,6 +219,9 @@ export const Compra = () => {
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                        <div className="col-1">
+
                         </div>
                     </div>
                 </div >

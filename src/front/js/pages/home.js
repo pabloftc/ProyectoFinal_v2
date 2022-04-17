@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import PaginaInicial from "./paginaInicial";
+import CourseInscription from "./courseInscription";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,7 +20,7 @@ export const Home = () => {
     <Container>
       <Row className="p-5">
         <Col className="pt-5">
-          <h1 className="pb-3">Cursos SayanDevelopers</h1>
+          <h1 className="pb-3 display-2">Cursos SayanDevelopers</h1>
           <h4 className="pb-3">
             Ven y danos tu dinero por ver videos de YouTube que podrías ver
             gratis
@@ -40,6 +41,7 @@ export const Home = () => {
         </Col>
       </Row>
       <PaginaInicial />
+      <CourseInscription />
     </Container>
   );
 };

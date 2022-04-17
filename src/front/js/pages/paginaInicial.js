@@ -18,11 +18,12 @@ const PaginaInicial = () => {
     const data = await response.json();
     actions.setCursos(data);
   };
-  useEffect( () => {
-    if(curso==""){ // cada palabra contiene un string vacío
-      finderHandler()
+  useEffect(() => {
+    if (curso == "") {
+      // cada palabra contiene un string vacío
+      finderHandler();
     }
-  }, [curso])
+  }, [curso]);
   let history = useHistory();
 
   function handleClick(id) {
@@ -89,23 +90,3 @@ const PaginaInicial = () => {
   );
 };
 export default PaginaInicial;
-
-{
-  /* <Link to={`/courseDetail/${cursoItem.id}`}></Link> */
-}
-
-// console.log(store)
-/* actions.getCourses()}, []) */
-/* useEffect(() => {
-    fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => setCursos(data));
-  }, []); */
-
-// function handleClick() {
-//   let history = useHistory();
-//   history.push("/courseDetail");
-// } /* useHistory -- crear "actions" -- quitar <Link> */

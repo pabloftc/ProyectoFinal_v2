@@ -9,12 +9,13 @@
 }
 
 .precio {
-    font-weight:bold;
-    font-size:large;
+  font-weight: bold;
+  font-size: large;
+  margin-top: 10px;
 }
 
 .lista-carrito {
-  max-width: 120px;
+  max-width: 300px;
   border: 100%;
   border-width: auto;
   display: "flex";
@@ -29,4 +30,11 @@
   align-items: center;
   justify-content: center;
   padding-left: 20%;
+}
+
+#eliminar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  margin-right: 35%;
 }
