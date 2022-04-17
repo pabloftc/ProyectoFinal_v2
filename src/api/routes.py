@@ -8,6 +8,14 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+import smtplib
+from email.message import EmailMessage
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import os
+
+API_KEY = os.environ.get("SENDGRID_API_KEY")
+
 
 api = Blueprint('api', __name__)
 
@@ -206,7 +214,7 @@ def eliminar_curso(id, user_id):
         email = request.json.get("email", None)
         password = request.json.get("password", None)
         #acá se debería cambiar el rol a "user" en el paréntesis
-        rol = request.json.get("rol", None)
+        rol = request.json.get("user", None)
         #is_active = request.json.get("is_active", None)
 
         if username != None and email != None and password != None:
@@ -240,18 +248,17 @@ def compra():
         return "Error", 500
 
 
-#obtener datos del proceso de compra
-@api.route("/payment_form", methods=["POST"])
-def payment():
+#endpoint de compra con post para enviar dato a la base de datos
+@api.route("/compra", methods=["POST"])
+def guardarcompra():
     response = {'mensaje': '', 'status': ''}
     try:
         precio_total = request.json.get("precio_total", None)
         metodo_de_pago = request.json.get("metodo_de_pago", None)
         created_at = request.json.get("created_at", None)
         curso_id = request.json.get("curso_id", None)
-        #user_id = request.json.get("user_id", None)
 
-        if precio_total != None and metodo_de_pago != None and curso_id != None: #and user_id != None:
+        if precio_total != None and metodo_de_pago != None and curso_id != None:
 
             existing_pedidos = Pedidos.query.filter_by(curso_id=curso_id).first()
 
@@ -259,7 +266,7 @@ def payment():
                 response['mensaje'] = 'Ya tienes comprado este curso'
                 response['status'] = 500
             else:
-                pedidos=Pedidos(precio_total=precio_total, metodo_de_pago=metodo_de_pago, created_at=created_at, curso_id=curso_id)#, user_id=user_id )
+                pedidos=Pedidos(precio_total=precio_total, metodo_de_pago=metodo_de_pago, created_at=created_at)#, curso_id=curso_id)#, user_id=user_id )
                 db.session.add(pedidos)
                 db.session.commit()
                 response['mensaje'] = 'Compra exitosa'
@@ -289,3 +296,100 @@ def payment():
 #@app.listen(3000, () => {
    # console.log("Servidor en -> http://localhost:3000")
 #})
+
+#enpoint para enviar un correo SOLO BACKEND (No real)
+@api.route("/pagocorrecto", methods=["POST"])
+def correo_confirmacion():
+    response = {'mensaje': "", 'status': ""}
+    try:
+        email = request.json.get("email", None)
+
+        if email != None:
+
+            existing_email = User.query.filter_by(email=email).first()
+
+            if existing_email:
+                response['mensaje'] = 'Mensaje enviado'
+                response['status'] = 200
+                console.log("Se mandó bien")
+            else:
+                response['mensaje'] = 'Correo desconocido'
+                response['status'] = 500
+    except Exception as e:
+        print(f'enviarcorreofailed: {e}')
+    return jsonify(response['mensaje']), response['status']
+
+
+#endpoint para que le llegue un correo al usuario
+@api.route('/email_sent', methods=['POST'])
+def send_email():
+    try:
+        email = request.json.get("email", None)
+
+        server = smtplib.SMTP('smtp.ethereal.email', 587)
+        server.starttls()
+        server.login('daphnee.damore61@ethereal.email', 'GWBHpwueXWnEf9Ut9z')
+
+        msg = EmailMessage()
+        msg.set_content('Gracias por comprar con nosotros')
+
+        msg['Subject'] = 'Confirmación de compra'
+        msg['From'] = 'sayandevelopers@sd.com'
+        msg ['To'] = email
+
+        server.send_message(msg)
+        server.quit()
+        return 'Email enviado con éxito'
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Error", 500
+
+#endpoint para que le llegue un correo al usuario (gmail)
+@api.route('/email_gmail', methods=['POST'])
+def send_gmail():
+    try:
+        email = request.json.get("email", None)
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login('mrmattkiddo@gmail.com', '')
+
+        msg = EmailMessage()
+        msg.set_content('Gracias por comprar con nosotros')
+
+        msg['Subject'] = 'Confirmación de compra'
+        msg['From'] = 'mrmattkiddo@gmail.com'
+        msg ['To'] = "matthegamer@gmail.com"
+
+        server.send_message(msg)
+        server.quit()
+        return 'Email enviado con éxito'
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Error", 500
+
+
+#endpoint de SENDGRID para enviar correo ¡FUNCIONANDOOOOOO!
+@api.route('/enviarcorreo', methods=['POST'])
+def enviarcorreo():
+    try:
+        email = request.json.get("email", None)
+
+        template = """
+            Gracias por comprar con nosotros. ¡Disfruta tu curso!
+        """
+        message = Mail(
+            from_email="matias.gonzalezl@usach.cl",
+            to_emails=email,
+            subject="Confirmación de compra",
+            html_content=template
+        )
+        sg = SendGridAPIClient(API_KEY)
+        response = sg.send(message)
+        response_body = {
+            "msg": "correo enviado",
+        }
+        return jsonify(response_body), 200
+    except Exception as e:
+        print(f"Error enviar correo: {e}")
+        return "ERROR", 500

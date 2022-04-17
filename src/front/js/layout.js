@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useCart } from "react-use-cart";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
@@ -19,6 +20,8 @@ import { PaymentForm } from "./component/Formulariopago";
 import { Pagobueno } from "./pages/Pagocorrecto";
 import { Pagomalo } from "./pages/Pagoinfallido";
 
+import { CarroFuncional } from "./component/Datafake";
+import { CartProvider } from "react-use-cart";
 
 
 //create your first component
@@ -43,7 +46,9 @@ const Layout = () => {
               <Login />
             </Route>
             <Route exact path="/compra">
-              <Compra />
+              <CartProvider>
+                <Compra />
+              </CartProvider>
             </Route>
             <Route exact path="/payment-form">
               <PaymentForm />
@@ -68,6 +73,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/single/:theid">
               <Single />
+            </Route>
+            <Route exact path="/Cursos">
+              <CarroFuncional />
             </Route>
             <Route>
               <h1>Not found!</h1>

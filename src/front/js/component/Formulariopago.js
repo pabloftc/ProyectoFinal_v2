@@ -3,8 +3,9 @@ import Cards from 'react-credit-cards';
 import "../../styles/compra.css";
 import 'react-credit-cards/es/styles-compiled.css';
 //import { Context } from '../store/appContext';
-import { Carritodecompra } from './carritodecompra';
+import { Carritodecompra } from '../respaldos/carritodecompra';
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 export const PaymentForm = () => {
     //const { store, actions } = useContext(Context);
@@ -40,21 +41,56 @@ export const PaymentForm = () => {
             focused: e.target.name
         })
     }
+    //b, c, d, etc.: son los argumentos que se pasan en el body, excepto el preventDefault
+    const onSubmit = (a, b, c) => {
+        a.preventDefault();
+        fetch("https://3001-4geeksacademy-reactflask-tliugxuopuj.ws-us39a.gitpod.io/api/payment_form",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                //lo que se pasa aquí debe coincidir con la base da datos
+                body: JSON.stringify({
+                    number: "",
+                    name: "",
+                    expiry: "",
+                    cvc: "",
+                    focused: null
+                })
+            })
+            .then(res => res.json())
+            //Dentro de lo que viene se pone lo que se quiere hacer con el método POST
+            //.then((data)=>{})
+            .catch(error => {
+                console.error("Este es el error", error)
+            })
+    }
+
 
     const processPayment = (e) => {
         e.preventDefault();
-        if (state.name != 0 && state.number != 0 && state.expiry != 0 && state.cvc != 0) {
-            history.push(`/Pagocorrecto`);
+        let nombre = state.name;
+        let numero = state.number;
+        let expiracion = state.expiry;
+        let serial = state.cvc;
+        let todoHere = (nombre.length !== 0 && numero.length !== 0 && expiracion.length !== 0 && serial.length !== 0);
+
+        if (todoHere) {
+            if (serial == 1111) {
+                history.push(`/Pagofallido`)
+            } else {
+                history.push(`/Pagocorrecto`)
+            }
         } else {
-            history.push(`/Pagofallido`)
+            swal("¡Ups!", "Debes llenar todos los campos", "error")
         }
-        console.log(state)
     }
 
 
     return (
-        <div className='form-row' id="superdiv">
-            <div className='form-group col-md-4' id="card-form">
+        <div className='form' id="superdiv">
+            <div className='form-group' id="card-form">
                 <div className='card-body'>
                     <Cards
                         number={state.number}
@@ -62,7 +98,6 @@ export const PaymentForm = () => {
                         expiry={state.expiry}
                         cvc={state.cvc}
                         focused={state.focused}
-                        pattern="[0-9]{0,13}"
                     />
                     <form>
                         <div className='form-group'>
@@ -75,6 +110,7 @@ export const PaymentForm = () => {
                                 onChange={handleChange}
                                 onFocus={handleFocusChange}
                                 maxLength="16"
+                                pattern="^[0-9]{0,16}"
                             />
                         </div>
                         <div className='form-group'>
@@ -125,12 +161,6 @@ export const PaymentForm = () => {
                     </form>
                 </div >
             </div >
-            <div className='form-group col-md-4' id="card-form">
-                <h1>Estás comprando en este momento:</h1>
-                <div className="producto-carrito">
-                    <Carritodecompra />
-                </div>
-            </div>
         </div >
     )
 }

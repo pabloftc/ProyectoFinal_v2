@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {Context} from "../store/appContext";
+import { Context } from "../store/appContext";
 import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstrap';
 
 import SayanImageUrl from "../../img/logo.jpeg";
@@ -13,9 +13,9 @@ import { LogoutButton } from "./logoutButton";
 // import state from "sweetalert/typings/modules/state";
 
 
- export const Navbars = () => {
-   const { store, actions } = useContext(Context);
-   const isLoggedIn = store.isLoggedIn
+export const Navbars = () => {
+  const { store, actions } = useContext(Context);
+  const isLoggedIn = store.isLoggedIn
   //  const token = sessionStorage.getItem("token");
   //Manejo de estado para el renderizado del botón login y logout 
   //  const [isLoggedIn, setIsLoggedIn] = useState(False);

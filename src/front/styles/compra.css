@@ -5,7 +5,7 @@
 
 #columna2 {
   border-left: 1px solid #ebebf3;
-  padding-left: 10%;
+  padding-left: 2%;
 }
 
 .layout {
@@ -21,10 +21,11 @@
   align-items: center;
   justify-content: center;
   padding: 30px;
-  margin-left: 10%;
-
+  margin-left: 35%;
+  margin-right: 35%;
   margin-top: 5%;
   margin-bottom: 10%;
+  background-color: white;
 }
 
 .boton-pago {
@@ -45,4 +46,18 @@
 
 #superdiv {
   display: flex;
+  width: 100%;
+  background-color: #dadada;
+}
+
+.componente-carritos {
+  width: 100%;
+  margin: 0;
+}
+
+#botondeconfirmacionpago {
+  padding: 2%;
+  font-size: xx-large;
+  font-weight: bold;
+  width: 100%;
 }
