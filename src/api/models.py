@@ -50,13 +50,16 @@ class Cursos(db.Model):
             "created_at": self.created_at,
             "user_id": self.user_id
         }
+        
+# _tablename_='compra'
 class Pedidos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     precio_total = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(), default=datetime.now())
     metodo_de_pago = db.Column(db.Integer)
-    # curso_id = db.Column(db.Integer, db.ForeignKey('cursos.id'))
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    curso_id = db.Column(db.Integer, db.ForeignKey('cursos.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     def serialize(self):
         return {
             "id": self.id,
@@ -65,4 +68,4 @@ class Pedidos(db.Model):
             "curso_id": self.curso_id,
             "user_id": self.user_id,
             "created_at": self.created_at,
-        }
+        }    

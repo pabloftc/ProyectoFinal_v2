@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import Login from "./login.js";
 import { Row, Card, Col, Form, FormControl, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +9,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const PaginaInicial = () => {
   const { store, actions } = useContext(Context);
   const [curso, setCurso] = useState("");
-  const [cursos, setCursos] = useState([]);
 
   const finderHandler = async () => {
     const response = await fetch(
@@ -18,9 +16,14 @@ const PaginaInicial = () => {
       { method: "GET", headers: { "Content-Type": "application/json" } }
     );
     const data = await response.json();
-    setCursos(data);
+    actions.setCursos(data);
   };
-
+  useEffect(() => {
+    if (curso == "") {
+      // cada palabra contiene un string vacío
+      finderHandler();
+    }
+  }, [curso]);
   let history = useHistory();
 
   function handleClick(id) {
@@ -81,28 +84,7 @@ const PaginaInicial = () => {
           </Col>
         ))}
       </Row>
-      <Login />
     </>
   );
 };
 export default PaginaInicial;
-
-{
-  /* <Link to={`/courseDetail/${cursoItem.id}`}></Link> */
-}
-
-// console.log(store)
-/* actions.getCourses()}, []) */
-/* useEffect(() => {
-    fetch(process.env.BACKEND_URL + "/api/detalle_curso" + `?name=${curso}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => setCursos(data));
-  }, []); */
-
-// function handleClick() {
-//   let history = useHistory();
-//   history.push("/courseDetail");
-// } /* useHistory -- crear "actions" -- quitar <Link> */

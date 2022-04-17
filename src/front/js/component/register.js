@@ -74,8 +74,8 @@ export const Register = () => {
     }
 
     return (
-        <Container>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '100vh' }}>
+        <Container className="containerregistro">
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '60vh' }}>
                 <div style={{ width: "600px" }}>
                     <Image className="imagenlogo" src={logo2} rounded />
                     <h2>Sign up</h2>
@@ -83,6 +83,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="username">Usuario</label>
                             <input
+                                className="inputregistro"
                                 name="username"
                                 id="username"
                                 type="text"
@@ -94,6 +95,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="email">Email</label>
                             <input
+                                className="inputregistro"
                                 name="email"
                                 id="email"
                                 type="email"
@@ -105,6 +107,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="password">Password</label>
                             <input
+                                className="inputregistro"
                                 name="password"
                                 id="password"
                                 type="password"
@@ -116,6 +119,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="password2">Confirmacion password</label>
                             <input
+                                className="inputregistro"
                                 name="password2"
                                 id="password2"
                                 type="password"

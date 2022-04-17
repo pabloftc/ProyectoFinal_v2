@@ -1,0 +1,40 @@
+.producto-carrito {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid #ebebf3;
+}
+
+.nombre-producto {
+  font-weight: bold;
+}
+
+.precio {
+  font-weight: bold;
+  font-size: large;
+  margin-top: 10px;
+}
+
+.lista-carrito {
+  max-width: 300px;
+  border: 100%;
+  border-width: auto;
+  display: "flex";
+  margin-bottom: "8px";
+  padding-left: 10px;
+  border-bottom: 1px solid #ebebf3;
+  justify-content: center;
+  align-items: center;
+}
+
+.sin-cursos {
+  align-items: center;
+  justify-content: center;
+  padding-left: 20%;
+}
+
+#eliminar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 35%;
+  margin-right: 35%;
+}

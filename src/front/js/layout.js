@@ -13,7 +13,13 @@ import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
 import { Usuarios } from "./pages/usuarios";
 import { Register } from "./component/register";
-// import { Compra } from "./component/compra";
+import { Compra } from "./component/compra";
+import { PaymentForm } from "./component/Formulariopago";
+import { Pagobueno } from "./pages/Pagocorrecto";
+import { Pagomalo } from "./pages/Pagoinfallido";
+
+import { CarroFuncional } from "./component/Datafake";
+import { CartProvider } from "react-use-cart";
 
 //create your first component
 const Layout = () => {
@@ -36,9 +42,21 @@ const Layout = () => {
             <Route exact path="/login">
               <Login />
             </Route>
-            {/* <Route exact path="/compra">
-							<Compra />
-						</Route> */}
+            <Route exact path="/compra">
+              <CartProvider>
+                <Compra />
+              </CartProvider>
+            </Route>
+            <Route exact path="/payment-form">
+              <PaymentForm />
+            </Route>
+            <Route exact path="/pagocorrecto">
+              <Pagobueno />
+            </Route>
+            <Route exact path="/pagofallido">
+              <Pagomalo />
+            </Route>
+
             <Route exact path="/miscursos">
               <MisCursos />
             </Route>
@@ -50,6 +68,9 @@ const Layout = () => {
             </Route>
             <Route exact path="/single/:theid">
               <Single />
+            </Route>
+            <Route exact path="/Cursos">
+              <CarroFuncional />
             </Route>
             <Route>
               <h1>Not found!</h1>

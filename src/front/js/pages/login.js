@@ -1,49 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Form, Button, Image } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 import logo2 from '../../img/logo2.png';
+import "../../styles/home.css";
+// import SayanImageUrl from "../../img/logo.jpeg";
 
 const Login = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errormessage, setErrormessage] = useState("");
   console.log(password);
-  const onSubmitHandler = async () => {
-    sessionStorage.setItem("email", email);
-    // sessionStorage.setItem("password", password);
-    const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-      // MODIFICAR ACA
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log("_".repeat(80));
-    console.log(data);
-    if (response.ok == false) {
-      setErrormessage(
-        "Su usuario no está registrado en plataforma, o bien se ha equivocado en su contraseña"
-      );
-    } else {
-      sessionStorage.setItem("token", data.access_token); //Código para enviar a otra vista
+  let history = useHistory();
+  const { store, actions } = useContext(Context);
+  const isLoggedIn = store.isLoggedIn
+  useEffect(() => {
+    if (isLoggedIn == true) {
+      //Código para enviar a otra vista  
+      history.push("/miscursos");
     }
+  }, [isLoggedIn]);
+  const onSubmitHandler = () => {
+    actions.createToken(email, password);
+  }
 
-    // .then(resp =>  { console.log(resp.json)
-    //   return resp.json()})
-    // .then(data => {console.log
-    //   return data()})
-    // .then(data => setStore({ message: data.message }))
-    // .catch(error => console.log("Error loading message from backend", error));
-  };
-  return [
+  // CÓDIGO QUE PASÉ A FLUX, hasta la línea 37
+  // const onSubmitHandler = async () => {
+  //   sessionStorage.setItem("email", email);
+  //   // sessionStorage.setItem("password", password);
+  //   const response = await fetch(process.env.BACKEND_URL + "/api/login", {
+  //     // MODIFICAR ACA
+  //     body: JSON.stringify({
+  //       email: email,
+  //       password: password,
+  //     }),
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await response.json();
+  //   console.log("_".repeat(80));
+  //   console.log(data);
+  //   if (response.ok == false) {
+  //     setErrormessage(
+  //       "Su usuario no está registrado en plataforma, o bien se ha equivocado en su contraseña"
+  //     );
+  //   } else {
+  //     sessionStorage.setItem("token", data.access_token)
+  // history.push("/miscursos"); //Código para enviar a otra vista
+  //   }
+
+  // .then(resp =>  { console.log(resp.json)
+  //   return resp.json()})
+  // .then(data => {console.log
+  //   return data()})
+  // .then(data => setStore({ message: data.message }))
+  // .catch(error => console.log("Error loading message from backend", error));
+
+  return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '100vh' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
+      >
         <div style={{ width: "600px" }}>
-
+          {/* <img src={SayanImageUrl} style={{ width: '300px', height: "70px"}}/>     */}
           <Image className="imagenlogo" src={logo2} rounded />
           <h2 style={{ color: "#191B1E", textAlign: "center" }}>Log in</h2>
           <Form>
@@ -70,14 +98,30 @@ const Login = () => {
               />
             </Form.Group>
             <p>{errormessage}</p>
-            <Button variant="primary" style={{ width: "100%" }} onClick={onSubmitHandler}>
+            <Button
+              variant="primary"
+              style={{ width: "100%" }}
+              onClick={onSubmitHandler}
+            >
               Log in
             </Button>
           </Form>
         </div>
       </div>
-
+      <div className="registroconnosotros" style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "30vh"
+      }}>
+        <Form.Group>
+          <Form.Label>¿No tienes cuenta? Regístrate con nosotros</Form.Label>
+          <Link to="/register">
+            <button id="botonregistrologin" className="btn btn-primary">¡Regístrate!</button>
+          </Link>
+        </Form.Group>
+      </div>
     </>
-  ];
+  );
 };
 export default Login;
