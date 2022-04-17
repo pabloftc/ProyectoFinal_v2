@@ -132,7 +132,7 @@ def register():
 # Crear Usuario
 @api.route("/usuarios", methods=["POST"])
 def crear_user():
-    username = request.json.get("usernamfe", None)
+    username = request.json.get("username", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     rol = request.json.get("rol", None)
