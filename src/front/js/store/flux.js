@@ -44,7 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				try {
 				const resp = await fetch(
-					process.env.BACKEND_URL + "/api/usuarios" + id,
+					process.env.BACKEND_URL + "/api/usuarios",
 					opts
 				);
 				if (resp.status < 200 || resp.status > 299) {
