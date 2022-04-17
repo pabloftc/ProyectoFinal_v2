@@ -37,7 +37,7 @@ def login():
         access_token = create_access_token(identity=email)
         return jsonify(access_token=access_token)   
     else:
-        return jsonify({"msg": "Bad username or password"}), 401    
+        return jsonify({"msg": "Bad username or password"}), 401       
 
 #endpoint del detalle de un curso
 @api.route("/detalle_curso", methods=["GET"])
@@ -66,7 +66,7 @@ def get_course(id):
 
     return jsonify(un_curso), 200
 
-@api.route("/cursos", methods=["POST"])
+@api.route("/scursos", methods=["POST"])
 def post_course():
     response = {'mensaje': '', 'status': ''}
     try:
@@ -132,7 +132,7 @@ def register():
 # Crear Usuario
 @api.route("/usuarios", methods=["POST"])
 def crear_user():
-    username = request.json.get("username", None)
+    username = request.json.get("usernamfe", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     rol = request.json.get("rol", None)
