@@ -7,11 +7,20 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80),unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     rol = db.Column(db.String(30), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    cursos = db.relationship("Cursos", backref="user", passive_deletes=True)
+
+#def __init__(self, username, email, password, is_active):
+   # self.username = username
+    #self.email = email
+   # self.password = password
+   # self.is_active = is_active
+
+
     def __repr__(self):
         return '<User %r>' % self.username
     def serialize(self):
@@ -35,8 +44,8 @@ class Cursos(db.Model):
     precio = db.Column(db.Integer)
     duracion = db.Column(db.String(250))
     created_at = db.Column(db.DateTime(), default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    rel_user = db.relationship("User", cascade="all, delete")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    
     def serialize(self):
         return {
             "id": self.id,
@@ -49,17 +58,18 @@ class Cursos(db.Model):
             "duracion": self.duracion,
             "created_at": self.created_at,
             "user_id": self.user_id
+        
         }
         
 # _tablename_='compra'
 class Pedidos(db.Model):
+    __tablename__ = 'pedidos'
     id = db.Column(db.Integer, primary_key=True)
-    precio_total = db.Column(db.Integer)
+    precio_total = db.Column((db.Integer), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.now())
-    metodo_de_pago = db.Column(db.Integer)
+    metodo_de_pago = db.Column((db.Integer), nullable=False)
     curso_id = db.Column(db.Integer, db.ForeignKey('cursos.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    
     def serialize(self):
         return {
             "id": self.id,
@@ -68,4 +78,5 @@ class Pedidos(db.Model):
             "curso_id": self.curso_id,
             "user_id": self.user_id,
             "created_at": self.created_at,
-        }    
+        }
+            
