@@ -21,7 +21,6 @@ import { Pagomalo } from "./pages/Pagoinfallido";
 import { CarroFuncional } from "./component/Datafake";
 import { CartProvider } from "react-use-cart";
 
-
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain

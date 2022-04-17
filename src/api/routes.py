@@ -15,9 +15,7 @@ import os
 
 API_KEY = os.environ.get("SENDGRID_API_KEY")
 
-
 api = Blueprint('api', __name__)
-
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -67,7 +65,41 @@ def get_course(id):
 
     return jsonify(un_curso), 200
 
-#endpoint del registro de usuario
+@api.route("/cursos", methods=["POST"])
+def post_course():
+    response = {'mensaje': '', 'status': ''}
+    try:
+        nombreCurso = request.json.get('nombreCurso')
+        descripcionCurso = request.json.get('descripcionCurso')
+        duracionCurso = request.json.get('duracionCurso')
+        categoriaCurso = request.json.get('categoriaCurso')
+        urlCurso = request.json.get('urlCurso')
+        imgCurso = request.json.get('imgCurso')
+
+        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso)
+        existing_course = Cursos.query.filter_by(name=nombreCurso).first()
+
+        if existing_course:
+            response['mensaje'] = 'Este Curso ya existe'
+            response['status'] = 500
+        else:
+            db.session.add(course)
+            db.session.commit()
+            response['mensaje'] = 'Curso agregado!'
+            response['status'] = 200
+    except Exception as e:
+        print(f'El curso no pudo ser agregado: {e}')
+    return jsonify(response['mensaje']), response['status']
+
+@api.route('/cursos/<int:id>', methods=['DELETE'])
+def eliminar_curso(id):
+    curso = Cursos.query.get(id)
+
+    db.session.delete(curso)
+    db.session.commit()
+
+    return ("Curso Eliminado")
+
 @api.route("/register", methods=["POST"])
 def register():
     response = {'mensaje': '', 'status': ''}
