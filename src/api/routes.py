@@ -16,9 +16,7 @@ import os
 
 API_KEY = os.environ.get("SENDGRID_API_KEY")
 
-
 api = Blueprint('api', __name__)
-
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -68,21 +66,68 @@ def get_course(id):
 
     return jsonify(un_curso), 200
 
-#endpoint del registro de usuario
+@api.route("/cursos", methods=["POST"])
+def post_course():
+    response = {'mensaje': '', 'status': ''}
+    try:
+        nombreCurso = request.json.get('nombreCurso')
+        descripcionCurso = request.json.get('descripcionCurso')
+        duracionCurso = request.json.get('duracionCurso')
+        categoriaCurso = request.json.get('categoriaCurso')
+        urlCurso = request.json.get('urlCurso')
+        imgCurso = request.json.get('imgCurso')
+
+        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso)
+        existing_course = Cursos.query.filter_by(name=nombreCurso).first()
+
+        if existing_course:
+            response['mensaje'] = 'Este Curso ya existe'
+            response['status'] = 500
+        else:
+            db.session.add(course)
+            db.session.commit()
+            response['mensaje'] = 'Curso agregado!'
+            response['status'] = 200
+    except Exception as e:
+        print(f'El curso no pudo ser agregado: {e}')
+    return jsonify(response['mensaje']), response['status']
+
+@api.route('/cursos/<int:id>', methods=['DELETE'])
+def eliminar_curso(id):
+    curso = Cursos.query.get(id)
+
+    db.session.delete(curso)
+    db.session.commit()
+
+    return ("Curso Eliminado")
+
 @api.route("/register", methods=["POST"])
 def register():
-    username = request.json.get("username", None)
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    user=User(username=username, email=email, password=password)
-    #len es una función que cuenta el largo de un array, y en el código de a continuación dice si el largo del array es mayor a 0 entonces error, porque ya existe un usuario con esos datos.
-    if len(User.query.filter_by(username=username).all()) > 0:
-        return jsonify({"Error": "Ya existe un usuario registrado con este nombre en la plataforma"}), 400
-    else:
-        db.session.add(user)
-        db.session.commit()
-    
-    return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
+    response = {'mensaje': '', 'status': ''}
+    try:
+        username = request.json.get("username", None)
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+        #acá se debería cambiar el rol a "user" en el paréntesis
+        rol = request.json.get("user", None)
+        #is_active = request.json.get("is_active", None)
+
+        if username != None and email != None and password != None:
+
+            existing_user = User.query.filter_by(email=email).first()
+
+            if existing_user:
+                response['mensaje'] = 'Este correo ya está en uso'
+                response['status'] = 500
+            else:
+                user=User(username=username, email=email, password=password, rol="user", is_active=True)
+                db.session.add(user)
+                db.session.commit()
+                response['mensaje'] = 'Perfecto'
+                response['status'] = 200
+    except Exception as e:
+        print(f'registerfailed: {e}')
+    return jsonify(response['mensaje']), response['status']
 
 # Crear Usuario
 @api.route("/usuarios", methods=["POST"])
@@ -200,7 +245,7 @@ def editar_curso(id):
 # Eliminar Curso
 
 @api.route('/cursos/<int:id>/<int:user_id>', methods=['DELETE'])
-def eliminar_curso(id, user_id):
+def eliminar_curso_user(id, user_id):
     curso = Cursos.query.filter_by(id=id, user_id = user_id)
 
     db.session.delete(curso)
@@ -208,31 +253,6 @@ def eliminar_curso(id, user_id):
 
     return jsonify(curso)
 
-    response = {'mensaje': '', 'status': ''}
-    try:
-        username = request.json.get("username", None)
-        email = request.json.get("email", None)
-        password = request.json.get("password", None)
-        #acá se debería cambiar el rol a "user" en el paréntesis
-        rol = request.json.get("user", None)
-        #is_active = request.json.get("is_active", None)
-
-        if username != None and email != None and password != None:
-
-            existing_user = User.query.filter_by(email=email).first()
-
-            if existing_user:
-                response['mensaje'] = 'Este correo ya está en uso'
-                response['status'] = 500
-            else:
-                user=User(username=username, email=email, password=password, rol="user", is_active=True)
-                db.session.add(user)
-                db.session.commit()
-                response['mensaje'] = 'Perfecto'
-                response['status'] = 200
-    except Exception as e:
-        print(f'registerfailed: {e}')
-    return jsonify(response['mensaje']), response['status']
 
 #endpoint de comprar
 @api.route("/compra", methods=["GET"])
