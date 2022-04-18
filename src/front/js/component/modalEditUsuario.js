@@ -11,7 +11,9 @@ const ModalEditUsers = (props, data) => {
   const [rol, setRol] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [confirmPassword, setConmfirmPassword] = useState();
-  console.log(data);
+  const id = props.data.id;
+  
+
   const validatePassword = (e) => {
       if ( password == e.target.value){
         setConmfirmPassword(e.target.value)
@@ -22,7 +24,7 @@ const ModalEditUsers = (props, data) => {
       
   };
   const updateUsuario = () => {
-      actions.actualizarUser(username, password, rol, email)
+      actions.actualizarUser(id, username, password, rol, email)
   }
   return (
       <>
