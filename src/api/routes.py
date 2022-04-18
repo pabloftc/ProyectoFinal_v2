@@ -32,10 +32,10 @@ def handle_hello():
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user=User(email=email, password=password)
-    if len(User.query.filter_by(email=email, password=password).all()) > 0:
+    user= User.query.filter_by(email=email, password=password).all()
+    if len(user) > 0:
         access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token)   
+        return jsonify(access_token=access_token, user_id=user[0].id, rol=user[0].rol)   
     else:
         return jsonify({"msg": "Bad username or password"}), 401       
 

@@ -36,6 +36,7 @@ const PaginaInicial = () => {
       <div
         style={{
           display: "flex",
+          alignItems: "center",
           justifyContent: "space-between",
           paddingTop: "40px",
           paddingBottom: "40px",
@@ -52,8 +53,9 @@ const PaginaInicial = () => {
             placeholder="Search . . ."
             className="me"
             aria-label="Search"
+            style={{margin:"0px", marginRight:"10px", fontSize:"10pt"}}
           />
-          <Button variant="outline-secondary" onClick={finderHandler}>
+          <Button variant="outline-secondary" onClick={finderHandler} style={{width:"50px", height:"50px"}}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Button>
         </Form>
