@@ -11,7 +11,7 @@ export const MisCursos = () => {
     const [modalShow, setModalShow] = useState(false);
     const [modalEditShow, setModalEditShow] = useState(false);
     const [data, setData] = useState("");
-    const {store, actions} = useContext(Context);
+    const { store, actions } = useContext(Context);
     const userId = sessionStorage.getItem("user_id");
     useEffect(() => {
         // Update the document title using the browser API
