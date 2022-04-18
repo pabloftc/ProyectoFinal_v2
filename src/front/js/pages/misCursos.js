@@ -1,29 +1,43 @@
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Table } from 'react-bootstrap'
 import ModalCursos from "../component/modalCursos";
 import { Context } from "../store/appContext";
+import ModalEditCurso from "../component/modalEditCurso";
 
 
 export const MisCursos = () => {
+    let history = useHistory();
     const [modalShow, setModalShow] = useState(false);
+    const [modalEditShow, setModalEditShow] = useState(false);
+    const [data, setData] = useState("");
     const {store, actions} = useContext(Context);
+    const userId = sessionStorage.getItem("user_id");
 
+    function createCourse() {
+        history.push('/courseInscription');
+    }
     useEffect(() => {
         // Update the document title using the browser API
-        actions.getCursosUser(store.user_id);
+        actions.getCursosUser(userId);
       }, []);
     
-      const borrarCursoUser = () => {
-          actions.borrarCurso();
+      const borrarCursoUser = (id) => {
+          actions.borrarCurso(id);
       }
-    console.log(store.lista_mis_cursos)
+      const actualizarCursoUser = (e) => {
+        setData(e);
+        console.log(e);
+        setModalEditShow(true)  
+     }
 
 return (
         <>
         <Container>
-             <Button variant="success" onClick={() => setModalShow(true) }>Crea un Nuevo Curso</Button>
+             <Button variant="success" onClick={() => createCourse()}>Crea un Nuevo Curso</Button>
+             {/* () => setModalShow(true) */}
              <br />
 
 
@@ -55,15 +69,15 @@ return (
                                             </td>
                                             <td><a href={e.url} target="_blank">Video</a></td>
                                             <td>{e.created_at}</td>
-                                            <td><Button variant="info" onClick={() => setModalShow(true) }>Editar</Button> {'  '}
-                                            <Button variant="danger" onClick={() => borrarCursoUser() }> Eliminar</Button></td>
+                                            <td><Button variant="info" onClick={() => { actualizarCursoUser(e)} }>Editar</Button> {'  '}
+                                            <Button variant="danger" onClick={() => borrarCursoUser(e.id) } href="miscursos"> Eliminar</Button></td>
 
                                     </tr>
                             )}
                     )}
                  </tbody>
              </Table>
-
+             <ModalEditCurso show={modalEditShow} onHide= {() => setModalEditShow(false)} data={data}/>                  
              <ModalCursos show={modalShow} onHide= {() => setModalShow(false)}/>
         </Container>
         

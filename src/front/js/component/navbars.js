@@ -24,51 +24,45 @@ export const Navbars = () => {
   //  console.log('TOKEN: ', token)
   return (
     <>
-      <Navbar
-        bg="light"
-        expand="lg"
+      <Navbar bg="light" expand="lg">
+  	<Container fluid>
+  	<Link to="/">
+    <Navbar.Brand><img src={SayanImageUrl} style={{ width: '300px', height: "70px"}}/></Navbar.Brand>
+	</Link>
+    <Navbar.Toggle aria-controls="navbarScroll" />
+    <Navbar.Collapse id="navbarScroll">
+      <Nav
+        className="me-auto my-2 my-lg-0"
+        style={{ maxHeight: '100px' }}
+        navbarScroll
       >
-        <Container fluid>
-          <Link to="/">
-            <Navbar.Brand>
-              <img
-                src={SayanImageUrl}
-                style={{ width: "200px", height: "70px" }}
-              />
-            </Navbar.Brand>
-          </Link>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
-              navbarScroll
-            >
-              <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
-              <Link to="/cursos">
-                <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
-              </Link>
-              <Nav.Link href="precios" className="navpaginas"><p>Precios</p></Nav.Link>
-              <Nav.Link href="favoritos" className="navpaginas"><p>Favoritos</p></Nav.Link>
-              <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
-
-            </Nav>
-            {/* ! significa contrario al valor del booleano  */}
-            {!isLoggedIn ? <Link to="/login">
-              <Button variant="outline-primary" style={{ marginRight: '5px' }}>Log In
-              </Button>
-            </Link> : <></>}
-            {!isLoggedIn ? <Link to="/register">
-              <Button variant="primary" style={{ marginRight: '5px' }}>Sign Up</Button>
-            </Link> : <></>}
-            {!isLoggedIn ? <></> : <LogoutButton />}
-            {/* {!isLoggedIn ? <></> : <><Link to="/compra">
-              <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
-            </Link>
-              <span className="productosencarrito">0</span></>} */}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
-  );
+        <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
+        <Nav.Link href="/cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+        { isLoggedIn ? <> <Link to="/miscursos">
+        <Nav.Link href="sobrenosotros" className="navpaginas"><p>MisCursos</p></Nav.Link>
+         </Link>
+        </>
+        : <></>
+        }
+        {sessionStorage.getItem("rol") == "Admin" ? <>
+        <Nav.Link href="usuarios" className="navpaginas">Usuarios</Nav.Link>
+        <Nav.Link href="todosloscursos" className="navpaginas">All Cursos</Nav.Link>
+        </>
+      : <></>}
+      
+      </Nav>
+    {/* ! significa contrario al valor del booleano  */}
+     { ! isLoggedIn ? <Link to="/login">
+      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
+      </Button> 
+      </Link> :<></> }
+      {! isLoggedIn ? <Link to="/register"> 
+        <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
+      </Link> : <></> }
+     { ! isLoggedIn ? <></> : <LogoutButton /> }
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+</>
+	);
 };

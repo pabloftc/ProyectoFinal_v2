@@ -66,7 +66,7 @@ def get_course(id):
 
     return jsonify(un_curso), 200
 
-@api.route("/scursos", methods=["POST"])
+@api.route("/cursos", methods=["POST"])
 def post_course():
     response = {'mensaje': '', 'status': ''}
     try:
@@ -76,8 +76,9 @@ def post_course():
         categoriaCurso = request.json.get('categoriaCurso')
         urlCurso = request.json.get('urlCurso')
         imgCurso = request.json.get('imgCurso')
+        precioCurso = request.json.get('precioCurso')
 
-        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso)
+        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso, precio=precioCurso)
         existing_course = Cursos.query.filter_by(name=nombreCurso).first()
 
         if existing_course:
@@ -196,14 +197,14 @@ def get_cursos_user(user_id):
 
 # Crear Curso
 
-@api.route("/cursos", methods=["POST"])
+@api.route("/miscursos", methods=["POST"])
 def crear_curso():
     id = request.json.get("id")
     name = request.json.get("name")
     description = request.json.get("description")
     categoria = request.json.get("categoria")
-    url = request.json.get("url")
-    url_portada = request.json.get("url_portada")
+    url = request.json.get("URL")
+    url_portada = request.json.get("URLPortada")
     precio = request.json.get("precio")
     duracion = request.json.get("duracion")
     created_at = request.json.get("created_at")
@@ -218,15 +219,15 @@ def crear_curso():
 
 # Editar Curso
 
-@api.route("/cursos/<id>", methods=["PUT"])
+@api.route("/miscursos/<int:id>", methods=["PUT"])
 def editar_curso(id):
     curso = Cursos.query.get(id)
 
     name = request.json.get("name")
     description = request.json.get("description")
     categoria = request.json.get("categoria")
-    url = request.json.get("url")
-    url_portada = request.json.get("url_portada")
+    url = request.json.get("URL")
+    url_portada = request.json.get("URLPortada")
     precio = request.json.get("precio")
     duracion = request.json.get("duracion")
 
@@ -244,14 +245,14 @@ def editar_curso(id):
 
 # Eliminar Curso
 
-@api.route('/cursos/<int:id>/<int:user_id>', methods=['DELETE'])
-def eliminar_curso_user(id, user_id):
-    curso = Cursos.query.filter_by(id=id, user_id = user_id)
+@api.route('/miscursos/<int:id>', methods=['DELETE'])
+def eliminar_curso_user(id):
+    curso = Cursos.query.get(id)
 
     db.session.delete(curso)
     db.session.commit()
 
-    return jsonify(curso)
+    return jsonify({"success": "Su curso ha sido eliminado en la plataforma "})
 
 
 #endpoint de comprar

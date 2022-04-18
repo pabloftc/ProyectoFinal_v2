@@ -18,12 +18,11 @@ export const Home = () => {
 
   return (
     <Container>
-      <Row className="p-5">
+      <Row className="p-5 mb-3">
         <Col className="pt-5">
           <h1 className="pb-3 display-2">Cursos SayanDevelopers</h1>
           <h4 className="pb-3">
-            Ven y danos tu dinero por ver videos de YouTube que podrías ver
-            gratis
+            Aprende lo que quieras y a tu ritmo!
           </h4>
           <Link to={`/register`}>
             <Button variant="primary" size="lg">
@@ -40,8 +39,7 @@ export const Home = () => {
           <Image fluid src={Hero} />
         </Col>
       </Row>
-      <PaginaInicial />
-      <CourseInscription />
+      <PaginaInicial className="mb-3" />
     </Container>
   );
 };
