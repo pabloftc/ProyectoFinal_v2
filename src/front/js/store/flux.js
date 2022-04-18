@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			cursos: [],
 			token: null,
 			rol: "Admin",
-			user_id: "3",
+			user_id: "4",
 			lista_mis_cursos:[],
 			usuario: null,
 			playlists: [],
@@ -60,14 +60,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("theres an error while Creating the User", error);
 				}},
 
-				borrarUsuario:  (e) => {
+				borrarUsuario:  (id) => {
 					const opts = {
 						method: "DELETE",
 						headers: {
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify({
-							"id": e.id,
+							"id": id,
 						
 						})};
 					fetch (process.env.BACKEND_URL + "/api/usuarios/" + id,opts)
@@ -290,7 +290,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				try {
 				const resp = await fetch(
-					process.env.BACKEND_URL + "/api/cursos",
+					process.env.BACKEND_URL + "/api/miscursos",
 					opts
 				);
 				if (resp.status !== 200) {
@@ -306,20 +306,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("theres an error while Creating the Course", error);
 				}
 			},
-			borrarCurso: async (id, user_id) => {const opts = {
+			actualizarCurso:	async (id, nombre, categoria, descripcion, precio, duracion, URL, URLPortada) => {
+				const opts = {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					"name": nombre,
+					"categoria": categoria,
+					"description": descripcion,
+					"precio": precio,
+					"duracion": duracion,
+					"URL": URL,
+					"URLPortada": URLPortada
+
+				}),
+				};
+				try {
+				const resp = await fetch(
+					process.env.BACKEND_URL + "/api/miscursos/" + id,
+					opts
+				);
+				if (resp.status !== 200) {
+					alert("there has been an error");
+					return false;
+				}
+
+				const data = await resp.json();
+				console.log("this came from the backend", data);
+				alert("Curso creado con exito");
+				return true;
+				} catch (error) {
+				console.log("theres an error while Creating the Course", error);
+				}
+			},
+			borrarCurso: async (id) => {const opts = {
 				method: "DELETE",
 				headers: {
 				  "Content-Type": "application/json",
 				},
 				body: JSON.stringify({
 				  "id": id,
-				  "user_id": user_id
+		
 	  
 				}),
 			  };
 			  try {
 				const resp = await fetch(
-					process.env.BACKEND_URL + "/api/cursos/" + id +"/"+ user_id,
+					process.env.BACKEND_URL + "/api/miscursos/" + id,
 				  opts
 				);
 				if (resp.status !== 200) {
@@ -330,7 +365,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return true;	
 					}
 					catch (error) {
-					console.log("there an error while Creating the Course", error);
+					console.log("there an error while Deleting the Course", error);
 				}
 				},
 

@@ -39,9 +39,17 @@ export const Navbars = () => {
       >
         <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
         <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
-        <Nav.Link href="precios" className="navpaginas"><p>Precios</p></Nav.Link>
-        <Nav.Link href="favoritos" className="navpaginas"><p>Favoritos</p></Nav.Link>
-        <Nav.Link href="sobrenosotros" className="navpaginas"><p>Sobre Nosotros</p></Nav.Link>
+        { isLoggedIn ? <> <Link to="/miscursos">
+        <Nav.Link href="sobrenosotros" className="navpaginas"><p>MisCursos</p></Nav.Link>
+         </Link>
+        </>
+        : <></>
+        }
+        {store.rol == "Admin" ? <>
+        <Nav.Link href="usuarios" className="navpaginas">Usuarios</Nav.Link>
+        <Nav.Link href="todosloscursos" className="navpaginas">All Cursos</Nav.Link>
+        </>
+      : <></>}
       
       </Nav>
     {/* ! significa contrario al valor del booleano  */}

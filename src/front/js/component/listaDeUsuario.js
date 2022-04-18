@@ -6,18 +6,20 @@ import { Context } from "../store/appContext";
 import ModalEditUsers from "./modalEditUsuario";
 
 export const ListaDeUsuario = () => {
+
     const {store, actions} = useContext(Context);
 
     const [modalShow, setModalShow] = useState(false);
     
-    const [data, setData] =useState('');
+    const [data, setData] =useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rol, setRol] = useState("");
     // setRol(store.rol)
     const modalData = (e) => {
-        setData(store.lista_usuarios[e]);
+        setData(e);
+        console.log(data);
         setModalShow(true)
     }
      useEffect(() => {
@@ -54,9 +56,9 @@ export const ListaDeUsuario = () => {
                                         <td>{e.password}**********</td>
                                         <td>{e.rol}</td>
                                         <td>
-                                        <Button variant="info" onClick={(e) => {modalData(e); console.log(e)}}>Editar</Button> 
+                                        <Button variant="info" onClick={() => {modalData(e); console.log(e)}}>Editar</Button> 
                                         {'  '}
-                                        <Button variant="danger" onClick={(e) => {actions.borrarUsuario(e.id);}} href="/usuarios"> Eliminar</Button>
+                                        <Button variant="danger" onClick={() => {actions.borrarUsuario(e.id)}} href="/usuarios" > Eliminar</Button>
                                         </td>
                                     
                                 </tr>
@@ -64,7 +66,7 @@ export const ListaDeUsuario = () => {
                         })}   
                         </tbody>
                     </Table>
-                <ModalEditUsers show={modalShow} onHide= {() => setModalShow(false)}/>
+                <ModalEditUsers show={modalShow} onHide= {() => setModalShow(false)} data={data}/>
                 </Container>
 
                 </>
