@@ -4,8 +4,6 @@ import { Context } from "../store/appContext";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
 
-// Cargar documentación (PDF - validar) - url Gitpod - En la database se guarda una URL
-
 export default function CourseInscription() {
   const { store, actions } = useContext(Context);
   let history = useHistory();
