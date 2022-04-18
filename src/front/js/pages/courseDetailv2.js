@@ -6,14 +6,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import YouTube from "../component/youTube";
-import { Link } from "react-router-dom";
+import { data } from "../component/Datafake";
 
-export default function CourseDetail() {
+export default function CourseDetailv2() {
   const { store, actions } = useContext(Context);
   const [carrito, setCarrito] = useState([]);
   const isLoggedIn = store.isLoggedIn;
   let history = useHistory();
+
 
   const handleClick = (id) => {
     actions.courseToStore(id);
@@ -36,6 +36,10 @@ export default function CourseDetail() {
     }
   };
 
+  const url = window.location.href;
+  const char = url.slice(-1);
+  const detail = data.cursosData[char - 1]
+
   //función dummy solo para pruebas
   const noCheckLogin = (e) => {
     e.preventDefault;
@@ -46,15 +50,13 @@ export default function CourseDetail() {
     <Container fluid>
       <Row>
         <Col className="m-5 p-5">
-          <h1 className="mb-2">{store.curso_actual.name}</h1>
-          <h3 className="mb-2">
-            Descripción: {store.curso_actual.description}
-          </h3>
-          <h4 className="mb-2">Categoría: {store.curso_actual.categoria}</h4>
-          <h4 className="mb-2">
-            Duración: {store.curso_actual.duracion} Horas
-          </h4>
-          <h4 className="mb-3">Precio: {store.curso_actual.precio}</h4>
+          <h1 className="mb-2">{detail.name}</h1>
+          <h3 className="mb-2">Descripción: {detail.description}</h3>
+          <h4 className="mb-2">Categoría: {detail.categoría}</h4>
+          {/* <h4 className="mb-2">
+            Duración: {data.cursosData.duracion} Horas
+          </h4> */}
+          <h4 className="mb-3">Precio: {detail.price}</h4>
           <Button
             onClick={(e) => {
               checkLogin(e);
@@ -76,11 +78,6 @@ export default function CourseDetail() {
         </Col>
         <Col>
           <Image fluid src="https://picsum.photos/600/400" />
-        </Col>
-      </Row>
-      <Row>
-        <Col className="align-self-center">
-      <YouTube url={store.curso_actual.url} />
         </Col>
       </Row>
     </Container>

@@ -6,6 +6,22 @@
     on that page only (the ones not reused in other pages).
 */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Roboto Mono", Arial, sans-serif;
+  font-size: 1.7rem;
+}
+
 .navpaginas {
   font-size: 22px;
   font-weight: bold;

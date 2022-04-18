@@ -11,7 +11,9 @@ import { Footer } from "./component/footer";
 import Login from "./pages/login";
 import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
+import CourseInscription from "./pages/courseInscription";
 import { Usuarios } from "./pages/usuarios";
+import CourseDetailv2 from "./pages/courseDetailv2";
 import { Register } from "./component/register";
 import { Compra } from "./component/compra";
 import { PaymentForm } from "./component/Formulariopago";
@@ -56,9 +58,11 @@ const Layout = () => {
             <Route exact path="/pagofallido">
               <Pagomalo />
             </Route>
-
             <Route exact path="/miscursos">
               <MisCursos />
+            </Route>
+            <Route exact path="/courseInscription">
+              <CourseInscription />
             </Route>
             <Route exact path="/usuarios">
               <Usuarios />
@@ -72,8 +76,11 @@ const Layout = () => {
             <Route exact path="/Cursos">
               <CarroFuncional />
             </Route>
+            <Route exact path="/courseDetailv2/:id">
+              <CourseDetailv2 />
+            </Route>
             <Route>
-              <h1>Not found!</h1>
+              <h1>Sitio en Construcción!</h1>
             </Route>
           </Switch>
           <Footer />

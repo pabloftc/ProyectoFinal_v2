@@ -1,17 +1,24 @@
 import React from "react";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Table } from 'react-bootstrap'
 import ModalCursos from "../component/modalCursos";
 
 
 export const MisCursos = () => {
+    let history = useHistory();
     const [modalShow, setModalShow] = useState(false);
+    
+    function createCourse() {
+        history.push('/courseInscription')
+    }
 
 return (
         <>
         <Container>
-             <Button variant="success" onClick={() => setModalShow(true) }>Crea un Nuevo Curso</Button>
+             <Button variant="success" onClick={() => createCourse()}>Crea un Nuevo Curso</Button>
+             {/* () => setModalShow(true) */}
              <br />
 
 

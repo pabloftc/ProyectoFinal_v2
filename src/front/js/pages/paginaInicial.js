@@ -24,6 +24,7 @@ const PaginaInicial = () => {
       finderHandler();
     }
   }, [curso]);
+
   let history = useHistory();
 
   function handleClick(id) {

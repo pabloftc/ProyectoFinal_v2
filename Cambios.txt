@@ -1,0 +1,7 @@
+Cambiar:
+
+-- modalCursos.js (Formulario) - check
+-- Cursosfake.js (Detalle Curso) - check
+-- Componente YouTube
+-- Archivo PDF
+-- Redirigir al home post creación de curso

@@ -18,7 +18,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <Row className="p-5">
+      <Row className="p-5 mb-3">
         <Col className="pt-5">
           <h1 className="pb-3 display-2">Cursos SayanDevelopers</h1>
           <p className="pb-3">
@@ -40,8 +40,7 @@ export const Home = () => {
           <Image fluid src={Hero} />
         </Col>
       </Row>
-      <PaginaInicial />
-      <CourseInscription />
+      <PaginaInicial className="mb-3" />
     </Container>
   );
 };
