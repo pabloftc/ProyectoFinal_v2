@@ -12,7 +12,7 @@ const Cursos = () => {
     const [modalEditShow, setModalEditShow] = useState(false);
     const {store, actions} = useContext(Context);
     const [data, setData] = useState("");
-    const user = store.rol;
+    const user = sessionStorage.getItem("rol");
     useEffect(() => {
         // Update the document title using the browser API
         actions.getCursos();

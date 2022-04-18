@@ -10,14 +10,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			cursos: [],
 			token: null,
-			rol: "Admin",
-			user_id: "4",
+			rol: "",
+			user_id: "",
 			lista_mis_cursos:[],
 			usuario: null,
 			playlists: [],
 			curso_actual: {},
-			pago: {},
-		
+			pago: {},	
       		isLoggedIn: false,
 		
 				
@@ -78,35 +77,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log("error", error));
 				},
-			//Crear token
-			createToken: async (email, password) => {
-				sessionStorage.setItem("email", email);
-				// sessionStorage.setItem("password", password);
-				const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-					// MODIFICAR ACA
-					body: JSON.stringify({
-						email: email,
-						password: password,
-					}),
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-				const data = await response.json();
-				console.log("_".repeat(80));
-				console.log(data);
-				if (response.ok == false) {
-					setErrormessage(
-						"Su usuario no está registrado en plataforma, o bien se ha equivocado en su contraseña"
-					);
-				} else {
-					sessionStorage.setItem("token", data.access_token)
-					//reset the global store- Función que cambia el estado de isLoggedIn del store a true
-					setStore({ isLoggedIn: true });
-					//   history.push("/miscursos"); //Código para enviar a otra vista
-				}
-			},
 			//Eliminar token 
 			deleteToken: () => {
 				sessionStorage.clear()

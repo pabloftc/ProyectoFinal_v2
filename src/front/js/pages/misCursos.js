@@ -12,10 +12,10 @@ export const MisCursos = () => {
     const [modalEditShow, setModalEditShow] = useState(false);
     const [data, setData] = useState("");
     const {store, actions} = useContext(Context);
-
+    const userId = sessionStorage.getItem("user_id");
     useEffect(() => {
         // Update the document title using the browser API
-        actions.getCursosUser(store.user_id);
+        actions.getCursosUser(userId);
       }, []);
     
       const borrarCursoUser = (id) => {

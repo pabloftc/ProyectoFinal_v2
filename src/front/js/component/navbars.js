@@ -44,7 +44,7 @@ export const Navbars = () => {
         </>
         : <></>
         }
-        {store.rol == "Admin" ? <>
+        {sessionStorage.getItem("rol") == "Admin" ? <>
         <Nav.Link href="usuarios" className="navpaginas">Usuarios</Nav.Link>
         <Nav.Link href="todosloscursos" className="navpaginas">All Cursos</Nav.Link>
         </>

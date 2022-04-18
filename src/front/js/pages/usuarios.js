@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext, useState } from "react";
 
 import { ListaDeUsuario } from '../component/listaDeUsuario';
@@ -10,15 +10,17 @@ import { Context } from "../store/appContext";
 
 export const Usuarios = () => {
  const {store, actions} = useContext(Context)
+console.log(sessionStorage.getItem("rol"))
 
- const user = store.rol;
+const userRol = sessionStorage.getItem("rol");
+
     const [modalShow, setModalShow] = useState(false);
 
 
     return (
         <>
         <Container>
-            { user == "Admin" ? (<><Button variant="success" onClick={() => setModalShow(true) } >Crea un Nuevo Usuario</Button>
+            { userRol == "Admin" ? (<><Button variant="success" onClick={() => setModalShow(true) } >Crea un Nuevo Usuario</Button>
                 <ListaDeUsuario />
                 <ModalUsers show={modalShow} onHide= {() => setModalShow(false)}/></>)
             :   
