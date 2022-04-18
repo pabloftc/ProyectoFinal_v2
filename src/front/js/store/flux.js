@@ -136,8 +136,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
         } else {
           sessionStorage.setItem("token", data.access_token);
+		  sessionStorage.setItem("user_id", data.user_id);
+		  sessionStorage.setItem("rol", data.rol);
           //reset the global store- Función que cambia el estado de isLoggedIn del store a true
-          setStore({ isLoggedIn: true });
+          setStore({ isLoggedIn: true, user_id:data.user_id, rol:data.rol });
           //   history.push("/miscursos"); //Código para enviar a otra vista
         }
       },

@@ -33,15 +33,14 @@ class User(db.Model):
         }
 class Cursos(db.Model):
     __tablename__ = 'cursos'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(300))
-    description = db.Column(db.String(600))
-    categoria = db.Column(db.String(80))
-    url = db.Column(db.String(600))
-    url_portada = db.Column(db.String(600))
-    precio = db.Column(db.Integer)
+    # _tablename_='cursos'
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(300), nullable=False)
+    description = db.Column(String(600), nullable=False)
+    categoria = db.Column(String(80), nullable=False)
+    url = db.Column(db.String(300))
+    url_portada = db.Column(db.String(300))
+    precio = db.Column(db.Integer, nullable=False)
     duracion = db.Column(db.String(250))
     created_at = db.Column(db.DateTime(), default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))

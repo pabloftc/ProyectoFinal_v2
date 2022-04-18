@@ -4,28 +4,27 @@ import { Context } from "../store/appContext";
 import { Navbar, Container, Form, Button, Nav, FormControl } from 'react-bootstrap';
 
 import SayanImageUrl from "../../img/logo.jpeg";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 
-import '../../styles/home.css';
+import "../../styles/home.css";
 import { LogoutButton } from "./logoutButton";
 // import state from "sweetalert/typings/modules/state";
 
-
 export const Navbars = () => {
   const { store, actions } = useContext(Context);
-  const isLoggedIn = store.isLoggedIn
+  const isLoggedIn = store.isLoggedIn;
   //  const token = sessionStorage.getItem("token");
-  //Manejo de estado para el renderizado del botón login y logout 
+  //Manejo de estado para el renderizado del botón login y logout
   //  const [isLoggedIn, setIsLoggedIn] = useState(False);
   //  useEffect(() => {
   //    state.actions.getIsLoggedIn();
   //  }, []);
   //  console.log('TOKEN: ', token)
-	return (
-		<>
-		<Navbar bg="light" expand="lg">
+  return (
+    <>
+      <Navbar bg="light" expand="lg">
   	<Container fluid>
   	<Link to="/">
     <Navbar.Brand><img src={SayanImageUrl} style={{ width: '300px', height: "70px"}}/></Navbar.Brand>
