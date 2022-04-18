@@ -79,7 +79,7 @@ export default function CourseDetail() {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="m-5">
       <YouTube url={store.curso_actual.url} />
         </Col>
       </Row>

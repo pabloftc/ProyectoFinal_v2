@@ -60,10 +60,6 @@ export const Navbars = () => {
         <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link> : <></> }
      { ! isLoggedIn ? <></> : <LogoutButton /> }
-        <Link to="/compra">
-             <FontAwesomeIcon icon={faBagShopping} className="bagshopping" />
-        </Link>
-         <span className="productosencarrito">0</span>
     </Navbar.Collapse>
   </Container>
 </Navbar>
