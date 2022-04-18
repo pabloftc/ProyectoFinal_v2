@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import PaginaInicial from "./paginaInicial";
+import CourseInscription from "./courseInscription";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,13 +18,12 @@ export const Home = () => {
 
   return (
     <Container>
-      <Row className="p-5">
+      <Row className="p-5 mb-3">
         <Col className="pt-5">
-          <h1 className="pb-3">Cursos SayanDevelopers</h1>
-          <p className="pb-3">
-            Ven y danos tu dinero por ver videos de YouTube que podrías ver
-            gratis
-          </p>
+          <h1 className="pb-3 display-2">Cursos SayanDevelopers</h1>
+          <h4 className="pb-3">
+            Aprende lo que quieras y a tu ritmo!
+          </h4>
           <Link to={`/register`}>
             <Button variant="primary" size="lg">
               Sign up
@@ -39,7 +39,7 @@ export const Home = () => {
           <Image fluid src={Hero} />
         </Col>
       </Row>
-      <PaginaInicial />
+      <PaginaInicial className="mb-3" />
     </Container>
   );
 };

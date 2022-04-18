@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useCart } from "react-use-cart";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
@@ -9,9 +10,12 @@ import injectContext from "./store/appContext";
 import { Navbars } from "./component/navbars";
 import { Footer } from "./component/footer";
 import Login from "./pages/login";
-import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
+import Cursos from "./pages/cursos";
+import CourseDetail from "./pages/courseDetail";
+import CourseInscription from "./pages/courseInscription";
 import { Usuarios } from "./pages/usuarios";
+import CourseDetailv2 from "./pages/courseDetailv2";
 import { Register } from "./component/register";
 import { Compra } from "./component/compra";
 import { PaymentForm } from "./component/Formulariopago";
@@ -20,7 +24,6 @@ import { Pagomalo } from "./pages/Pagoinfallido";
 
 import { CarroFuncional } from "./component/Datafake";
 import { CartProvider } from "react-use-cart";
-
 
 //create your first component
 const Layout = () => {
@@ -57,12 +60,17 @@ const Layout = () => {
             <Route exact path="/pagofallido">
               <Pagomalo />
             </Route>
-
             <Route exact path="/miscursos">
               <MisCursos />
             </Route>
+            <Route exact path="/courseInscription">
+              <CourseInscription />
+            </Route>
             <Route exact path="/usuarios">
               <Usuarios />
+            </Route>
+            <Route exact path="/todosloscursos">
+              <Cursos />
             </Route>
             <Route exact path="/courseDetail/:id">
               <CourseDetail />
@@ -73,8 +81,11 @@ const Layout = () => {
             <Route exact path="/cursos">
               <CarroFuncional />
             </Route>
+            <Route exact path="/courseDetailv2/:id">
+              <CourseDetailv2 />
+            </Route>
             <Route>
-              <h1>Not found!</h1>
+              <h1>Sitio en Construcción!</h1>
             </Route>
           </Switch>
           <Footer />

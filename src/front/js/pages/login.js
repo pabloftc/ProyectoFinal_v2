@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errormessage, setErrormessage] = useState("");
-  console.log(password);
+
   let history = useHistory();
   const { store, actions } = useContext(Context);
   const isLoggedIn = store.isLoggedIn
@@ -24,42 +24,8 @@ const Login = () => {
   }, [isLoggedIn]);
   const onSubmitHandler = () => {
     actions.createToken(email, password);
-  }
-
-  // CÓDIGO QUE PASÉ A FLUX, hasta la línea 37
-  // const onSubmitHandler = async () => {
-  //   sessionStorage.setItem("email", email);
-  //   // sessionStorage.setItem("password", password);
-  //   const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-  //     // MODIFICAR ACA
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const data = await response.json();
-  //   console.log("_".repeat(80));
-  //   console.log(data);
-  //   if (response.ok == false) {
-  //     setErrormessage(
-  //       "Su usuario no está registrado en plataforma, o bien se ha equivocado en su contraseña"
-  //     );
-  //   } else {
-  //     sessionStorage.setItem("token", data.access_token)
-  // history.push("/miscursos"); //Código para enviar a otra vista
-  //   }
-
-  // .then(resp =>  { console.log(resp.json)
-  //   return resp.json()})
-  // .then(data => {console.log
-  //   return data()})
-  // .then(data => setStore({ message: data.message }))
-  // .catch(error => console.log("Error loading message from backend", error));
-
+     } 
+    
   return (
     <>
       <div
