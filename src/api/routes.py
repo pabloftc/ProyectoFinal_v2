@@ -76,8 +76,9 @@ def post_course():
         categoriaCurso = request.json.get('categoriaCurso')
         urlCurso = request.json.get('urlCurso')
         imgCurso = request.json.get('imgCurso')
+        precioCurso = request.json.get('precioCurso')
 
-        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso)
+        course = Cursos(name=nombreCurso, description=descripcionCurso, duracion=duracionCurso, categoria=categoriaCurso, url=urlCurso, url_portada=imgCurso, precio=precioCurso)
         existing_course = Cursos.query.filter_by(name=nombreCurso).first()
 
         if existing_course:

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Table } from 'react-bootstrap'
 import ModalCursos from "../component/modalCursos";
@@ -8,11 +9,16 @@ import ModalEditCurso from "../component/modalEditCurso";
 
 
 export const MisCursos = () => {
+    let history = useHistory();
     const [modalShow, setModalShow] = useState(false);
     const [modalEditShow, setModalEditShow] = useState(false);
     const [data, setData] = useState("");
     const {store, actions} = useContext(Context);
     const userId = sessionStorage.getItem("user_id");
+
+    function createCourse() {
+        history.push('/courseInscription');
+    }
     useEffect(() => {
         // Update the document title using the browser API
         actions.getCursosUser(userId);
@@ -30,7 +36,8 @@ export const MisCursos = () => {
 return (
         <>
         <Container>
-             <Button variant="success" onClick={() => setModalShow(true) }>Crea un Nuevo Curso</Button>
+             <Button variant="success" onClick={() => createCourse()}>Crea un Nuevo Curso</Button>
+             {/* () => setModalShow(true) */}
              <br />
 
 
