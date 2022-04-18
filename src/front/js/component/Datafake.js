@@ -1,4 +1,5 @@
 import React from "react";
+import { useCart } from "react-use-cart";
 import { Itemcard } from "./Cursosfake";
 import { Cart } from "./Carritofinal";
 import { CartProvider } from "react-use-cart";

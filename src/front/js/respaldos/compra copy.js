@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Container, Image } from "react-bootstrap";
+import { useCart } from "react-use-cart";
 import logo2 from '../../img/logo2.png';
 import "../../styles/compra.css";
 import "../../styles/carritodecompra.css";

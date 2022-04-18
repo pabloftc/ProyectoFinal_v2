@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useCart } from "react-use-cart";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
@@ -9,8 +10,9 @@ import injectContext from "./store/appContext";
 import { Navbars } from "./component/navbars";
 import { Footer } from "./component/footer";
 import Login from "./pages/login";
-import CourseDetail from "./pages/courseDetail";
 import { MisCursos } from "./pages/misCursos";
+import Cursos from "./pages/cursos";
+import CourseDetail from "./pages/courseDetail";
 import CourseInscription from "./pages/courseInscription";
 import { Usuarios } from "./pages/usuarios";
 import CourseDetailv2 from "./pages/courseDetailv2";
@@ -67,13 +69,16 @@ const Layout = () => {
             <Route exact path="/usuarios">
               <Usuarios />
             </Route>
+            <Route exact path="/todosloscursos">
+              <Cursos />
+            </Route>
             <Route exact path="/courseDetail/:id">
               <CourseDetail />
             </Route>
             <Route exact path="/single/:theid">
               <Single />
             </Route>
-            <Route exact path="/Cursos">
+            <Route exact path="/cursos">
               <CarroFuncional />
             </Route>
             <Route exact path="/courseDetailv2/:id">

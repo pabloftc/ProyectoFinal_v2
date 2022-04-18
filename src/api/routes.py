@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 import smtplib
 from email.message import EmailMessage
 from sendgrid import SendGridAPIClient
@@ -31,12 +32,12 @@ def handle_hello():
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user=User(email=email, password=password)
-    if len(User.query.filter_by(email=email, password=password).all()) > 0:
+    user= User.query.filter_by(email=email, password=password).all()
+    if len(user) > 0:
         access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token)   
+        return jsonify(access_token=access_token, user_id=user[0].id, rol=user[0].rol)   
     else:
-        return jsonify({"msg": "Bad username or password"}), 401    
+        return jsonify({"msg": "Bad username or password"}), 401       
 
 #endpoint del detalle de un curso
 @api.route("/detalle_curso", methods=["GET"])
@@ -128,6 +129,131 @@ def register():
         print(f'registerfailed: {e}')
     return jsonify(response['mensaje']), response['status']
 
+# Crear Usuario
+@api.route("/usuarios", methods=["POST"])
+def crear_user():
+    username = request.json.get("username", None)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    rol = request.json.get("rol", None)
+    is_active = request.json.get("is_active", None)
+    user=User(username=username, email=email, password=password, rol=rol, is_active = is_active)
+    #len es una función que cuenta el largo de un array, y en el código de a continuación dice si el largo del array es mayor a 0 entonces error, porque ya existe un usuario con esos datos.
+    if len(User.query.filter_by(username=username).all()) > 0:
+        return jsonify({"Error": "Ya existe un usuario registrado con este nombre en la plataforma"}), 400
+    else:
+        db.session.add(user)
+        db.session.commit()
+    
+    return jsonify({"success": "Su usuario ha sido creado en la plataforma"}), 201
+
+#Todos los usuarios
+@api.route("/usuarios", methods=["GET"])
+def lista_usuarios():
+    lista_usuarios = User.query.all()
+    todos_los_usuarios = list(map(lambda x: x.serialize(), lista_usuarios))
+    return jsonify(todos_los_usuarios)
+
+#Borrar un Usuario
+@api.route('/usuarios/<int:id>', methods=["DELETE"])
+def borrar_usuario(id):
+    usuario = User.query.get(id)
+
+    db.session.delete(usuario)
+    db.session.commit()
+
+    return jsonify({"msg": "Usuario Eliminado"})
+
+# Editar Usuario
+@api.route("/usuarios/<int:id>", methods=["PUT"])
+def editar_user(id):
+    user = User.query.get(id)
+    body=request.get_json()
+
+    user.username=body["username"]
+    user.email=body["email"]
+    user.password=body["password"]
+    user.rol=body["rol"]
+    user.is_active=body["is_active"]
+
+    db.session.commit()
+    
+    return jsonify({"success": "Su usuario ha sido actualizado en la plataforma"}), 201
+
+# Get Todos los cursos
+@api.route('/cursos', methods=['GET'])
+def todos_los_cursos():
+    lista_cursos = Cursos.query.all()
+    todos_los_cursos = list(map(lambda x: x.serialize(), lista_cursos))
+    return jsonify(todos_los_cursos)
+
+# Get Cursos por id user
+@api.route('/miscursos/<int:user_id>', methods=['GET'])
+def get_cursos_user(user_id):
+    curso = Cursos.query.filter_by(user_id = user_id)
+    los_cursos = list(map(lambda x: x.serialize(), curso))
+    return jsonify(los_cursos)
+
+# Crear Curso
+
+@api.route("/miscursos", methods=["POST"])
+def crear_curso():
+    id = request.json.get("id")
+    name = request.json.get("name")
+    description = request.json.get("description")
+    categoria = request.json.get("categoria")
+    url = request.json.get("URL")
+    url_portada = request.json.get("URLPortada")
+    precio = request.json.get("precio")
+    duracion = request.json.get("duracion")
+    created_at = request.json.get("created_at")
+    user_id = request.json.get("user_id")
+
+    nuevo_curso = Cursos(id=id, name=name, description=description, categoria=categoria, url=url, url_portada=url_portada, precio=precio, duracion=duracion, created_at=created_at, user_id = user_id)
+    
+    db.session.add(nuevo_curso)
+    db.session.commit()
+
+    return jsonify({"success": "Su curso ha sido creado en la plataforma, "}), 200
+
+# Editar Curso
+
+@api.route("/miscursos/<int:id>", methods=["PUT"])
+def editar_curso(id):
+    curso = Cursos.query.get(id)
+
+    name = request.json.get("name")
+    description = request.json.get("description")
+    categoria = request.json.get("categoria")
+    url = request.json.get("URL")
+    url_portada = request.json.get("URLPortada")
+    precio = request.json.get("precio")
+    duracion = request.json.get("duracion")
+
+    curso.name = name
+    curso.description = description
+    curso.categoria = categoria
+    curso.url = url
+    curso.url_portada = url_portada
+    curso.precio = precio
+    curso.duracion = duracion
+    
+    db.session.commit()
+
+    return jsonify({"success": "Su curso ha sido editado en la plataforma, "}), 200
+
+# Eliminar Curso
+
+@api.route('/miscursos/<int:id>', methods=['DELETE'])
+def eliminar_curso_user(id):
+    curso = Cursos.query.get(id)
+
+    db.session.delete(curso)
+    db.session.commit()
+
+    return jsonify({"success": "Su curso ha sido eliminado en la plataforma "})
+
+
 #endpoint de comprar
 @api.route("/compra", methods=["GET"])
 def compra():
@@ -169,6 +295,27 @@ def guardarcompra():
         print(f'pedidosfailed: {e}')
     return jsonify(response['mensaje']), response['status']
 
+#para mandar email
+#@app.route("/send-email", methods=["POST"])
+#def sendemail():
+#    response = {'mensaje': '', 'status': ''}
+#    try:
+#        name = request.json.get("name", None)
+#        description = request.json.get("description", None)
+#        categoria = request.json.get("categoria", None)
+#        precio = request.json.get("precio", None)
+#        for cursos in Cursos.query.all()
+#
+#        message = Mail(
+#            from_email="matthegamer@gmail.com"
+#            
+#        )
+
+
+
+#@app.listen(3000, () => {
+   # console.log("Servidor en -> http://localhost:3000")
+#})
 
 #enpoint para enviar un correo SOLO BACKEND (No real)
 @api.route("/pagocorrecto", methods=["POST"])

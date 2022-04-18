@@ -4,7 +4,7 @@ import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-const ModalCursos = (props) => {
+const ModalEditCurso = (props, data) => {
   const { store, actions } = useContext(Context);
   const [nombre,setNombre] = useState();
   const [categoria,  setCategoria] = useState();
@@ -13,14 +13,12 @@ const ModalCursos = (props) => {
   const [duracion ,setDuracion] = useState();
   const [URL ,setURL] = useState();
   const [URLPortada ,setURLPortada] = useState();
-  
+  const id = props.data.id;
   const [modalShow, setModalShow] = useState(false);
-
-  const userId = store.user_id;
-  console.log(userId);
-  const crearCurso = () => {
+  console.log(id);
+;  const actualizarCurso = () => {
     
-    actions.crearCurso(nombre, categoria, descripcion, precio, duracion, URL, URLPortada,userId);
+    actions.actualizarCurso(id, nombre, categoria, descripcion, precio, duracion, URL, URLPortada);
 
   };
 
@@ -44,14 +42,14 @@ const ModalCursos = (props) => {
             <Row className="mb-3">
                  <Form.Group as={Col} controlId="formGridNombre">
                     <Form.Label>Nombre del Curso</Form.Label>
-                    <Form.Control 
+                    <Form.Control placeholder={props.data.name}
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}/>
                 </Form.Group>
 
                  <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>Precio</Form.Label>
-                    <Form.Control placeholder="$" 
+                    <Form.Control placeholder={ "$ " + props.data.precio} 
                     value={precio}
                     onChange={(e) => setPrecio(e.target.value)} />
                     </Form.Group>
@@ -60,6 +58,7 @@ const ModalCursos = (props) => {
                 <Form.Group className="mb-3" controlId="formGridDescripcion">
                     <Form.Label>Descripcion</Form.Label>
                     <Form.Control as="textarea" rows={3} 
+                    placeholder ={props.data.description}
                     value={descripcion}
                     onChange={(e) => setDescripcion(e.target.value)}
                     />
@@ -68,12 +67,14 @@ const ModalCursos = (props) => {
                 <Form.Group className="mb-3" controlId="formGridURLVideo">
                     <Form.Label>URL Video</Form.Label>
                     <Form.Control value={URL}
+                    placeholder ={props.data.url}
                     onChange={(e) => setURL(e.target.value)} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formGridURLImagenPortada">
                     <Form.Label>URL Imagen Portada</Form.Label>
                     <Form.Control value={URLPortada}
+                    placeholder ={props.data.url_portada}
                     onChange={(e) => setURLPortada(e.target.value)}/>
                 </Form.Group>
 
@@ -98,6 +99,7 @@ const ModalCursos = (props) => {
                     <Form.Group as={Col} controlId="formGridDuracion">
                     <Form.Label>Duracion</Form.Label>
                     <Form.Control value={duracion}
+                    placeholder ={props.data.duracion}
                     onChange={(e) => setDuracion(e.target.value)}/>
                     </Form.Group>
                 </Row>
@@ -105,8 +107,8 @@ const ModalCursos = (props) => {
                 </Form>
         </Modal.Body>
         <Modal.Footer>
-                <Button variant="primary" type="submit" onClick={(e) => {crearCurso(e)}} href="miscursos">
-                    Crear Curso
+                <Button variant="primary" type="submit" onClick={(e) => {actualizarCurso(e)}} href="miscursos">
+                    Actualizar Curso
                 </Button>{'  '}
                 
         </Modal.Footer>
@@ -115,4 +117,4 @@ const ModalCursos = (props) => {
     )
   }
 
-  export default ModalCursos;
+  export default ModalEditCurso;
