@@ -37,7 +37,7 @@ export const Navbars = () => {
         navbarScroll
       >
         <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
-        <Nav.Link href="cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+        <Nav.Link href="/cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
         { isLoggedIn ? <> <Link to="/miscursos">
         <Nav.Link href="sobrenosotros" className="navpaginas"><p>MisCursos</p></Nav.Link>
          </Link>

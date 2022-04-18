@@ -14,6 +14,7 @@ export default function CourseDetail() {
   const [carrito, setCarrito] = useState([]);
   const isLoggedIn = store.isLoggedIn;
   let history = useHistory();
+  window.scrollTo(0, 0)
 
   const handleClick = (id) => {
     actions.courseToStore(id);
