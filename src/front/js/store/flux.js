@@ -510,7 +510,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         duracionCurso,
         categoriaCurso,
         urlCurso,
-        imgCurso
+        imgCurso,
+		precioCurso,
       ) => {
         console.log("1");
         const course = {
@@ -525,6 +526,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             categoriaCurso: categoriaCurso,
             urlCurso: urlCurso,
             imgCurso: imgCurso,
+			precioCurso: precioCurso,
           }),
         };
         console.log("2");

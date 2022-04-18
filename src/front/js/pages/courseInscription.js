@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useForm } from "react-hook-form";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 // Cargar documentación (PDF - validar) - url Gitpod - En la database se guarda una URL
 
 export default function CourseInscription() {
   const { store, actions } = useContext(Context);
+  let history = useHistory();
 
   const {
     register,
@@ -21,6 +23,7 @@ export default function CourseInscription() {
       categoriaCurso: "",
       urlCurso: "",
       imgCurso: "",
+      precioCurso: "",
     },
   });
 
@@ -33,15 +36,18 @@ export default function CourseInscription() {
           data.duracionCurso,
           data.categoriaCurso,
           data.urlCurso,
-          data.imgCurso
+          data.imgCurso,
+          data.precioCurso
         );
-        console.log("Data: ", serverResponse)
+        console.log("Data: ", serverResponse);
         if (serverResponse === 200) {
-          swal("Curso Registrado!")
+          swal("Curso Registrado!");
+          history.push("/");
         } else {
-          swal("Error en el registro, ya existe un Curso con este nombre")
+          swal("Error en el registro, ya existe un Curso con este nombre");
+          history.push("/");
         }
-        reset()
+        reset();
       })}
     >
       <h1 className="d-flex justify-content-center display-2">
@@ -141,6 +147,18 @@ export default function CourseInscription() {
         ></input>
         <strong>{errors.imgCurso?.message}</strong>
         <label htmlFor="imgCurso">URL Imagen del Curso</label>
+      </div>
+      {/* Precio del Curso */}
+      <div className="form-floating mb-3">
+        <input
+          {...register("precioCurso", { required: "Este campo es requerido" })}
+          type="number"
+          className="form-control"
+          id="precioCurso"
+          placeholder="Precio del Curso"
+        ></input>
+        <strong>{errors.precioCurso?.message}</strong>
+        <label htmlFor="precioCurso">Precio del Curso</label>
       </div>
       {/* Documentación del Curso */}
       <div className="input-group mb-3">
