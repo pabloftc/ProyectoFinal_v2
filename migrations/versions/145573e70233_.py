@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:migrations/versions/b75457461aca_.py
-Revision ID: b75457461aca
+Revision ID: 145573e70233
 Revises: 
-Create Date: 2022-04-17 00:21:07.182963
-=======
-Revision ID: 9b16f6e1640b
-Revises: 
-Create Date: 2022-04-17 00:43:19.165418
->>>>>>> dev:migrations/versions/9b16f6e1640b_.py
+Create Date: 2022-04-18 13:49:34.078426
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:migrations/versions/b75457461aca_.py
-revision = 'b75457461aca'
-=======
-revision = '9b16f6e1640b'
->>>>>>> dev:migrations/versions/9b16f6e1640b_.py
+revision = '145573e70233'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,20 +31,12 @@ def upgrade():
     )
     op.create_table('cursos',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=300), nullable=True),
-<<<<<<< HEAD:migrations/versions/b75457461aca_.py
-    sa.Column('description', sa.String(length=600), nullable=True),
-    sa.Column('categoria', sa.String(length=80), nullable=True),
-    sa.Column('url', sa.String(length=600), nullable=True),
-    sa.Column('url_portada', sa.String(length=600), nullable=True),
-    sa.Column('precio', sa.Integer(), nullable=True),
-=======
+    sa.Column('name', sa.String(length=300), nullable=False),
     sa.Column('description', sa.String(length=600), nullable=False),
     sa.Column('categoria', sa.String(length=80), nullable=False),
-    sa.Column('url', sa.String(length=300), nullable=True),
-    sa.Column('url_portada', sa.String(length=300), nullable=True),
+    sa.Column('url', sa.String(length=600), nullable=True),
+    sa.Column('url_portada', sa.String(length=600), nullable=True),
     sa.Column('precio', sa.Integer(), nullable=False),
->>>>>>> dev:migrations/versions/9b16f6e1640b_.py
     sa.Column('duracion', sa.String(length=250), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),

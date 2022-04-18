@@ -56,7 +56,7 @@ export default function CourseDetailv2() {
           {/* <h4 className="mb-2">
             Duración: {data.cursosData.duracion} Horas
           </h4> */}
-          <h4 className="mb-3">Precio: {detail.price}</h4>
+          <h4 className="mb-3">Precio: ${detail.price}</h4>
           <Button
             onClick={(e) => {
               checkLogin(e);

@@ -1,5 +1,0 @@
-Cambiar:
-
--- Componente YouTube
--- Archivo PDF
--- Redirigir al home post creación de curso

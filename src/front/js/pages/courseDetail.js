@@ -54,7 +54,7 @@ export default function CourseDetail() {
           <h4 className="mb-2">
             Duración: {store.curso_actual.duracion} Horas
           </h4>
-          <h4 className="mb-3">Precio: {store.curso_actual.precio}</h4>
+          <h4 className="mb-3">Precio: ${store.curso_actual.precio}</h4>
           <Button
             onClick={(e) => {
               checkLogin(e);
@@ -79,7 +79,7 @@ export default function CourseDetail() {
         </Col>
       </Row>
       <Row>
-        <Col className="align-self-center">
+        <Col>
       <YouTube url={store.curso_actual.url} />
         </Col>
       </Row>

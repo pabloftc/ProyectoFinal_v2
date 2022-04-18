@@ -6,15 +6,15 @@ import "../../styles/youtube.css";
 const YouTube = (props) => {
   const { store, actions } = useContext(Context);
   return (
-      <div className="player-wrapper mt-5 align-items-center">
-        <ReactPlayer
-          className="react-player"
-          url={props.url}
-          controls={true}
-          width="100%"
-          height="100%"
-        />
-      </div>
+    <div className="player-wrapper mt-5 pl-5">
+      <ReactPlayer
+        className="react-player"
+        url={props.url}
+        controls={true}
+        width="100%"
+        height="100%"
+      />
+    </div>
   );
 };
 
