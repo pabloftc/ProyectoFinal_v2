@@ -70,7 +70,7 @@ const Layout = () => {
             <Route exact path="/single/:theid">
               <Single />
             </Route>
-            <Route exact path="/Cursos">
+            <Route exact path="/cursos">
               <CarroFuncional />
             </Route>
             <Route>
