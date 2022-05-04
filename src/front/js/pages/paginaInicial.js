@@ -68,9 +68,10 @@ const PaginaInicial = () => {
               <Card.Img
                 style={{ height: "200px", objectFit: "cover" }}
                 variant="top"
-                src={`https://picsum.photos/id/${Math.floor(
-                  Math.random() * 230
-                )}/200/300`}
+                src={cursoItem.url_portada}
+                // src={`https://picsum.photos/id/${Math.floor(
+                //   Math.random() * 230
+                // )}/200/300`}
               />
               <Card.Body>
                 <Card.Title> {cursoItem.name} </Card.Title>
