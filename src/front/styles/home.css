@@ -18,14 +18,21 @@ html {
 
 body {
   box-sizing: border-box;
-  font-family: "Roboto Mono", Arial, sans-serif;
   font-size: 1.7rem;
 }
 
+.gradient-custom {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 12%,
+    rgba(186, 225, 255, 0.9626225490196079) 100%
+  );
+}
+
 .navpaginas {
-  font-size: 22px;
-  font-weight: bold;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 17px;
 }
 
 .navpaginas > p {

@@ -75,7 +75,7 @@ export const Register = () => {
 
     return (
         <Container className="containerregistro">
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '60vh' }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: '90vh' }}>
                 <div style={{ width: "600px" }}>
                     <Image className="imagenlogo" src={logo2} rounded />
                     <h2>Sign up</h2>
@@ -83,7 +83,8 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="username">Usuario</label>
                             <input
-                                className="inputregistro"
+                                className="form-control"
+                                // inputregistro
                                 name="username"
                                 id="username"
                                 type="text"
@@ -95,7 +96,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="email">Email</label>
                             <input
-                                className="inputregistro"
+                                className="form-control"
                                 name="email"
                                 id="email"
                                 type="email"
@@ -107,7 +108,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="password">Password</label>
                             <input
-                                className="inputregistro"
+                                className="form-control"
                                 name="password"
                                 id="password"
                                 type="password"
@@ -119,7 +120,7 @@ export const Register = () => {
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
                             <label htmlFor="password2">Confirmacion password</label>
                             <input
-                                className="inputregistro"
+                                className="form-control"
                                 name="password2"
                                 id="password2"
                                 type="password"
@@ -130,7 +131,7 @@ export const Register = () => {
                         </div>
 
                         <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
-                            <button type="submit" className="btn btn-primary mb-3" onClick={(e) => registerClick(e)}>Sign in</button>
+                            <button type="submit" className="btn btn-primary mb-3" onClick={(e) => registerClick(e)}>Submit</button>
                         </div>
                     </form>
                 </div>

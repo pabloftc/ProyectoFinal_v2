@@ -20,18 +20,18 @@ export const Home = () => {
     <Container>
       <Row className="p-5 mb-3">
         <Col className="pt-5">
-          <h1 className="pb-3 display-2">Cursos SayanDevelopers</h1>
-          <h4 className="pb-3">
-            Aprende lo que quieras y a tu ritmo!
-          </h4>
+          <h1 className="pb-3 display-2 fw-bold mb-4">
+            Cursos SayanDevelopers
+          </h1>
+          <h4 className="pb-3 mb-4">Aprende lo que quieras, a tu ritmo!</h4>
           <Link to={`/register`}>
-            <Button variant="primary" size="lg">
+            <Button className="fs-4" variant="primary" size="lg">
               Sign up
             </Button>
           </Link>{" "}
           <Link to={`/Login`}>
-            <Button variant="outline-primary" size="lg">
-              Login
+            <Button className="fs-4" variant="outline-primary" size="lg">
+              Log In
             </Button>
           </Link>
         </Col>
@@ -39,7 +39,9 @@ export const Home = () => {
           <Image fluid src={Hero} />
         </Col>
       </Row>
+      <div>
       <PaginaInicial className="mb-3" />
+    </div>
     </Container>
   );
 };
