@@ -27,7 +27,7 @@ export const Navbars = () => {
       <Navbar bg="light" expand="lg">
   	<Container fluid>
   	<Link to="/">
-    <Navbar.Brand><img src={SayanImageUrl} style={{ width: '300px', height: "70px"}}/></Navbar.Brand>
+    <Navbar.Brand><img src={SayanImageUrl} style={{ width: '200px', height: "50px"}}/></Navbar.Brand>
 	</Link>
     <Navbar.Toggle aria-controls="navbarScroll" />
     <Navbar.Collapse id="navbarScroll">
@@ -36,10 +36,10 @@ export const Navbars = () => {
         style={{ maxHeight: '100px' }}
         navbarScroll
       >
-        <Nav.Link href="/" className="navpaginas">Home</Nav.Link>
-        <Nav.Link href="/cursos" className="navpaginas"><p>Cursos</p></Nav.Link>
+        <Nav.Link href="/" className="navpaginas my-2 mx-3">Home</Nav.Link>
+        <Nav.Link href="/cursos" className="navpaginas my-2 mx-3"><p>Cursos</p></Nav.Link>
         { isLoggedIn ? <> <Link to="/miscursos">
-        <Nav.Link href="sobrenosotros" className="navpaginas"><p>MisCursos</p></Nav.Link>
+        <Nav.Link href="sobrenosotros" className="navpaginas my-2 mx-3"><p>Mis Cursos</p></Nav.Link>
          </Link>
         </>
         : <></>
@@ -53,11 +53,11 @@ export const Navbars = () => {
       </Nav>
     {/* ! significa contrario al valor del booleano  */}
      { ! isLoggedIn ? <Link to="/login">
-      <Button variant="outline-primary" style={{marginRight: '5px'}}>Log In
+      <Button variant="outline-primary btn-lg" style={{marginRight: '5px'}}>Log In
       </Button> 
       </Link> :<></> }
       {! isLoggedIn ? <Link to="/register"> 
-        <Button variant="primary" style={{marginRight: '5px'}}>Sign Up</Button>
+        <Button className="me-5" variant="primary btn-lg" style={{marginRight: '5px'}}>Sign Up</Button>
       </Link> : <></> }
      { ! isLoggedIn ? <></> : <LogoutButton /> }
     </Navbar.Collapse>
