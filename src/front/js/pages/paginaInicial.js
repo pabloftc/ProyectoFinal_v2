@@ -43,7 +43,9 @@ const PaginaInicial = () => {
           paddingBottom: "40px",
         }}
       >
-        <h2 className="display-6 fw-bold fst-italic">Últimos Cursos agregados</h2>{" "}
+        <h2 className="display-6 fw-bold fst-italic">
+          Últimos Cursos agregados
+        </h2>{" "}
         <Form className="d-flex" style={{ marginRight: "5px" }}>
           <FormControl
             value={curso}
@@ -93,5 +95,3 @@ const PaginaInicial = () => {
   );
 };
 export default PaginaInicial;
-
-// `https://picsum.photos/id/${Math.floor(Math.random() * 230)}/200/300`;
