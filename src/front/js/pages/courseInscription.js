@@ -178,8 +178,8 @@ export default function CourseInscription() {
         </div>
         {/* Submit */}
         <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary btn-lg fs-4">
-            Enviar
+          <button type="submit" className="btn btn-primary btn-lg fs-2">
+            Inscribir Curso
           </button>
         </div>
       </form>
