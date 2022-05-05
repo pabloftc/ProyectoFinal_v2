@@ -8,7 +8,7 @@ export const LogoutButton = () => {
     const tokenDestroyer = actions.deleteToken
   return (   
     <Link to="/"> 
-    <Button variant="primary" onClick={tokenDestroyer} style={{marginRight: '5px'}}>Log out</Button>
+    <Button variant="primary btn-lg" onClick={tokenDestroyer} style={{marginRight: '5px'}}>Log out</Button>
   </Link>
   );
   };

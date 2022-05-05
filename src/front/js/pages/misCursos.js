@@ -36,14 +36,15 @@ export const MisCursos = () => {
 return (
         <>
         <Container>
-             <Button variant="success" onClick={() => createCourse()}>Crea un Nuevo Curso</Button>
-             {/* () => setModalShow(true) */}
+            <div className="my-5">
+             <Button className="fs-4" variant="success" size="lg" onClick={() => createCourse()}>Crea un Nuevo Curso</Button>
+            </div>
              <br />
 
 
              <Table>
                  <thead>
-                     <tr>
+                     <tr className="fs-5">
                          <th>Curso</th>
                          <th>Categoria</th>
                          <th>Descripcion</th>

@@ -33,7 +33,7 @@ const PaginaInicial = () => {
   }
 
   return (
-    <>
+    <div className="bg-secondary bg-gradient bg-opacity-10">
       <div
         style={{
           display: "flex",
@@ -43,7 +43,9 @@ const PaginaInicial = () => {
           paddingBottom: "40px",
         }}
       >
-        <h1>Cursos o categoría de cursos</h1>{" "}
+        <h2 className="display-6 fw-bold fst-italic">
+          Últimos Cursos agregados
+        </h2>{" "}
         <Form className="d-flex" style={{ marginRight: "5px" }}>
           <FormControl
             value={curso}
@@ -51,12 +53,16 @@ const PaginaInicial = () => {
               setCurso(e.target.value);
             }}
             type="search"
-            placeholder="Search . . ."
+            placeholder="Busca un Curso . . ."
             className="me"
             aria-label="Search"
-            style={{margin:"0px", marginRight:"10px", fontSize:"10pt"}}
+            style={{ margin: "0px", marginRight: "10px", fontSize: "10pt" }}
           />
-          <Button variant="outline-secondary" onClick={finderHandler} style={{width:"50px", height:"50px"}}>
+          <Button
+            variant="outline-secondary"
+            onClick={finderHandler}
+            style={{ width: "50px", height: "50px" }}
+          >
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Button>
         </Form>
@@ -64,30 +70,28 @@ const PaginaInicial = () => {
       <Row xs={1} md={3} className="g-4">
         {store.cursos.map((cursoItem, idx) => (
           <Col key={idx}>
-            <Card>
+            <Card className="mb-3 mx-2">
               <Card.Img
                 style={{ height: "200px", objectFit: "cover" }}
                 variant="top"
-                src={`https://picsum.photos/id/${Math.floor(
-                  Math.random() * 230
-                )}/200/300`}
+                src={cursoItem.url_portada}
               />
               <Card.Body>
-                <Card.Title> {cursoItem.name} </Card.Title>
-                <Card.Text>{cursoItem.description}</Card.Text>
+                <Card.Title className="fs-4"> {cursoItem.name} </Card.Title>
+                <Card.Text className="fs-5">{cursoItem.description}</Card.Text>
                 <Button
                   variant="primary"
                   size="lg"
                   onClick={(id) => handleClick(cursoItem.id)}
                 >
-                  Detalles
+                  Más Detalles
                 </Button>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   );
 };
 export default PaginaInicial;

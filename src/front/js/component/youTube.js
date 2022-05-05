@@ -6,7 +6,7 @@ import "../../styles/youtube.css";
 const YouTube = (props) => {
   const { store, actions } = useContext(Context);
   return (
-    <div className="player-wrapper mt-5 pl-5">
+    <div className="player-wrapper">
       <ReactPlayer
         className="react-player"
         url={props.url}

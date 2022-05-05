@@ -52,7 +52,7 @@ export const data = {
       img: excel,
       name: "Excel intermedio",
       description: "Curso para aprender excel intermedio",
-      categoría: "Informática",
+      categoría: "Programación",
       price: 35000,
     },
     {
@@ -60,7 +60,7 @@ export const data = {
       img: excel2,
       name: "Excel avanzado",
       description: "Curso para aprender excel avanzado",
-      categoría: "Informática",
+      categoría: "Programación",
       price: 50000,
     },
     {
@@ -84,7 +84,7 @@ export const data = {
       img: python,
       name: "Aprende Python",
       description: "Curso para aprender Python",
-      categoría: "Informática",
+      categoría: "Programación",
       price: 35000,
     },
     {
@@ -100,7 +100,7 @@ export const data = {
       img: bootstrap,
       name: "Aprende Bootstrap 5",
       description: "Curso para aprender Bootstrap",
-      categoría: "Informática",
+      categoría: "Programación",
       price: 45000,
     },
     {
