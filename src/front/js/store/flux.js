@@ -211,7 +211,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						setStore({ lista_usuarios: data });
 						return true;
 						} catch (error) {
-						console.log("there an error while Loading the Courses", error);
+						console.log("there an error while Loading the Users", error);
 						}
 			},
 			getCursos: async () => {

@@ -58,14 +58,18 @@ const ModalUsers = (props) => {
                 <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control  placeholder="Password" 
+                    <Form.Control  
+                    type="Password"
+                    placeholder="Password" 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridConfirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control  placeholder=" Confirm Password" 
+                    <Form.Control  
+                    type="Password"
+                    placeholder=" Confirm Password" 
                     value={confirmPassword}
                     onChange={(e) => setConmfirmPassword(e.target.value)}
                     />
