@@ -63,7 +63,9 @@ export default function CourseDetail() {
           <h4 className="mb-4">
             <strong>Duración:</strong> {store.curso_actual.duracion} Horas
           </h4>
-          <h4 className="mb-5"><strong>Precio:</strong> ${store.curso_actual.precio}</h4>
+          <h4 className="mb-5">
+            <strong>Precio:</strong> ${store.curso_actual.precio}
+          </h4>
           <Button
             className="fs-4"
             onClick={(e) => {
@@ -97,9 +99,21 @@ export default function CourseDetail() {
       </Row>
       <Row>
         <Col>
-          <div className="container justify-content-center text-center mt-5 w-50">
-            <h3 className="display-5 fw-bold mb-4">Preview</h3>
-            <YouTube url={store.curso_actual.url} />
+        <div className="container justify-content-center text-center mt-5">
+        <h4 className="fs-3 mb-5 fw-bold">Tabla de Contenidos</h4>
+        <ul className="mt-3 fs-4">
+          <li className="mb-3">Introducción</li>
+          <li className="mb-3">Tipos de datos</li>
+          <li className="mb-3">Variables</li>
+          <li className="mb-3">Condicionales</li>
+          <li className="mb-3">Loops</li>
+        </ul>
+        </div>
+        </Col>
+        <Col md={9}>
+          <div className="container justify-content-center text-center mt-5 w-75">
+            <h3 className="display-5 fw-bold mb-4 mt-4 pb-3 border-bottom border-primary rounded">Preview</h3>
+            <YouTube className="mb-4" url={store.curso_actual.url} />
           </div>
         </Col>
       </Row>

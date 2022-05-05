@@ -9,9 +9,14 @@
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {
   box-sizing: border-box;
   font-size: 1.7rem;
   }
+
+.home-title {
+  filter: drop-shadow(10px 10px 4px #c3d0d7);
+}
